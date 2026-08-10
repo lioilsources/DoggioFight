@@ -188,8 +188,11 @@ function hud.update_flight(player, f)
     if vy > 1 or vy < -1 then
         vs = string.format("VS %+d", math.floor(vy + 0.5))
     end
+    local mtag = doggiowars.mode
+        and doggiowars.mode[player:get_player_name()] == "sub"
+        and "SUB   " or ""
     hud.set(player, "speed", {text = string.format(
-        "SPD %d   ALT %d   %s", f.speed or 0, alt, vs)})
+        "%sSPD %d   ALT %d   %s", mtag, f.speed or 0, alt, vs)})
 
     -- kompas: kurz z pohledu (0° = sever = +Z, po směru hodin)
     local heading = (360 - math.deg(player:get_look_horizontal() or 0)) % 360

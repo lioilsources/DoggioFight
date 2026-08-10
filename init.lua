@@ -16,6 +16,13 @@ doggiowars.const = {
     ROLL_MAX     = math.pi,
     ROLL_DECAY   = 1.5,     -- roll auto-level rate
     SPAWN_HEIGHT = 300,     -- výška spawnu / respawnu
+
+    -- Režim ponorky (/mode) — 5DoF hover
+    SUB_SPEED      = 20,    -- m/s max tah dopředu/dozadu
+    SUB_STRAFE     = 14,    -- m/s max úkrok do stran
+    SUB_VERT_SPEED = 12,    -- m/s max stoupání/klesání
+    SUB_ACCEL      = 25,    -- m/s^2 dojezd k cílové rychlosti (i brzda)
+    SUB_PITCH_MAX  = 0.9,   -- rad clamp sklonu trupu (strmější než PITCH_MAX)
 }
 
 local MP = minetest.get_modpath("doggiowars")

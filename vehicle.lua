@@ -13,6 +13,10 @@ local respawn_pending = {}
 -- Gamepad diagnostika (přepíná /gp): živě ukazuje páčky a stisknutá tlačítka,
 -- aby šlo namapovat konkrétní ovladač (Xbox/PS4) na herní akce.
 doggiowars.gp_debug = doggiowars.gp_debug or {}
+
+-- Řídicí režim per hráč (/mode): nil/"fighter" = letadlo, "sub" = ponorka.
+-- Přežívá respawn entity — klíčem je jméno hráče, ne entita.
+doggiowars.mode = doggiowars.mode or {}
 local GP_KEYS = {"up", "down", "left", "right", "jump", "aux1",
                  "sneak", "dig", "place", "zoom"}
 local function gp_debug_str(ctrl, look_v, f)
@@ -197,6 +201,7 @@ minetest.register_entity("doggiowars:fighter", {
             if self.is_dead then return end
         end
 
+        local sub_mode = doggiowars.mode[self.pilot_name or ""] == "sub"
         local rot, vel
 
         if self.trick then
@@ -212,6 +217,71 @@ minetest.register_entity("doggiowars:fighter", {
                     minetest.dir_to_yaw({x = vel.x, y = 0, z = vel.z}))
                 pilot:set_look_vertical(-math.atan2(vel.y, th))
             end
+        elseif sub_mode then
+            -- PONORKA: 5DoF hover. Levá páčka = tah/úkrok, pohled (myš nebo
+            -- pravá páčka) = kurz+sklon, jump/sneak = stoupání/klesání.
+            -- Žádný roll, žádné triky (check_triggers se tu nevolá).
+            rot = self.object:get_rotation()
+            local look_h = pilot:get_look_horizontal()
+            local look_v = pilot:get_look_vertical()
+
+            -- yaw + pitch: trup se dotáčí za zaměřovačem; left/right/jump/
+            -- sneak pohledem NEhýbou — v ponorce mají nový význam
+            local chase = 2.0 * dtime
+            local dy = wrap_angle(look_h + math.pi - rot.y)
+            rot.y = rot.y + math.max(-chase, math.min(chase, dy))
+
+            local target_pitch = math.max(-C.SUB_PITCH_MAX,
+                math.min(C.SUB_PITCH_MAX, -look_v))
+            local pstep = C.PITCH_RATE * 1.5 * dtime
+            self.pitch = self.pitch + math.max(-pstep,
+                math.min(pstep, target_pitch - self.pitch))
+
+            -- roll: žádné bankování, plynule srovnat do nuly
+            local rstep = C.ROLL_DECAY * dtime
+            self.roll = (self.roll or 0)
+                - math.max(-rstep, math.min(rstep, self.roll or 0))
+
+            -- vstupy: levá páčka analogově, digitální klávesy jako záloha
+            -- (stejný deadzone vzor jako plyn stíhačky)
+            local thr = math.max(-1, math.min(1, ctrl.movement_y or 0))
+            if math.abs(thr) < 0.25 then
+                thr = (ctrl.up and 1 or 0) - (ctrl.down and 1 or 0)
+            end
+            self.dbg_thr = thr
+            local sway = math.max(-1, math.min(1, ctrl.movement_x or 0))
+            if math.abs(sway) < 0.25 then
+                sway = (ctrl.right and 1 or 0) - (ctrl.left and 1 or 0)
+            end
+            local heave = (ctrl.jump and 1 or 0) - (ctrl.sneak and 1 or 0)
+
+            -- cílová rychlost: dopředu po skloněné ose trupu, úkrok vodorovně
+            -- kolmo na kurz (right = (f.z, -f.x)), heave svisle ve světových
+            -- osách nezávisle na sklonu nosu
+            local dir = minetest.yaw_to_dir(rot.y + math.pi)
+            local cp, sp = math.cos(self.pitch), math.sin(self.pitch)
+            local tvx = dir.x * cp * thr * C.SUB_SPEED
+                + dir.z * sway * C.SUB_STRAFE
+            local tvy = sp * thr * C.SUB_SPEED + heave * C.SUB_VERT_SPEED
+            local tvz = dir.z * cp * thr * C.SUB_SPEED
+                - dir.x * sway * C.SUB_STRAFE
+
+            -- hover model: rychlost se dojíždí k cílové, puštěné ovládání
+            -- znamená cíl (0,0,0) → ponorka plynule zastaví a visí
+            local v = self.sub_vel or self.object:get_velocity()
+                or {x = 0, y = 0, z = 0}
+            local astep = C.SUB_ACCEL * dtime
+            v.x = v.x + math.max(-astep, math.min(astep, tvx - v.x))
+            v.y = v.y + math.max(-astep, math.min(astep, tvy - v.y))
+            v.z = v.z + math.max(-astep, math.min(astep, tvz - v.z))
+            self.sub_vel = v
+            self.speed = math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z)
+
+            rot.x = -self.pitch
+            rot.z = self.roll
+            self.object:set_rotation(rot)
+            vel = v
+            self.object:set_velocity(vel)
         else
             rot = self.object:get_rotation()
 
@@ -673,5 +743,41 @@ minetest.register_chatcommand("gp", {
                 .. "sleduj, co se rozsvítí uprostřed obrazovky."
         end
         return true, "Gamepad diagnostika VYP."
+    end,
+})
+
+minetest.register_chatcommand("mode", {
+    description = "Přepnutí ovládání: stíhačka <-> ponorka",
+    params = "[fighter|sub]",
+    privs = {interact = true},
+    func = function(name, param)
+        param = (param or ""):gsub("%s+", ""):lower()
+        local new
+        if param == "sub" or param == "submarine" then
+            new = "sub"
+        elseif param == "fighter" or param == "plane" then
+            new = nil
+        else
+            new = doggiowars.mode[name] ~= "sub" and "sub" or nil
+        end
+        doggiowars.mode[name] = new
+        local p = minetest.get_player_by_name(name)
+        local f = p and doggiowars.get_player_fighter(p)
+        if f then
+            -- Čistý přechod za letu: zrušit trik i boost a srovnat vstupní
+            -- hrany, ať držené klávesy nespustí hold-trik ve druhém režimu.
+            -- Záměrně NE tricks.init — ten by smazal boost_meter/combo/skóre.
+            f.trick = nil
+            f.boost_time = 0
+            f.input = {prev = {}, last_tap = {}, held_since = {}}
+            f.sub_vel = nil
+            if not new then f.speed = 15 end
+            p:set_fov(0)
+        end
+        if new == "sub" then
+            return true, "PONORKA: levá páčka = tah/úkrok, pohled = kurz, "
+                .. "Space/Shift (X/○) = nahoru/dolů. Triky a boost vypnuty."
+        end
+        return true, "STÍHAČKA: klasické letecké ovládání."
     end,
 })

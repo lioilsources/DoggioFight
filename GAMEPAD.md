@@ -48,6 +48,25 @@ Náklon (bank) je **automatický** — letadlo se naklání samo podle ostrosti
 zatáčky. Na klávesnici střílí **levé myšítko** (nebo `E`), boost je **pravé
 myšítko** nebo dvojité W.
 
+## Režim ponorky — příkaz `/mode`
+
+Příkaz **`/mode`** přepíná mezi stíhačkou a ponorkou (`/mode sub`,
+`/mode fighter` nastaví režim napřímo). Ponorka je „hover": puštěné
+ovládání plynule zastaví a loď visí na místě. Režim přežívá respawn.
+
+| Vstup | Akce |
+|---|---|
+| **Levá páčka nahoru/dolů** (W/S) | tah dopředu/dozadu po ose trupu |
+| **Levá páčka doleva/doprava** (A/D) | úkrok do stran (strafe, kurz se nemění) |
+| **Pravá páčka** (myš) | kurz + sklon (trup se dotáčí za zaměřovačem) |
+| **X** (`jump`, Space) | stoupání svisle nahoru |
+| **kolečko** (`sneak`, Shift) | klesání svisle dolů |
+| **R2** (`dig`) | střelba (funguje i v ponorce) |
+
+Triky, boost a drift jsou v ponorce **vypnuté** (tlačítka mají nový
+význam). Vertikální posun je na X/kolečku, protože D-pad Luanti modu
+neposílá (viz níže).
+
 Co ovladač NEUMÍ namapovat (klientské zkratky Luanti, mod je nezmění):
 
 - **Trojúhelník / čtverec, R1 / L1** — nic (Luanti je nemapuje vůbec).
