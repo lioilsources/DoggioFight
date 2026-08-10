@@ -88,6 +88,14 @@ function doggiowars.mount_player(player, pos)
     self.pilot = player
     self.pilot_name = name
     self.score = doggiowars.tricks.scores[name] or 0
+    -- Režim řízení přežívá zničení stroje i odpojení (viz /mode)
+    self.mode = player:get_meta():get_string("doggiowars_mode")
+    if self.mode ~= "sub" then self.mode = "fighter" end
+    if self.mode == "sub" then
+        -- ponorka nikam sama nejede — po spawnu prostě visí
+        self.speed = 0
+        obj:set_velocity({x = 0, y = 0, z = 0})
+    end
 
     player:set_attach(obj, "", {x = 0, y = 0, z = 0}, {x = 0, y = 0, z = 0})
     -- srovnat zaměřovač se směrem letu (letadlo se pak dotáčí za pohledem)
@@ -126,6 +134,135 @@ function doggiowars.dismount_player(player)
         hotbar = true, wielditem = true, healthbar = true,
         breathbar = true, crosshair = true,
     })
+end
+
+---------------------------------------------------------------------------
+-- Letový blok stíhačky — mouse-flight, plyn, gravitační fyzika.
+-- Vrací rot + vel (a rovnou je aplikuje). Protějšek doggiowars.sub.step,
+-- který stejný kontrakt plní pro režim ponorky.
+---------------------------------------------------------------------------
+
+local function step_fighter(self, dtime, ctrl, pilot, events)
+    local rot = self.object:get_rotation()
+
+    -- Plyn: čistě analogově z levé páčky (movement_y: +1 dopředu,
+    -- -1 dozadu; klávesnice W/S dává plné ±1). Rychlost DRŽÍ tam,
+    -- kam ji hráč nastaví — žádné samovolné vracení. Bity up/down
+    -- jen jako záloha (klient je z páčky spíná až při velké výchylce,
+    -- proto dřív jemný plyn "nereagoval").
+    local thr = math.max(-1, math.min(1, ctrl.movement_y or 0))
+    if math.abs(thr) < 0.25 then
+        thr = (ctrl.up and 1 or 0) - (ctrl.down and 1 or 0)
+    end
+    self.dbg_thr = thr
+    if thr > 0 and self.speed < C.SPEED_MAX then
+        self.speed = math.min(self.speed + 8 * dtime * thr, C.SPEED_MAX)
+    elseif thr < 0 then
+        self.speed = math.max(self.speed + 10 * dtime * thr, C.SPEED_MIN)
+    end
+
+    -- Airbrake drift: S + A/D = ostrá zatáčka za cenu rychlosti
+    local turn = C.TURN_SPEED
+    local drifting = ctrl.down and (ctrl.left or ctrl.right)
+    if drifting then
+        turn = C.TURN_SPEED * 2.2
+        self.speed = math.max(self.speed - 12 * dtime, C.SPEED_MIN)
+        doggiowars.tricks.add_raw_score(self, 50 * dtime)
+    end
+
+    -- Mouse-flight: myš (nebo pravá páčka gamepadu) míří zaměřovačem,
+    -- letadlo se za ním dotáčí. Levá páčka / A-D / Space-Shift natáčí
+    -- pohledem stejně jako myš — nativní joystick tak funguje přímo.
+    -- Zatáčení je proporcionální podle výchylky páčky (klávesnice = ±1).
+    local xmag = math.abs(ctrl.movement_x or 1)
+    if xmag < 0.001 then xmag = 1 end
+    local look_h = pilot:get_look_horizontal()
+    local look_v = pilot:get_look_vertical()
+    local keys_steered = false
+    if ctrl.left then
+        look_h = look_h + turn * dtime * xmag
+        keys_steered = true
+    end
+    if ctrl.right then
+        look_h = look_h - turn * dtime * xmag
+        keys_steered = true
+    end
+    if ctrl.jump then
+        look_v = math.max(look_v - C.PITCH_RATE * dtime, -1.25)
+        keys_steered = true
+    elseif ctrl.sneak then
+        look_v = math.min(look_v + C.PITCH_RATE * dtime, 1.25)
+        keys_steered = true
+    end
+    if keys_steered then
+        pilot:set_look_horizontal(look_h)
+        pilot:set_look_vertical(look_v)
+    end
+
+    -- yaw: dotáčení za zaměřovačem nejkratší cestou
+    local chase = math.max(turn * 1.3, 2.0) * dtime
+    local dy = wrap_angle(look_h + math.pi - rot.y)
+    rot.y = rot.y + math.max(-chase, math.min(chase, dy))
+
+    -- pitch: cíl z vertikálního pohledu (look_v kladné = dolů)
+    local target_pitch = math.max(-C.PITCH_MAX,
+        math.min(C.PITCH_MAX, -look_v))
+    local pstep = C.PITCH_RATE * 1.5 * dtime
+    self.pitch = self.pitch + math.max(-pstep,
+        math.min(pstep, target_pitch - self.pitch))
+
+    -- Náklon: automaticky do zatáčky (podle toho, jak ostře se
+    -- letadlo dotáčí za zaměřovačem); po srovnání kurzu se vyrovná
+    local target_roll = math.max(-1, math.min(1, -dy * 2.0))
+        * C.ROLL_MAX * 0.7
+    local rstep = C.ROLL_SPEED * dtime
+    self.roll = (self.roll or 0)
+        + math.max(-rstep, math.min(rstep, target_roll - self.roll))
+
+    -- Boost + gravitační fyzika: strmý střemhlavý let zrychluje
+    -- (úměrně sklonu, až od ~26° dolů), stoupání rychlost ubírá.
+    -- Mírný pohled dolů (prohlížení ostrova) už NEzrychluje.
+    if (self.boost_time or 0) > 0 then
+        self.boost_time = self.boost_time - dtime
+        self.speed = 60
+        if self.boost_time <= 0 then
+            pilot:set_fov(0)
+        end
+    elseif self.pitch < -0.45 then
+        self.speed = math.min(
+            self.speed + 80 * dtime * (-self.pitch - 0.45),
+            C.SPEED_MAX * 1.5)
+    else
+        if self.pitch > 0.3 then
+            -- Stoupání ubírá rychlost, ale plyn proti tomu táhne:
+            -- plný plyn vykryje 70 % ztráty (motor vs. gravitace),
+            -- bez plynu se krvácí naplno. Páčka tak reaguje vždy.
+            local bleed = 40 * (self.pitch - 0.3)
+                * (1 - 0.7 * math.max(thr, 0))
+            self.speed = math.max(
+                self.speed - bleed * dtime, C.SPEED_MIN)
+        end
+        -- overspeed z dive/boostu se po srovnání rychle vyčerpá
+        if self.speed > C.SPEED_MAX then
+            self.speed = math.max(C.SPEED_MAX, self.speed - 12 * dtime)
+        end
+    end
+
+    rot.x = -self.pitch
+    rot.z = self.roll
+    self.object:set_rotation(rot)
+
+    -- Velocity from direction + speed
+    local dir = minetest.yaw_to_dir(rot.y + math.pi)
+    local vel = {
+        x = dir.x * self.speed,
+        y = math.sin(self.pitch) * self.speed,
+        z = dir.z * self.speed,
+    }
+    self.object:set_velocity(vel)
+
+    doggiowars.tricks.check_triggers(self, events, pilot)
+    return rot, vel
 end
 
 ---------------------------------------------------------------------------
@@ -193,6 +330,12 @@ minetest.register_entity("doggiowars:fighter", {
             self.crash_cooldown = 0.5
             local dmg = math.floor((self.speed - 10) * 2.5)
             self.speed = C.SPEED_MIN
+            if self.mode == "sub" then
+                -- ponorka si rychlost počítá z vektoru, takže ji musíme
+                -- srazit tam — jinak by se do stěny tlačila dál
+                self.speed = 0
+                self.object:set_velocity({x = 0, y = 0, z = 0})
+            end
             self:damage_fighter(dmg, true)
             if self.is_dead then return end
         end
@@ -212,126 +355,13 @@ minetest.register_entity("doggiowars:fighter", {
                     minetest.dir_to_yaw({x = vel.x, y = 0, z = vel.z}))
                 pilot:set_look_vertical(-math.atan2(vel.y, th))
             end
+        elseif self.mode == "sub" then
+            -- Ponorka: 6DoF, žádné triky (dvojšvih strafu by jinak pořád
+            -- spouštěl barrel roll). Boost zůstává, ale jen na L2/RMB.
+            rot, vel = doggiowars.sub.step(self, dtime, ctrl, pilot)
+            doggiowars.tricks.check_boost(self, events, pilot, true)
         else
-            rot = self.object:get_rotation()
-
-            -- Plyn: čistě analogově z levé páčky (movement_y: +1 dopředu,
-            -- -1 dozadu; klávesnice W/S dává plné ±1). Rychlost DRŽÍ tam,
-            -- kam ji hráč nastaví — žádné samovolné vracení. Bity up/down
-            -- jen jako záloha (klient je z páčky spíná až při velké výchylce,
-            -- proto dřív jemný plyn "nereagoval").
-            local thr = math.max(-1, math.min(1, ctrl.movement_y or 0))
-            if math.abs(thr) < 0.25 then
-                thr = (ctrl.up and 1 or 0) - (ctrl.down and 1 or 0)
-            end
-            self.dbg_thr = thr
-            if thr > 0 and self.speed < C.SPEED_MAX then
-                self.speed = math.min(self.speed + 8 * dtime * thr, C.SPEED_MAX)
-            elseif thr < 0 then
-                self.speed = math.max(self.speed + 10 * dtime * thr, C.SPEED_MIN)
-            end
-
-            -- Airbrake drift: S + A/D = ostrá zatáčka za cenu rychlosti
-            local turn = C.TURN_SPEED
-            local drifting = ctrl.down and (ctrl.left or ctrl.right)
-            if drifting then
-                turn = C.TURN_SPEED * 2.2
-                self.speed = math.max(self.speed - 12 * dtime, C.SPEED_MIN)
-                doggiowars.tricks.add_raw_score(self, 50 * dtime)
-            end
-
-            -- Mouse-flight: myš (nebo pravá páčka gamepadu) míří zaměřovačem,
-            -- letadlo se za ním dotáčí. Levá páčka / A-D / Space-Shift natáčí
-            -- pohledem stejně jako myš — nativní joystick tak funguje přímo.
-            -- Zatáčení je proporcionální podle výchylky páčky (klávesnice = ±1).
-            local xmag = math.abs(ctrl.movement_x or 1)
-            if xmag < 0.001 then xmag = 1 end
-            local look_h = pilot:get_look_horizontal()
-            local look_v = pilot:get_look_vertical()
-            local keys_steered = false
-            if ctrl.left then
-                look_h = look_h + turn * dtime * xmag
-                keys_steered = true
-            end
-            if ctrl.right then
-                look_h = look_h - turn * dtime * xmag
-                keys_steered = true
-            end
-            if ctrl.jump then
-                look_v = math.max(look_v - C.PITCH_RATE * dtime, -1.25)
-                keys_steered = true
-            elseif ctrl.sneak then
-                look_v = math.min(look_v + C.PITCH_RATE * dtime, 1.25)
-                keys_steered = true
-            end
-            if keys_steered then
-                pilot:set_look_horizontal(look_h)
-                pilot:set_look_vertical(look_v)
-            end
-
-            -- yaw: dotáčení za zaměřovačem nejkratší cestou
-            local chase = math.max(turn * 1.3, 2.0) * dtime
-            local dy = wrap_angle(look_h + math.pi - rot.y)
-            rot.y = rot.y + math.max(-chase, math.min(chase, dy))
-
-            -- pitch: cíl z vertikálního pohledu (look_v kladné = dolů)
-            local target_pitch = math.max(-C.PITCH_MAX,
-                math.min(C.PITCH_MAX, -look_v))
-            local pstep = C.PITCH_RATE * 1.5 * dtime
-            self.pitch = self.pitch + math.max(-pstep,
-                math.min(pstep, target_pitch - self.pitch))
-
-            -- Náklon: automaticky do zatáčky (podle toho, jak ostře se
-            -- letadlo dotáčí za zaměřovačem); po srovnání kurzu se vyrovná
-            local target_roll = math.max(-1, math.min(1, -dy * 2.0))
-                * C.ROLL_MAX * 0.7
-            local rstep = C.ROLL_SPEED * dtime
-            self.roll = (self.roll or 0)
-                + math.max(-rstep, math.min(rstep, target_roll - self.roll))
-
-            -- Boost + gravitační fyzika: strmý střemhlavý let zrychluje
-            -- (úměrně sklonu, až od ~26° dolů), stoupání rychlost ubírá.
-            -- Mírný pohled dolů (prohlížení ostrova) už NEzrychluje.
-            if (self.boost_time or 0) > 0 then
-                self.boost_time = self.boost_time - dtime
-                self.speed = 60
-                if self.boost_time <= 0 then
-                    pilot:set_fov(0)
-                end
-            elseif self.pitch < -0.45 then
-                self.speed = math.min(
-                    self.speed + 80 * dtime * (-self.pitch - 0.45),
-                    C.SPEED_MAX * 1.5)
-            else
-                if self.pitch > 0.3 then
-                    -- Stoupání ubírá rychlost, ale plyn proti tomu táhne:
-                    -- plný plyn vykryje 70 % ztráty (motor vs. gravitace),
-                    -- bez plynu se krvácí naplno. Páčka tak reaguje vždy.
-                    local bleed = 40 * (self.pitch - 0.3)
-                        * (1 - 0.7 * math.max(thr, 0))
-                    self.speed = math.max(
-                        self.speed - bleed * dtime, C.SPEED_MIN)
-                end
-                -- overspeed z dive/boostu se po srovnání rychle vyčerpá
-                if self.speed > C.SPEED_MAX then
-                    self.speed = math.max(C.SPEED_MAX, self.speed - 12 * dtime)
-                end
-            end
-
-            rot.x = -self.pitch
-            rot.z = self.roll
-            self.object:set_rotation(rot)
-
-            -- Velocity from direction + speed
-            local dir = minetest.yaw_to_dir(rot.y + math.pi)
-            vel = {
-                x = dir.x * self.speed,
-                y = math.sin(self.pitch) * self.speed,
-                z = dir.z * self.speed,
-            }
-            self.object:set_velocity(vel)
-
-            doggiowars.tricks.check_triggers(self, events, pilot)
+            rot, vel = step_fighter(self, dtime, ctrl, pilot, events)
         end
 
         -- Eye-lean: kamera "sklouzne" do zatáčky podle bankování — engine
@@ -546,6 +576,64 @@ minetest.register_chatcommand("respawn_fighter", {
     end,
 })
 
+---------------------------------------------------------------------------
+-- Přepínání režimu řízení: stíhačka ↔ ponorka
+---------------------------------------------------------------------------
+
+local MODE_ALIAS = {
+    sub = "sub", ponorka = "sub", submarine = "sub", u = "sub",
+    plane = "fighter", fighter = "fighter", letadlo = "fighter",
+    stihacka = "fighter", air = "fighter",
+}
+
+minetest.register_chatcommand("mode", {
+    params = "[plane|sub]",
+    description = "Přepnout řízení: plane = stíhačka, sub = ponorka (6DoF)",
+    privs = {interact = true},
+    func = function(name, param)
+        local player = minetest.get_player_by_name(name)
+        if not player then return false, "Player not found" end
+        local meta = player:get_meta()
+        local f = doggiowars.get_player_fighter(player)
+        local cur = (f and f.mode) or meta:get_string("doggiowars_mode")
+        if cur ~= "sub" then cur = "fighter" end
+
+        param = (param or ""):gsub("%s+", ""):lower()
+        local target
+        if param == "" then
+            target = (cur == "sub") and "fighter" or "sub"
+        else
+            target = MODE_ALIAS[param]
+            if not target then
+                return false, "Použití: /mode [plane|sub]"
+            end
+        end
+
+        meta:set_string("doggiowars_mode", target)
+        if f then
+            f.mode = target
+            f.trick = nil          -- trik rozjetý ve starém režimu zahodit
+            if target == "sub" then
+                f.speed = 0
+                f.object:set_velocity({x = 0, y = 0, z = 0})
+            else
+                -- ze stojící ponorky do letadla: rozjet na klidovou rychlost
+                f.speed = math.max(f.speed or 0, 15)
+            end
+            doggiowars.hud.flash(player,
+                target == "sub" and "PONORKA" or "STÍHAČKA", 0x66CCFF)
+        end
+
+        if target == "sub" then
+            return true, "Ponorka (6DoF): levá páčka = vpřed/vzad a boční "
+                .. "posun, pravá = pitch/yaw, X = nahoru, kolečko = dolů. "
+                .. "V klidu stojí. Triky vypnuté."
+        end
+        return true, "Stíhačka: plyn levou páčkou, letadlo se dotáčí za "
+            .. "zaměřovačem, triky zapnuté."
+    end,
+})
+
 -- Přesun k nejbližšímu ostrovu (funguje v jakémkoli světě — chunk se
 -- v případě potřeby dogeneruje). Řeší "nevidím žádné ostrovy".
 local function fly_player_to(player, sp)
@@ -558,7 +646,13 @@ local function fly_player_to(player, sp)
     local f = doggiowars.get_player_fighter(player)
     if f and f.object then
         f.object:set_pos(sp)
-        f.speed = 12
+        if f.mode == "sub" then
+            -- ponorka po přesunu stojí, ať se hráči neodplaví od ostrova
+            f.speed = 0
+            f.object:set_velocity({x = 0, y = 0, z = 0})
+        else
+            f.speed = 12
+        end
     else
         player:set_pos(sp)
     end

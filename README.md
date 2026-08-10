@@ -42,6 +42,30 @@ Mouse-flight: the plane chases your crosshair. Steer by looking.
 Steep dives build overspeed, climbing bleeds it off. Skimming close to
 terrain charges your boost meter, and tricks score points.
 
+### Submarine mode — `/mode sub`
+
+A second control scheme for the same craft: **6DoF**, and unlike the plane it
+**stands still** when you let go. Nothing carries you forward, so you can hover
+next to an island and manoeuvre out of a standstill in any direction.
+
+| Input | Action |
+|---|---|
+| W / S (left stick ↑↓) | move forward / backward |
+| A / D (left stick ←→) | **strafe** left / right |
+| Mouse / right stick | pitch + yaw (the hull swings around to follow) |
+| Space / Shift (X / ○) | move **up** / **down** |
+| Left mouse button, E (R2) | shoot — aimed at the crosshair, not the hull |
+| Right mouse button (L2) | boost |
+
+Top speed is 18 m/s forward, 12 sideways, 10 vertically, and it takes about
+0.7 s to reach either full speed or a full stop. Tricks are off in this mode —
+a double flick of the strafe stick would otherwise fire a barrel roll on every
+sidestep. `/mode` with no argument toggles, `/mode plane` goes back.
+
+The vertical is on X / ○ rather than the D-pad because the D-pad cannot be read
+by a mod at all — Luanti keeps it for client shortcuts. See
+[GAMEPAD.md](GAMEPAD.md).
+
 **Gamepad**: native Luanti joystick support (Xbox 360, PS4 DualShock) —
 see [GAMEPAD.md](GAMEPAD.md) for setup, the button map and
 troubleshooting (in Czech).
@@ -50,6 +74,7 @@ troubleshooting (in Czech).
 
 | Command | Effect |
 |---|---|
+| `/mode` | switch controls: `/mode sub` = submarine (6DoF), `/mode plane` = fighter |
 | `/island` | fly to the nearest island |
 | `/island <biome>` | fly above the nearest island of a biome (`ice`, `volcano`, `sand`, `green`, … or full names) |
 | `/goto <x> <z>` or `/goto <x> <y> <z>` | fly to coordinates |

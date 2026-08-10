@@ -512,6 +512,10 @@ minetest.register_chatcommand("race", {
         if not fighter then
             return false, "Nejsi ve stíhačce."
         end
+        -- Králík jede 18-35 m/s, ponorka má strop 18 — nedohonitelné
+        if fighter.mode == "sub" then
+            return false, "V ponorce závod nedoženeš — přepni si /mode plane."
+        end
 
         local pos = fighter.object:get_pos()
         local yaw = fighter.object:get_rotation().y

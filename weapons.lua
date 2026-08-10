@@ -244,16 +244,28 @@ function doggiowars.shoot_bullet(fighter_self)
     local pos = fighter_self.object:get_pos()
     if not pos then return end
 
-    local rot = fighter_self.object:get_rotation()
-    local dir = minetest.yaw_to_dir(rot.y + math.pi)
-    local pitch_angle = -(rot.x or 0)   -- rot.x is -pitch
-    dir.y = math.sin(pitch_angle)
-    -- Re-normalize horizontal component
-    local hlen = math.sqrt(dir.x * dir.x + dir.z * dir.z)
-    local cos_p = math.cos(pitch_angle)
-    if hlen > 0 then
-        dir.x = dir.x / hlen * cos_p
-        dir.z = dir.z / hlen * cos_p
+    local dir
+    local pilot = fighter_self.pilot
+    if fighter_self.mode == "sub" and pilot and pilot:is_player() then
+        -- Ponorka míří pohledem, ne trupem: trup se za zaměřovačem dotáčí
+        -- pomalu a jeho sklon má clamp, takže by střely létaly jinam,
+        -- než kam hráč ukazuje.
+        local look_v = pilot:get_look_vertical()   -- kladné = dolů
+        local cv = math.cos(look_v)
+        local h = minetest.yaw_to_dir(pilot:get_look_horizontal())
+        dir = {x = h.x * cv, y = -math.sin(look_v), z = h.z * cv}
+    else
+        local rot = fighter_self.object:get_rotation()
+        dir = minetest.yaw_to_dir(rot.y + math.pi)
+        local pitch_angle = -(rot.x or 0)   -- rot.x is -pitch
+        dir.y = math.sin(pitch_angle)
+        -- Re-normalize horizontal component
+        local hlen = math.sqrt(dir.x * dir.x + dir.z * dir.z)
+        local cos_p = math.cos(pitch_angle)
+        if hlen > 0 then
+            dir.x = dir.x / hlen * cos_p
+            dir.z = dir.z / hlen * cos_p
+        end
     end
 
     -- Muzzle: 6 blocks in front of center — first-person kamera pilota sedí

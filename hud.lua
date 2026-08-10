@@ -189,7 +189,8 @@ function hud.update_flight(player, f)
         vs = string.format("VS %+d", math.floor(vy + 0.5))
     end
     hud.set(player, "speed", {text = string.format(
-        "SPD %d   ALT %d   %s", f.speed or 0, alt, vs)})
+        "%sSPD %d   ALT %d   %s",
+        f.mode == "sub" and "SUB  " or "", f.speed or 0, alt, vs)})
 
     -- kompas: kurz z pohledu (0° = sever = +Z, po směru hodin)
     local heading = (360 - math.deg(player:get_look_horizontal() or 0)) % 360

@@ -215,10 +215,16 @@ function tricks.check_triggers(self, events, pilot)
         return
     end
 
-    -- Boost: L2/RMB (place) nebo double-tap W — stojí 25 z metru.
-    -- (zoom NE — na gamepadu sdílí tlačítko s minimapou, žral boost omylem)
-    if (events.tap_place or events.double_up)
-            and (self.boost_meter or 0) >= 25
+    tricks.check_boost(self, events, pilot)
+end
+
+-- Boost: L2/RMB (place) nebo double-tap W — stojí 25 z metru.
+-- (zoom NE — na gamepadu sdílí tlačítko s minimapou, žral boost omylem)
+-- V ponorce se volá samostatně (triky tam neběží) a s no_double = true:
+-- dvojšvih páčkou vpřed je při manévrování z místa běžný pohyb.
+function tricks.check_boost(self, events, pilot, no_double)
+    local trigger = events.tap_place or (not no_double and events.double_up)
+    if trigger and (self.boost_meter or 0) >= 25
             and (self.boost_time or 0) <= 0 then
         self.boost_meter = self.boost_meter - 25
         self.boost_time = 2.0
@@ -226,7 +232,6 @@ function tricks.check_triggers(self, events, pilot)
             pilot:set_fov(1.25, true, 0.15)
             doggiowars.hud.flash(pilot, "BOOST!", 0x66CCFF)
         end
-        return
     end
 end
 
@@ -246,7 +251,10 @@ function tricks.update_passive(self, dtime)
     self.prox_timer = (self.prox_timer or 0) + dtime
     if self.prox_timer < 0.2 then return end
     self.prox_timer = 0
-    if (self.speed or 0) <= 30 then return end
+    -- Ponorka nikdy 30 m/s nedosáhne — měla by jinak boost metr navždy
+    -- prázdný. Práh 8 ale pořád vyžaduje plavat podél skály, ne u ní viset.
+    local min_speed = (self.mode == "sub") and 8 or 30
+    if (self.speed or 0) <= min_speed then return end
     local pos = self.object:get_pos()
     if not pos then return end
     for _, off in ipairs(PROX_OFFSETS) do

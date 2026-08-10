@@ -48,6 +48,32 @@ Náklon (bank) je **automatický** — letadlo se naklání samo podle ostrosti
 zatáčky. Na klávesnici střílí **levé myšítko** (nebo `E`), boost je **pravé
 myšítko** nebo dvojité W.
 
+## Režim ponorky — `/mode sub`
+
+Druhé schéma řízení téhož stroje: **6DoF**. Proti letadlu, které pořád někam
+letí, ponorka po puštění páček **stojí na místě** — dá se u ostrova viset
+a manévrovat z místa všemi směry.
+
+| Vstup | Akce |
+|---|---|
+| **Levá páčka nahoru/dolů** | posun vpřed / vzad |
+| **Levá páčka doleva/doprava** | **boční posun (strafe)** — nezatáčí! |
+| **Pravá páčka** | pitch + yaw (trup se dotáčí za pohledem) |
+| **X** (`jump`) / **kolečko** (`sneak`) | **nahoru / dolů** |
+| **R2** (`dig`) | střelba — míří do zaměřovače, ne po trupu |
+| **L2** (`place`) | boost |
+
+Rychlosti: 18 m/s vpřed i vzad, 12 do strany, 10 svisle; rozjezd i úplné
+zastavení trvá zhruba 0,7 s. Triky jsou v tomhle režimu **vypnuté** —
+dvojšvih páčkou do strany by jinak spouštěl barrel roll při každém úkroku.
+Bez parametru `/mode` jen přepíná, zpátky do letadla `/mode plane`.
+
+⚠️ **Proč vertikál není na D-padu:** D-pad se z modu přečíst nedá vůbec.
+`get_player_control()` ho nevrací, Luanti si ho drží na klientské zkratky
+(viz seznam níž) — a D-pad dolů dokonce přepíná autoforward, který by rozbil
+plyn. Proto jsou stoupání a klesání na X a kolečku, tedy na tlačítkách,
+která ve stíhačce dávají nos nahoru/dolů.
+
 Co ovladač NEUMÍ namapovat (klientské zkratky Luanti, mod je nezmění):
 
 - **Trojúhelník / čtverec, R1 / L1** — nic (Luanti je nemapuje vůbec).
@@ -63,9 +89,10 @@ Co ovladač NEUMÍ namapovat (klientské zkratky Luanti, mod je nezmění):
   `L(...,+1.00)` v klidu. Oprava: stisknout D-pad dolů znovu
   (hláška „Automatic forward disabled").
 
-Užitečné chatové příkazy: `/island` (nejbližší ostrov), `/island ice`
-(nejbližší daného biomu — ice, volcano, desert, jungle, crystal, …),
-`/home` (domovský ostrov), `/gp` (diagnostika gamepadu).
+Užitečné chatové příkazy: `/mode` (přepnutí stíhačka ↔ ponorka), `/island`
+(nejbližší ostrov), `/island ice` (nejbližší daného biomu — ice, volcano,
+desert, jungle, crystal, …), `/home` (domovský ostrov), `/gp` (diagnostika
+gamepadu).
 
 ## Které fyzické tlačítko dělá co? → příkaz `/gp`
 

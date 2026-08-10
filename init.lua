@@ -16,6 +16,15 @@ doggiowars.const = {
     ROLL_MAX     = math.pi,
     ROLL_DECAY   = 1.5,     -- roll auto-level rate
     SPAWN_HEIGHT = 300,     -- výška spawnu / respawnu
+
+    -- Režim ponorky (/mode sub) — 6DoF. Klidová rychlost je 0: ponorka nikam
+    -- sama nejede, po puštění páček dojede na nulu a zůstane viset.
+    SUB_SPEED_MAX = 18,     -- m/s vpřed i vzad
+    SUB_STRAFE    = 12,     -- m/s boční posun
+    SUB_VERT      = 10,     -- m/s stoupání / klesání
+    SUB_ACCEL     = 25,     -- m/s^2 — jak rychle se dojíždí k cílové rychlosti
+    SUB_TURN      = 1.2,    -- rad/s dotáčení trupu za pohledem
+    SUB_PITCH_MAX = 1.2,    -- rad (~69°), letadlo má 0.6
 }
 
 local MP = minetest.get_modpath("doggiowars")
@@ -27,6 +36,7 @@ dofile(MP .. "/mapgen.lua")     -- Island generator
 dofile(MP .. "/decorate.lua")   -- Post-gen decoration (trees, mushrooms, etc.)
 dofile(MP .. "/hud.lua")        -- HUD (statbary, flash, race widgety)
 dofile(MP .. "/tricks.lua")     -- Vstupní komba a skriptované triky
+dofile(MP .. "/submarine.lua")  -- Režim ponorky (6DoF řízení)
 dofile(MP .. "/vehicle.lua")    -- Fighter plane entity
 dofile(MP .. "/weapons.lua")    -- Projectiles, explosions, damage
 dofile(MP .. "/rabbit.lua")     -- Zajíc — AI loď pro chrtí závod
