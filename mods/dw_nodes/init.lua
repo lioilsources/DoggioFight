@@ -1,33 +1,39 @@
--- dw_nodes — náhrada nodů z minetest_game
+-- dw_nodes — nody, ze kterých DoggioWars staví terén
 --
--- DoggioWars staví terén z nodů pojmenovaných default:*, flowers:* a
--- fire:basic_flame. Aby hra nemusela balit minetest_game (LGPL 2.1 kód +
--- CC BY-SA 3.0 média), registrujeme si těch ~70 nodů sami, pod stejnými
--- jmény — volající kód v biomes.lua a decorate.lua se tak nemění ani na
--- jednom ze 123 míst.
+-- Kdysi to byly nody z minetest_game (default:*, flowers:*, fire:*). Hra je
+-- nebalí — kód by byl LGPL 2.1 a média CC BY-SA 3.0 — a od té doby si je
+-- registruje sama. Všechno teď žije ve VLASTNÍM jmenném prostoru
+-- `dw_nodes:`, protože zapisovat položky do cizího namespace je něco, na co
+-- se recenzenti ContentDB ptají, a hra na to nemá žádný nárok.
 --
--- Jména v cizím jmenném prostoru se zapisují s ÚVODNÍ DVOJTEČKOU;
--- bez ní by je Luanti odmítl ("modname: prefix required").
+-- Stará jména zůstávají jako aliasy (register_alias dole), takže světy
+-- uložené dřív se načtou beze změny.
 --
 -- Textury generuje tools/gen_textures.py — proceduálně, ze standardní
 -- knihovny, deterministicky. Přegenerování: python3 tools/gen_textures.py
 
+dw_nodes = dw_nodes or {}
+
 local S = function(t) return t end     -- místo pro budoucí překlady
 
-local function reg(name, def)
-    minetest.register_node(":" .. name, def)
+-- Stará jména pro aliasy: krátké jméno -> jmenný prostor, ze kterého node
+-- historicky pocházel
+local LEGACY_NS = {}
+
+local function reg(short, def, legacy_ns)
+    minetest.register_node("dw_nodes:" .. short, def)
+    LEGACY_NS[short] = legacy_ns or "default"
 end
 
 ---------------------------------------------------------------------------
--- Lua API `default`
+-- Zvukové helpery
 --
--- nodes.lua volá default.node_sound_*_defaults() — to není jméno nodu, ale
--- globální tabulka z minetest_game, takže ji grep po "default:" nenašel a
--- hra na ní bez shimu spadne. DoggioWars nebalí žádné zvuky, takže funkce
--- vracejí prázdný popis a nody prostě mlčí.
+-- nodes.lua je volal jako default.node_sound_*_defaults() — globální
+-- tabulka minetest_game, kterou grep po "default:" nenašel a hra na ní
+-- padala. Teď je to naše vlastní tabulka. Hra nebalí žádné zvuky, takže
+-- vracejí prázdný popis a nody mlčí; až nějaké zvuky přibudou, mění se to
+-- na jednom místě.
 ---------------------------------------------------------------------------
-
-default = default or {}
 
 local function silent(tbl)
     return tbl or {}
@@ -35,9 +41,9 @@ end
 
 for _, kind in ipairs({"stone", "dirt", "sand", "glass", "wood",
                        "leaves", "gravel", "snow", "water", "metal"}) do
-    default["node_sound_" .. kind .. "_defaults"] = silent
+    dw_nodes["node_sound_" .. kind .. "_defaults"] = silent
 end
-default.node_sound_defaults = silent
+dw_nodes.node_sound_defaults = silent
 
 ---------------------------------------------------------------------------
 -- Pevné nody
@@ -45,15 +51,15 @@ default.node_sound_defaults = silent
 
 -- {jméno, textura, popis, tvrdost}
 local SOLIDS = {
-    {"default:stone",            "stone",            "Stone",            3},
-    {"default:desert_stone",     "desert_stone",     "Desert Stone",     3},
-    {"default:sandstone",        "sandstone",        "Sandstone",        2},
-    {"default:desert_sandstone", "desert_sandstone", "Desert Sandstone", 2},
-    {"default:silver_sandstone", "silver_sandstone", "Silver Sandstone", 2},
-    {"default:obsidian",         "obsidian",         "Obsidian",         3},
-    {"default:clay",             "clay",             "Clay",             3},
-    {"default:permafrost",       "permafrost",       "Permafrost",       3},
-    {"default:coral_skeleton",   "coral_skeleton",   "Coral Skeleton",   3},
+    {"stone",            "stone",            "Stone",            3},
+    {"desert_stone",     "desert_stone",     "Desert Stone",     3},
+    {"sandstone",        "sandstone",        "Sandstone",        2},
+    {"desert_sandstone", "desert_sandstone", "Desert Sandstone", 2},
+    {"silver_sandstone", "silver_sandstone", "Silver Sandstone", 2},
+    {"obsidian",         "obsidian",         "Obsidian",         3},
+    {"clay",             "clay",             "Clay",             3},
+    {"permafrost",       "permafrost",       "Permafrost",       3},
+    {"coral_skeleton",   "coral_skeleton",   "Coral Skeleton",   3},
 }
 
 for _, s in ipairs(SOLIDS) do
@@ -67,14 +73,14 @@ end
 
 -- Sypké: písky, zeminy, štěrk, sníh
 local LOOSE = {
-    {"default:sand",        "sand",        "Sand",         2},
-    {"default:desert_sand", "desert_sand", "Desert Sand",  2},
-    {"default:silver_sand", "silver_sand", "Silver Sand",  2},
-    {"default:dirt",        "dirt",        "Dirt",         3},
-    {"default:dry_dirt",    "dry_dirt",    "Dry Dirt",     3},
-    {"default:gravel",      "gravel",      "Gravel",       2},
-    {"default:snowblock",   "snowblock",   "Snow Block",   3},
-    {"default:snow",        "snow",        "Snow",         3},
+    {"sand",        "sand",        "Sand",         2},
+    {"desert_sand", "desert_sand", "Desert Sand",  2},
+    {"silver_sand", "silver_sand", "Silver Sand",  2},
+    {"dirt",        "dirt",        "Dirt",         3},
+    {"dry_dirt",    "dry_dirt",    "Dry Dirt",     3},
+    {"gravel",      "gravel",      "Gravel",       2},
+    {"snowblock",   "snowblock",   "Snow Block",   3},
+    {"snow",        "snow",        "Snow",         3},
 }
 
 for _, s in ipairs(LOOSE) do
@@ -88,11 +94,11 @@ end
 
 -- Zemina s porostem — boční textura má travní pruh nahoře
 local COVERED = {
-    {"default:dirt_with_grass",             "grass_top",
+    {"dirt_with_grass",             "grass_top",
      "grass_side",     "Dirt with Grass"},
-    {"default:dirt_with_dry_grass",         "dry_grass_top",
+    {"dirt_with_dry_grass",         "dry_grass_top",
      "dry_grass_side", "Dirt with Dry Grass"},
-    {"default:dirt_with_rainforest_litter", "rainforest_litter_top",
+    {"dirt_with_rainforest_litter", "rainforest_litter_top",
      "litter_side",    "Dirt with Rainforest Litter"},
 }
 
@@ -110,8 +116,8 @@ for _, s in ipairs(COVERED) do
 end
 
 -- Led: průsvitný, ať je vidět dovnitř ledovcových ostrovů
-for _, s in ipairs({{"default:ice", "ice", "Ice"},
-                    {"default:cave_ice", "cave_ice", "Cave Ice"}}) do
+for _, s in ipairs({{"ice", "ice", "Ice"},
+                    {"cave_ice", "cave_ice", "Cave Ice"}}) do
     reg(s[1], {
         description = S(s[3]),
         tiles = {"dwn_" .. s[2] .. ".png"},
@@ -128,12 +134,12 @@ end
 ---------------------------------------------------------------------------
 
 local TREES = {
-    {"default:tree",        "tree",        "Tree"},
-    {"default:jungletree",  "jungletree",  "Jungle Tree"},
-    {"default:pine_tree",   "pine_tree",   "Pine Tree"},
-    {"default:aspen_tree",  "aspen_tree",  "Aspen Tree"},
-    {"default:acacia_tree", "acacia_tree", "Acacia Tree"},
-    {"default:bush_stem",   "bush_stem",   "Bush Stem"},
+    {"tree",        "tree",        "Tree"},
+    {"jungletree",  "jungletree",  "Jungle Tree"},
+    {"pine_tree",   "pine_tree",   "Pine Tree"},
+    {"aspen_tree",  "aspen_tree",  "Aspen Tree"},
+    {"acacia_tree", "acacia_tree", "Acacia Tree"},
+    {"bush_stem",   "bush_stem",   "Bush Stem"},
 }
 
 for _, s in ipairs(TREES) do
@@ -153,14 +159,14 @@ for _, s in ipairs(TREES) do
 end
 
 local LEAVES = {
-    {"default:leaves",            "leaves",            "Leaves"},
-    {"default:jungleleaves",      "jungleleaves",      "Jungle Leaves"},
-    {"default:pine_needles",      "pine_needles",      "Pine Needles"},
-    {"default:aspen_leaves",      "aspen_leaves",      "Aspen Leaves"},
-    {"default:acacia_leaves",     "acacia_leaves",     "Acacia Leaves"},
-    {"default:bush_leaves",       "bush_leaves",       "Bush Leaves"},
-    {"default:acacia_bush_leaves","acacia_bush_leaves","Acacia Bush Leaves"},
-    {"default:blueberry_bush_leaves_with_berries", "blueberry_leaves",
+    {"leaves",            "leaves",            "Leaves"},
+    {"jungleleaves",      "jungleleaves",      "Jungle Leaves"},
+    {"pine_needles",      "pine_needles",      "Pine Needles"},
+    {"aspen_leaves",      "aspen_leaves",      "Aspen Leaves"},
+    {"acacia_leaves",     "acacia_leaves",     "Acacia Leaves"},
+    {"bush_leaves",       "bush_leaves",       "Bush Leaves"},
+    {"acacia_bush_leaves","acacia_bush_leaves","Acacia Bush Leaves"},
+    {"blueberry_bush_leaves_with_berries", "blueberry_leaves",
      "Blueberry Bush with Berries"},
 }
 
@@ -178,7 +184,7 @@ for _, s in ipairs(LEAVES) do
 end
 
 -- Kaktus je pevný, ale s vlastními boky
-reg("default:cactus", {
+reg("cactus", {
     description = S("Cactus"),
     tiles = {"dwn_cactus_top.png", "dwn_cactus_top.png", "dwn_cactus_side.png"},
     paramtype2 = "facedir",
@@ -199,7 +205,7 @@ local PLANTS = {
     "junglegrass", "dry_shrub",
 }
 
-local function plant(name, tex, desc, extra)
+local function plant(name, tex, desc, extra, legacy_ns)
     local def = {
         description = S(desc),
         drawtype = "plantlike",
@@ -218,16 +224,16 @@ local function plant(name, tex, desc, extra)
         },
     }
     for k, v in pairs(extra or {}) do def[k] = v end
-    reg(name, def)
+    reg(name, def, legacy_ns)
 end
 
 for _, p in ipairs(PLANTS) do
     local label = p:gsub("_", " "):gsub("^%l", string.upper)
-    plant("default:" .. p, p, label)
+    plant(p, p, label)
 end
 
 -- Papyrus roste do sloupků, takže musí mít vlastní výšku výběru
-plant("default:papyrus", "papyrus", "Papyrus", {
+plant("papyrus", "papyrus", "Papyrus", {
     selection_box = {type = "fixed", fixed = {-0.3, -0.5, -0.3, 0.3, 0.5, 0.3}},
     groups = {snappy = 3, flammable = 2},
 })
@@ -237,22 +243,22 @@ plant("default:papyrus", "papyrus", "Papyrus", {
 ---------------------------------------------------------------------------
 
 local FLOWERS = {
-    {"flowers:rose",             "rose",             "Red Rose"},
-    {"flowers:tulip",            "tulip",            "Orange Tulip"},
-    {"flowers:viola",            "viola",            "Viola"},
-    {"flowers:geranium",         "geranium",         "Blue Geranium"},
-    {"flowers:dandelion_yellow", "dandelion_yellow", "Yellow Dandelion"},
-    {"flowers:dandelion_white",  "dandelion_white",  "White Dandelion"},
-    {"flowers:mushroom_red",     "mushroom_red",     "Red Mushroom"},
-    {"flowers:mushroom_brown",   "mushroom_brown",   "Brown Mushroom"},
+    {"rose",             "rose",             "Red Rose"},
+    {"tulip",            "tulip",            "Orange Tulip"},
+    {"viola",            "viola",            "Viola"},
+    {"geranium",         "geranium",         "Blue Geranium"},
+    {"dandelion_yellow", "dandelion_yellow", "Yellow Dandelion"},
+    {"dandelion_white",  "dandelion_white",  "White Dandelion"},
+    {"mushroom_red",     "mushroom_red",     "Red Mushroom"},
+    {"mushroom_brown",   "mushroom_brown",   "Brown Mushroom"},
 }
 
 for _, f in ipairs(FLOWERS) do
-    plant(f[1], f[2], f[3])
+    plant(f[1], f[2], f[3], nil, "flowers")
 end
 
 -- Leknín leží na hladině — plochý nodebox, ne stéblo
-reg("flowers:waterlily", {
+reg("waterlily", {
     description = S("Waterlily"),
     drawtype = "nodebox",
     tiles = {"dwn_waterlily.png"},
@@ -266,7 +272,7 @@ reg("flowers:waterlily", {
     groups = {snappy = 3, flower = 1},
     node_box = {type = "fixed", fixed = {-0.5, -0.5, -0.5, 0.5, -0.4375, 0.5}},
     selection_box = {type = "fixed", fixed = {-0.5, -0.5, -0.5, 0.5, -0.4375, 0.5}},
-})
+}, "flowers")
 
 ---------------------------------------------------------------------------
 -- Kapaliny
@@ -288,8 +294,8 @@ local function liquid_pair(base, tex, opts)
         light_source = opts.light,
         post_effect_color = opts.post,
         liquid_viscosity = opts.viscosity or 1,
-        liquid_alternative_flowing = base .. "_flowing",
-        liquid_alternative_source = base .. "_source",
+        liquid_alternative_flowing = "dw_nodes:" .. base .. "_flowing",
+        liquid_alternative_source = "dw_nodes:" .. base .. "_source",
         liquid_renewable = opts.renewable ~= false,
         use_texture_alpha = "blend",
         groups = opts.groups or {},
@@ -317,19 +323,19 @@ local function liquid_pair(base, tex, opts)
     reg(base .. "_flowing", flow)
 end
 
-liquid_pair("default:water", "water", {
+liquid_pair("water", "water", {
     desc = "Water", drowning = 1, viscosity = 1,
     post = {a = 103, r = 30, g = 60, b = 90},
     groups = {water = 3, liquid = 3, cools_lava = 1},
 })
 
-liquid_pair("default:river_water", "river_water", {
+liquid_pair("river_water", "river_water", {
     desc = "River Water", drowning = 1, viscosity = 1, renewable = false,
     post = {a = 103, r = 30, g = 76, b = 90},
     groups = {water = 3, liquid = 3, cools_lava = 1},
 })
 
-liquid_pair("default:lava", "lava", {
+liquid_pair("lava", "lava", {
     desc = "Lava", dps = 4, light = 13, viscosity = 7, renewable = false,
     post = {a = 191, r = 255, g = 64, b = 0},
     groups = {lava = 3, liquid = 2, igniter = 1},
@@ -339,7 +345,7 @@ liquid_pair("default:lava", "lava", {
 -- Oheň — jen dekorace nad sopkami, nešíří se
 ---------------------------------------------------------------------------
 
-reg("fire:basic_flame", {
+reg("basic_flame", {
     description = S("Fire"),
     drawtype = "firelike",
     tiles = {"dwn_basic_flame.png"},
@@ -358,6 +364,22 @@ reg("fire:basic_flame", {
         minetest.remove_node(pos)
         return false
     end,
-})
+}, "fire")
 
-minetest.log("action", "[dw_nodes] minetest_game node stand-ins registered")
+---------------------------------------------------------------------------
+-- Aliasy na historická jména
+--
+-- Světy uložené verzí, která ještě stavěla z default:*/flowers:*/fire:*,
+-- se díky tomu načtou beze změny — engine si alias přeloží při načtení
+-- bloku. V registered_nodes se aliasy NEobjeví, takže nový kód je smí
+-- používat jen přes dw_nodes:.
+---------------------------------------------------------------------------
+
+local aliased = 0
+for short, ns in pairs(LEGACY_NS) do
+    minetest.register_alias(ns .. ":" .. short, "dw_nodes:" .. short)
+    aliased = aliased + 1
+end
+
+minetest.log("action", ("[dw_nodes] %d nodes registered, %d legacy aliases")
+    :format(aliased, aliased))

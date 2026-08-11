@@ -4,14 +4,37 @@
 #   ./play.sh main                -> přepne na main a spustí
 #   ./play.sh claude/submarine-mode
 # Hra je do Luanti připojena symlinkem v games/, takže stačí přepnout
-# větev a spustit.
+# větev a spustit. Svět se založí, pokud ještě není.
+#
+# Proměnné: WORLD (jméno světa), SEED (seed nového světa),
+#           LUANTI (cesta k binárce), WORLDS (složka se světy)
 set -euo pipefail
 
 LUANTI="${LUANTI:-$HOME/Downloads/luanti.app/Contents/MacOS/luanti}"
-WORLD="${WORLD:-Paja}"
+WORLD="${WORLD:-Doggio}"
+SEED="${SEED:-}"                 # prázdné = Luanti si vylosuje vlastní
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WORLDS="${WORLDS:-$HOME/Library/Application Support/minetest/worlds}"
 
 [ -x "$LUANTI" ] || { echo "Luanti nenalezen: $LUANTI (nastav LUANTI=...)" >&2; exit 1; }
+
+# Svět si založíme sami, ať "rozjet novou hru" je jeden příkaz. Luanti
+# umí --go jen do existujícího světa; bez tohohle by spadl na neznámý svět.
+if [ ! -d "$WORLDS/$WORLD" ]; then
+  echo "zakládám nový svět: $WORLD"
+  mkdir -p "$WORLDS/$WORLD"
+  cat > "$WORLDS/$WORLD/world.mt" <<EOF
+gameid = doggiowars
+world_name = $WORLD
+backend = sqlite3
+player_backend = sqlite3
+auth_backend = sqlite3
+mod_storage_backend = sqlite3
+server_announce = false
+EOF
+  [ -n "$SEED" ] && printf 'seed = %s\n[end_of_params]\n' "$SEED" \
+    > "$WORLDS/$WORLD/map_meta.txt"
+fi
 
 if [ $# -ge 1 ]; then
   branch="$1"

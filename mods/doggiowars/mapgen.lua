@@ -38,7 +38,7 @@ local c_stone
 
 local function init_mapgen_ids()
     c_air   = minetest.get_content_id("air")
-    c_stone = minetest.get_content_id("default:stone")
+    c_stone = minetest.get_content_id("dw_nodes:stone")
 end
 
 minetest.after(0, init_mapgen_ids)

@@ -66,7 +66,8 @@ media were used. Specifically:
       produced for this game.
 
   mods/dw_nodes/textures/dwn_*.png
-      Stand-ins for the minetest_game nodes the terrain is built from. Drawn
+      Textures for the nodes the terrain is built from (dw_nodes:*, which
+      replaced the minetest_game blocks the game used to require). Drawn
       procedurally by tools/gen_textures.py using nothing but the Python
       standard library — no minetest_game texture, and no other third-party
       image, was copied, traced or sampled. Re-runnable: the generator is

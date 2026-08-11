@@ -118,13 +118,16 @@ mods/dw_nodes/       stand-ins for the minetest_game nodes the terrain uses
 tools/               procedural texture generator for dw_nodes
 ```
 
-`dw_nodes` is what makes the game standalone. The terrain code names its
-blocks `default:stone`, `flowers:rose` and so on — the vocabulary of
-Minetest Game. Rather than bundle Minetest Game (LGPL 2.1 code and CC BY-SA
-3.0 media, which would mean shipping other people's assets), `dw_nodes`
-registers those ~70 names itself with textures drawn by
-`tools/gen_textures.py`. Nothing in the terrain code had to change, and all
-media in the repository stays original work.
+`dw_nodes` is what makes the game standalone. The terrain used to be built
+from Minetest Game's blocks — `default:stone`, `flowers:rose` and so on.
+Bundling Minetest Game would have meant shipping other people's assets
+(LGPL 2.1 code, CC BY-SA 3.0 media), so `dw_nodes` provides all ~70 of them
+instead, in its **own** `dw_nodes:` namespace, with textures drawn by
+`tools/gen_textures.py`. Every asset in the repository stays original work.
+
+The old names still resolve: `dw_nodes` registers an alias for each one, so
+worlds saved by earlier versions load unchanged. New code should use
+`dw_nodes:` — aliases do not appear in `registered_nodes`.
 
 ## License
 
