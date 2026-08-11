@@ -26,6 +26,20 @@ Ve stejné sekci je i `Joystick dead zone` (ujíždí-li kamera, zvyš) a
 
 ⚠️ Ovladač připoj **před** spuštěním hry.
 
+### DualShock se sám odpojuje
+
+Nejdřív vyluč **baterku** — je to zdaleka nejčastější příčina a pozná se
+podle toho, že odpojení přicházejí v pravidelných rozestupech, které se
+postupně zkracují, a **i když hra vůbec neběží**. Ověříš to takhle:
+
+```
+log show --last 4h --style compact \
+  --predicate 'eventMessage CONTAINS "DUALSHOCK" AND eventMessage CONTAINS[c] "disconnect"'
+```
+
+Když odpojení padají i mimo běh hry, nabij pad — nebo ho rovnou nech
+**na kabelu**, přes USB funguje a nabíjí se zároveň.
+
 Kdo si to raději píše ručně do `minetest.conf` (servery, dávkové nasazení),
 najde ho tady — ale uprav ho, **když Luanti neběží**, protože při ukončení
 si ho hra přepisuje:
