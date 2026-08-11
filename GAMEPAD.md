@@ -26,29 +26,19 @@ Ve stejné sekci je i `Joystick dead zone` (ujíždí-li kamera, zvyš) a
 
 ⚠️ Ovladač připoj **před** spuštěním hry.
 
-### DualShock se odpojí, jakmile hra nastartuje
+### DualShock se sám odpojuje
 
-Na macOS si SDL otevírá PS4 pad **vlastním HIDAPI driverem**, jenže systém
-ho už drží přes Game Controller framework — a pad se v ten okamžik odpojí.
-V systémovém logu to vypadá takhle (obojí ve stejné vteřině jako start hry):
-
-```
-Connected devices changed (1 added) -> DualShock 4
-Received disconnection indication on device DUALSHOCK 4 Wireless Controller
-```
-
-Řešení je říct SDL, ať svůj driver vynechá:
+Nejdřív vyluč **baterku** — je to zdaleka nejčastější příčina a pozná se
+podle toho, že odpojení přicházejí v pravidelných rozestupech, které se
+postupně zkracují, a **i když hra vůbec neběží**. Ověříš to takhle:
 
 ```
-SDL_JOYSTICK_HIDAPI_PS4=0
+log show --last 4h --style compact \
+  --predicate 'eventMessage CONTAINS "DUALSHOCK" AND eventMessage CONTAINS[c] "disconnect"'
 ```
 
-`play.sh` to nastavuje sám. Při ručním spouštění dej proměnnou před příkaz.
-**Pozor:** se systémovým driverem může pad hlásit tlačítka jinak, takže si
-po téhle změně znovu projdi `joystick_type` — a ověř `/gp`.
-
-Když se pad odpojuje i tak, zkus ho **připojit kabelem**; USB tenhle
-konflikt obchází úplně.
+Když odpojení padají i mimo běh hry, nabij pad — nebo ho rovnou nech
+**na kabelu**, přes USB funguje a nabíjí se zároveň.
 
 Kdo si to raději píše ručně do `minetest.conf` (servery, dávkové nasazení),
 najde ho tady — ale uprav ho, **když Luanti neběží**, protože při ukončení
