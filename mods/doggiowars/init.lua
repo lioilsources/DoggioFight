@@ -8,14 +8,19 @@ doggiowars = {}
 doggiowars.const = {
     SPEED_MAX    = 40,      -- m/s
     SPEED_MIN    = 5,       -- stall speed
-    TURN_SPEED   = 1.5,     -- rad/s (rychlost otáčení za zaměřovačem)
+    TURN_SPEED   = 1.5,     -- rad/s (ponorka: dotáčení za zaměřovačem)
 
-    -- Levá páčka = knipl do náklonu, ne otočka. Zatáčí zlomkem rychlosti
-    -- pohledu, zato se do zatáčky pořádně položí. Náklon horizontu Luanti
-    -- neumí, takže ten pocit nese natočení trupu + úklon kamery (eye-lean).
-    BANK_TURN    = 0.35,    -- násobek TURN_SPEED při zatáčení páčkou
-    BANK_ROLL    = 1.05,    -- rad (~60°) při plné výchylce páčky
-    BANK_ROLL_MAX = 2.2,    -- rad (~126°) strop pro náklon i s dotáčením
+    -- Stíhačka zatáčí NÁKLONEM (bank-to-turn), ne mířením: levá páčka zadá
+    -- úhel náklonu a zatáčka z něj teprve vznikne. Pravá páčka do letu
+    -- nezasahuje vůbec — jen míří.
+    BANK_ROLL     = 1.05,   -- rad (~60°) při plné výchylce páčky
+    BANK_ROLL_MAX = 1.40,   -- rad (~80°) v airbrake driftu
+    TURN_RATE     = 1.30,   -- rad/s při svislém náklonu; škáluje sin(roll)
+
+    -- Zaměřovač se od nosu smí odchýlit jen v kuželu — pilot je připoutaný
+    AIM_YAW       = 0.90,   -- rad (~52°) do stran
+    AIM_PITCH     = 0.70,   -- rad (~40°) nahoru/dolů
+    AIM_RECENTER  = 0.80,   -- rad/s návrat zaměřovače na nos, když nemíříš
 
     PITCH_RATE   = 1.2,     -- rad/s
     PITCH_MAX    = 0.6,     -- max pitch angle

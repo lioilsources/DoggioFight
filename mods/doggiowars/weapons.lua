@@ -240,20 +240,29 @@ minetest.register_entity("doggiowars:bullet", {
 -- Shoot function — called from vehicle.lua on_step
 ---------------------------------------------------------------------------
 
-function doggiowars.shoot_bullet(fighter_self)
+-- dir (nepovinný) = kam střílet. Stíhačka posílá směr zaměřovače, aby
+-- pravá páčka mířila zbraní nezávisle na tom, kam letí trup. Bez něj se
+-- střílí po ose trupu (původní chování, drží ho případní další volající).
+function doggiowars.shoot_bullet(fighter_self, dir)
     local pos = fighter_self.object:get_pos()
     if not pos then return end
 
-    local rot = fighter_self.object:get_rotation()
-    local dir = minetest.yaw_to_dir(rot.y + math.pi)
-    local pitch_angle = -(rot.x or 0)   -- rot.x is -pitch
-    dir.y = math.sin(pitch_angle)
-    -- Re-normalize horizontal component
-    local hlen = math.sqrt(dir.x * dir.x + dir.z * dir.z)
-    local cos_p = math.cos(pitch_angle)
-    if hlen > 0 then
-        dir.x = dir.x / hlen * cos_p
-        dir.z = dir.z / hlen * cos_p
+    if dir then
+        local len = math.sqrt(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z)
+        if len < 1e-6 then return end
+        dir = {x = dir.x / len, y = dir.y / len, z = dir.z / len}
+    else
+        local rot = fighter_self.object:get_rotation()
+        dir = minetest.yaw_to_dir(rot.y + math.pi)
+        local pitch_angle = -(rot.x or 0)   -- rot.x is -pitch
+        dir.y = math.sin(pitch_angle)
+        -- Re-normalize horizontal component
+        local hlen = math.sqrt(dir.x * dir.x + dir.z * dir.z)
+        local cos_p = math.cos(pitch_angle)
+        if hlen > 0 then
+            dir.x = dir.x / hlen * cos_p
+            dir.z = dir.z / hlen * cos_p
+        end
     end
 
     -- Muzzle: 6 blocks in front of center — first-person kamera pilota sedí

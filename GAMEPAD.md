@@ -38,9 +38,9 @@ si ho hra přepisuje:
 
 | Vstup | Akce |
 |---|---|
-| **Pravá páčka** | míření / let (letadlo se dotáčí za zaměřovačem) |
+| **Pravá páčka** | **jen míření** — zaměřovač v kuželu kolem nosu, do letu nezasahuje |
 | **Levá páčka nahoru/dolů** | plyn / brzda (analogově dle výchylky) |
-| **Levá páčka doleva/doprava** | **náklon** — položí letadlo na křídlo a stáčí ho ~3× pomaleji než pohled |
+| **Levá páčka doleva/doprava** | **náklon** — a ze sklonu vzniká zatáčka |
 | **R2** (`dig`) | **STŘELBA** (držet = dávka ~6/s) |
 | **L2** (`place`) | **BOOST** (stojí 25 z metru) |
 | **X** (`jump`) | nos nahoru; podržet ≥0,8 s = **Looping** |
@@ -48,14 +48,22 @@ si ho hra přepisuje:
 | dvojšvih páčky **doleva/doprava** | **Barrel roll** (krátká nesmrtelnost) |
 | dvojité „dozadu" (`down`) | **Immelmann** (otočka 180°) |
 
-Polohu stroje ukazuje **vodováha pod minimapou** — čára se naklání spolu s
-letadlem a při stoupání se zvedne nad pevnou značku, při klesání pod ni.
-Když na značce leží, letíš rovně.
+**Levá páčka létá, pravá míří — nepřekrývají se.**
 
-Náklon máš **pod páčkou**: čím víc levou páčku vychýlíš do strany, tím víc
-letadlo položí na křídlo (plná výchylka ≈ 60°) a tím ochotněji se stáčí —
-ale pořád ~3× pomaleji, než když zamíříš pohledem. Něco navíc si letadlo
-přidá samo podle toho, jak ostře se dotáčí za zaměřovačem. Na klávesnici střílí **levé myšítko** (nebo `E`), boost je **pravé
+Zatáčí se **náklonem**, jako skutečné letadlo: levá páčka zadá úhel (plná
+výchylka ≈ 60°) a zatáčka z něj teprve vznikne — čím strmější náklon, tím
+rychleji se nos stáčí (60° ≈ 57°/s). Po puštění se křídla srovnají sama.
+Výškovka (X/○) klopí nos a po puštění se vrací k horizontu.
+
+Pravá páčka hýbe **zaměřovačem v kuželu kolem nosu** (~52° do stran, 40°
+nahoru/dolů) a do letu nezasahuje. Střely letí po zaměřovači, ne po ose
+trupu, takže jde předsadit cíl napříč zatáčkou. Když páčku pustíš,
+zaměřovač se plynule vrátí na nos.
+
+Kamera sedí v trupu, takže se svět otáčí spolu se strojem. Polohu ukazuje
+**vodováha pod minimapou** — čára se naklání spolu s letadlem a při stoupání
+se zvedne nad pevnou značku, při klesání pod ni. Když na značce leží, letíš
+rovně. Na klávesnici střílí **levé myšítko** (nebo `E`), boost je **pravé
 myšítko** nebo dvojité W.
 
 ## Režim ponorky — příkaz `/mode` (VÝCHOZÍ REŽIM)

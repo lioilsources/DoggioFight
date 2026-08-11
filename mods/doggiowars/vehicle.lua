@@ -32,7 +32,7 @@ local function gp_debug_str(ctrl, look_v, f)
     end
     -- Klíč ke čtení: když SPD roste bez doteku páček — thr>0 = plyn (drift
     -- levé páčky / špatná osa movement_y), thr=0 = dive fyzika (let < -26°).
-    -- pitch = kam koukáš (pravá páčka), let = skutečný sklon letadla.
+    -- pitch = kam koukáš (pravá páčka mimo osu nosu), let = sklon letadla.
     return string.format(
         "GAMEPAD  L(%+.2f,%+.2f)  thr=%+.2f  SPD=%.0f  pitch=%+.0f\194\176"
             .. "  let=%+.0f\194\176  [ %s ]",
@@ -100,6 +100,10 @@ function doggiowars.mount_player(player, pos, yaw)
     self.pilot = player
     self.pilot_name = name
     self.score = doggiowars.tricks.scores[name] or 0
+    -- zaměřovač na nose; cam_* je reference "co jsme naposledy nastavili",
+    -- bez vynulování by se první snímek tvářil jako obří pohyb myší
+    self.aim_h, self.aim_v = 0, 0
+    self.cam_h, self.cam_v = nil, nil
     if yaw then
         obj:set_rotation({x = 0, y = yaw + math.pi, z = 0})
     end
@@ -228,6 +232,11 @@ minetest.register_entity("doggiowars:fighter", {
                     minetest.dir_to_yaw({x = vel.x, y = 0, z = vel.z}))
                 pilot:set_look_vertical(-math.atan2(vel.y, th))
             end
+            -- Trik si pohled řídí sám; zahodíme odchylku zaměřovače i
+            -- referenci kamery, ať po dokončení nenaskočí skokem (rozdíl
+            -- proti poslednímu nastavení by se jinak započítal jako míření).
+            self.aim_h, self.aim_v = 0, 0
+            self.cam_h, self.cam_v = nil, nil
         elseif sub_mode then
             -- PONORKA: 5DoF hover. Levá páčka = tah/úkrok, pohled (myš nebo
             -- pravá páčka) = kurz+sklon, jump/sneak = stoupání/klesání.
@@ -315,79 +324,51 @@ minetest.register_entity("doggiowars:fighter", {
                 self.speed = math.max(self.speed + 10 * dtime * thr, C.SPEED_MIN)
             end
 
-            -- Airbrake drift: S + A/D = ostrá zatáčka za cenu rychlosti
-            local turn = C.TURN_SPEED
+            -- Airbrake drift: S + A/D = ostrá zatáčka za cenu rychlosti.
+            -- Násobek zatáčky se aplikuje níž, na rychlost otáčení z náklonu.
             local drifting = ctrl.down and (ctrl.left or ctrl.right)
             if drifting then
-                turn = C.TURN_SPEED * 2.2
                 self.speed = math.max(self.speed - 12 * dtime, C.SPEED_MIN)
                 doggiowars.tricks.add_raw_score(self, 50 * dtime)
             end
 
-            -- Mouse-flight: myš (nebo pravá páčka gamepadu) míří zaměřovačem,
-            -- letadlo se za ním dotáčí. Levá páčka / A-D / Space-Shift natáčí
-            -- pohledem stejně jako myš — nativní joystick tak funguje přímo.
-            -- Zatáčení je proporcionální podle výchylky páčky (klávesnice = ±1).
+            -- KŘIDÉLKA: levá páčka zadává ÚHEL NÁKLONU, ne rychlost otáčení.
+            -- Výchylka je analogová (klávesnice A/D = ±1).
             local xmag = math.abs(ctrl.movement_x or 1)
             if xmag < 0.001 then xmag = 1 end
-            local look_h = pilot:get_look_horizontal()
-            local look_v = pilot:get_look_vertical()
-            local keys_steered = false
-
-            -- Levá páčka NENÍ druhý pohled — je to knipl do náklonu.
-            -- Zatáčí zlomkem rychlosti pohledu (BANK_TURN), zato letadlo
-            -- položí na křídlo. Při driftu (S+A/D) se náklon neškrtí:
-            -- to je vědomý manévr za cenu rychlosti a má zůstat ostrý.
             local bank = 0
             if ctrl.left then bank = xmag end
             if ctrl.right then bank = -xmag end
-            if bank ~= 0 then
-                local rate = drifting and turn or (turn * C.BANK_TURN)
-                look_h = look_h + rate * dtime * bank
-                keys_steered = true
-            end
-            if ctrl.jump then
-                look_v = math.max(look_v - C.PITCH_RATE * dtime, -1.25)
-                keys_steered = true
-            elseif ctrl.sneak then
-                look_v = math.min(look_v + C.PITCH_RATE * dtime, 1.25)
-                keys_steered = true
-            end
-            if keys_steered then
-                pilot:set_look_horizontal(look_h)
-                pilot:set_look_vertical(look_v)
-            end
 
-            -- yaw: dotáčení za zaměřovačem nejkratší cestou
-            local chase = math.max(turn * 1.3, 2.0) * dtime
-            local dy = wrap_angle(look_h + math.pi - rot.y)
-            rot.y = rot.y + math.max(-chase, math.min(chase, dy))
-
-            -- pitch: cíl z vertikálního pohledu (look_v kladné = dolů)
-            local target_pitch = math.max(-C.PITCH_MAX,
-                math.min(C.PITCH_MAX, -look_v))
-            local pstep = C.PITCH_RATE * 1.5 * dtime
-            self.pitch = self.pitch + math.max(-pstep,
-                math.min(pstep, target_pitch - self.pitch))
-
-            -- Náklon: automaticky do zatáčky (podle toho, jak ostře se
-            -- letadlo dotáčí za zaměřovačem); po srovnání kurzu se vyrovná
-            local target_roll = math.max(-1, math.min(1, -dy * 2.0))
-                * C.ROLL_MAX * 0.7
-
-            -- Páčka klade letadlo na křídlo napřímo. Bez tohohle by se
-            -- náklon skoro neprojevil: odvozuje se z dy (rozdílu kurzu a
-            -- pohledu), a ten je při pomalém zatáčení páčkou malý — hráč
-            -- by zatáčel pomaleji a neviděl proč.
-            if bank ~= 0 then
-                target_roll = math.max(-C.BANK_ROLL_MAX,
-                    math.min(C.BANK_ROLL_MAX,
-                        target_roll - bank * C.BANK_ROLL))
-            end
-
-            local rstep = C.ROLL_SPEED * dtime
+            -- doleva = záporný roll (stejná konvence drží vodováha v HUD)
+            local target_roll = -bank
+                * (drifting and C.BANK_ROLL_MAX or C.BANK_ROLL)
+            -- s rukou na páčce se stroj klopí svižně, po puštění se křídla
+            -- srovnávají sama a pomaleji (přirozená stabilita)
+            local rstep = (bank ~= 0 and C.ROLL_SPEED or C.ROLL_DECAY) * dtime
             self.roll = (self.roll or 0)
                 + math.max(-rstep, math.min(rstep, target_roll - self.roll))
+
+            -- ZATÁČKA VZNIKÁ Z NÁKLONU. sin(roll), ne tan: tan u svislého
+            -- náklonu utíká do nekonečna a stroj by se protočil na místě.
+            -- Náklon doleva (roll < 0) musí zvýšit rot.y — to je zatáčka
+            -- doleva, protože směr letu je yaw_to_dir(rot.y + pi).
+            local yaw_rate = -C.TURN_RATE * math.sin(self.roll)
+            if drifting then yaw_rate = yaw_rate * 2.2 end
+            rot.y = rot.y + yaw_rate * dtime
+
+            -- VÝŠKOVKA: X/○ (Space/Shift) klopí nos. Bez zásahu se nos vrací
+            -- k horizontu — PITCH_DECAY byla v konstantách od začátku, jen ji
+            -- do teď nic nepoužívalo, protože sklon určoval pohled.
+            local elev = (ctrl.jump and 1 or 0) - (ctrl.sneak and 1 or 0)
+            if elev ~= 0 then
+                self.pitch = math.max(-C.PITCH_MAX, math.min(C.PITCH_MAX,
+                    self.pitch + elev * C.PITCH_RATE * dtime))
+            else
+                local pd = C.PITCH_DECAY * dtime
+                self.pitch = self.pitch
+                    - math.max(-pd, math.min(pd, self.pitch))
+            end
 
             -- Boost + gravitační fyzika: strmý střemhlavý let zrychluje
             -- (úměrně sklonu, až od ~26° dolů), stoupání rychlost ubírá.
@@ -422,6 +403,43 @@ minetest.register_entity("doggiowars:fighter", {
             rot.z = self.roll
             self.object:set_rotation(rot)
 
+            -- KAMERA SEDÍ V TRUPU, zaměřovač se od nosu odchyluje v kuželu.
+            --
+            -- Pravá páčka (myš) do letu nezasahuje — jen míří. Aby to šlo,
+            -- musí kamera sledovat trup: kam se hráč mezi snímky podíval sám,
+            -- zjistíme jako rozdíl proti tomu, co jsme mu naposledy nastavili,
+            -- a uložíme jako odchylku od nosu. Pak pohled přepíšeme na
+            -- "nos + odchylka".
+            local look_h = pilot:get_look_horizontal()
+            local look_v = pilot:get_look_vertical()
+            local moved_h = wrap_angle(look_h - (self.cam_h or look_h))
+            local moved_v = look_v - (self.cam_v or look_v)
+
+            local aim_h = wrap_angle((self.aim_h or 0) + moved_h)
+            local aim_v = (self.aim_v or 0) + moved_v
+            if math.abs(moved_h) < 1e-4 and math.abs(moved_v) < 1e-4 then
+                -- ruce pryč od páčky → zaměřovač se plynule vrátí na nos
+                local r = C.AIM_RECENTER * dtime
+                aim_h = aim_h - math.max(-r, math.min(r, aim_h))
+                aim_v = aim_v - math.max(-r, math.min(r, aim_v))
+            end
+            self.aim_h = math.max(-C.AIM_YAW, math.min(C.AIM_YAW, aim_h))
+            self.aim_v = math.max(-C.AIM_PITCH, math.min(C.AIM_PITCH, aim_v))
+
+            local new_h = rot.y + math.pi + self.aim_h
+            local new_v = math.max(-1.4, math.min(1.4,
+                -self.pitch + self.aim_v))
+            -- Přepisovat pohled každý snímek i při rovném letu bez míření
+            -- znamená zbytečný paket a pere se to s predikcí klienta — přesně
+            -- to dělá obraz cukavým. Posíláme jen skutečnou změnu.
+            if self.cam_h == nil
+                    or math.abs(wrap_angle(new_h - self.cam_h)) > 1e-4
+                    or math.abs(new_v - (self.cam_v or new_v)) > 1e-4 then
+                pilot:set_look_horizontal(new_h)
+                pilot:set_look_vertical(new_v)
+            end
+            self.cam_h, self.cam_v = new_h, new_v
+
             -- Velocity from direction + speed
             local dir = minetest.yaw_to_dir(rot.y + math.pi)
             vel = {
@@ -450,7 +468,9 @@ minetest.register_entity("doggiowars:fighter", {
         self.shoot_cooldown = math.max(0, (self.shoot_cooldown or 0) - dtime)
         if (ctrl.dig or ctrl.aux1) and self.shoot_cooldown <= 0 then
             self.shoot_cooldown = 0.15
-            doggiowars.shoot_bullet(self)
+            -- po zaměřovači, ne po trupu: ve stíhačce míří pravá páčka
+            -- nezávisle na směru letu, v ponorce zaměřovač trup stejně vede
+            doggiowars.shoot_bullet(self, pilot:get_look_dir())
         end
 
         -- Damage smoke: light at HP < 70, heavy fire at HP < 30
@@ -665,6 +685,8 @@ local function fly_player_to(player, sp, yaw)
             player:set_look_horizontal(yaw)
             player:set_look_vertical(0)
             f.pitch, f.roll = 0, 0
+            f.aim_h, f.aim_v = 0, 0
+            f.cam_h, f.cam_v = nil, nil
             f.object:set_rotation({x = 0, y = yaw + math.pi, z = 0})
         end
     else
@@ -816,6 +838,8 @@ minetest.register_chatcommand("mode", {
             f.boost_time = 0
             f.input = {prev = {}, last_tap = {}, held_since = {}}
             f.sub_vel = nil
+            f.aim_h, f.aim_v = 0, 0
+            f.cam_h, f.cam_v = nil, nil
             if new == "fighter" then f.speed = 15 end
             p:set_fov(0)
         end
