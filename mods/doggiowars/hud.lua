@@ -100,10 +100,121 @@ local function compass_tape(heading)
 end
 
 ---------------------------------------------------------------------------
+-- Vodováha — poloha letadla (náklon + sklon) v jednom prvku
+--
+-- Ukazuje POLOHU STROJE, ne horizont: čára se naklání SPOLU s letadlem
+-- (náklon doleva sklopí levý konec) a při stoupání se zvedne nad pevnou
+-- značku, při klesání pod ni. Pevná značka je vodorovná reference —
+-- když na ní čára sedí, letíš rovně.
+--
+-- Luanti neumí HUD prvek otočit, takže čára je pár dílků rozmístěných po
+-- přímce. Poloha se počítá přes cos/sin, ne tangens: roll sahá přes 90°,
+-- kde by tangens utekl do nekonečna.
+---------------------------------------------------------------------------
+
+-- Sudý počet dílků = uprostřed mezera pro pevnou značku (je 31 px široká).
+local ATT_PIPS    = 8       -- 4 vlevo, 4 vpravo, žádný ve středu
+-- 22 px: značka má poloměr ~15,5 a dílek přesahuje ze svého středu o 6,
+-- takže menší rozteč by je nechala překrývat (15,5 + 6 = 21,5)
+local ATT_SPACING = 22      -- px mezi dílky
+local ATT_PITCH_PX = 30     -- o kolik px se čára zvedne při plném stoupání
+
+-- Pod minimapou vpravo nahoře, ať nepřekáží uprostřed obrazovky.
+--
+-- Kotvíme na PRAVÝ OKRAJ (position.x = 1) a odsazujeme v pixelech, ne na
+-- zlomek šířky: minimapa visí taky na pravém okraji, takže si takhle lícují
+-- pravou hranou na jakémkoli rozlišení. Přesné zarovnání na minimapu nejde
+-- — Luanti její polohu ani velikost do Lua nedává.
+local ATT_POS      = {x = 1, y = 0.38}
+local ATT_MARGIN_R = 16     -- px od pravého okraje k pravému konci čáry
+
+local PIP_TEX = "doggiowars_hud_pip.png^[colorize:#8FE3A0:255"
+local REF_TEX = "doggiowars_hud_ref.png^[colorize:#FFFFFF:255"
+
+local function att_key(i)
+    return "att_pip" .. i
+end
+
+-- i = 1..8  ->  vzdálenost od středu -88,-66,-44,-22, +22,+44,+66,+88
+local function att_dist(i)
+    local half = ATT_PIPS / 2
+    local k = (i <= half) and (i - half - 1) or (i - half)
+    return k * ATT_SPACING
+end
+
+-- poloměr čáry = od středu ke STŘEDU vnějšího dílku
+local ATT_RADIUS = (ATT_PIPS / 2) * ATT_SPACING
+-- dílek je po škálování 12 px široký, takže od svého středu přesahuje o 6;
+-- bez toho by okraj seděl o 6 px blíž k hraně, než říká ATT_MARGIN_R
+local ATT_PIP_HALF = 6
+-- vodorovný posun středu widgetu od pravého okraje (záporný = doleva)
+local ATT_BASE_X = -(ATT_MARGIN_R + ATT_RADIUS + ATT_PIP_HALF)
+
+local function att_add(player)
+    for i = 1, ATT_PIPS do
+        hud.add(player, att_key(i), {
+            type      = "image",
+            position  = ATT_POS,
+            offset    = {x = ATT_BASE_X, y = 0},
+            text      = PIP_TEX,
+            scale     = {x = 2, y = 2},
+            alignment = {x = 0, y = 0},
+            z_index   = 45,
+        })
+    end
+    -- pevná reference: vodorovná poloha, kolem které se čára hýbe
+    hud.add(player, "att_ref", {
+        type      = "image",
+        position  = ATT_POS,
+        offset    = {x = ATT_BASE_X, y = 0},
+        text      = REF_TEX,
+        -- scale 1: značka je 31 px široká a vejde se do mezery ±22 px
+        scale     = {x = 1, y = 1},
+        alignment = {x = 0, y = 0},
+        z_index   = 46,
+    })
+end
+
+-- roll i pitch v radiánech; show = false vodováhu schová (ponorka se
+-- nenaklání). Texturu přepisujeme jen při změně viditelnosti — každý
+-- hud_change je paket klientovi a tohle běží 7× za sekundu.
+local function att_update(player, roll, pitch, show)
+    local st = S(player)
+    if show ~= st.att_shown then
+        st.att_shown = show
+        for i = 1, ATT_PIPS do
+            hud.set(player, att_key(i), {text = show and PIP_TEX or ""})
+        end
+        hud.set(player, "att_ref", {text = show and REF_TEX or ""})
+    end
+    if not show then return end
+
+    -- náklon: čára se klopí SPOLU se strojem (proto roll bez znaménka
+    -- navíc — horizont by tu měl -roll)
+    local ca, sa = math.cos(roll or 0), math.sin(roll or 0)
+
+    -- sklon: stoupání zvedá čáru nad referenci (y na obrazovce roste dolů),
+    -- klesání ji pouští pod ni. Škáluje se plným rozsahem sklonu, takže
+    -- plné stoupání = plná výchylka.
+    local pmax = doggiowars.const.PITCH_MAX
+    local pfrac = math.max(-1, math.min(1, (pitch or 0) / pmax))
+    local dy = -pfrac * ATT_PITCH_PX
+
+    for i = 1, ATT_PIPS do
+        local d = att_dist(i)
+        hud.set(player, att_key(i), {
+            offset = {x = ATT_BASE_X + math.floor(d * ca + 0.5),
+                      y = math.floor(d * sa + dy + 0.5)},
+        })
+    end
+end
+
+---------------------------------------------------------------------------
 -- Letový HUD
 ---------------------------------------------------------------------------
 
 function hud.init(player)
+    att_add(player)
     hud.add(player, "compass", {
         type      = "text",
         position  = {x = 0.5, y = 0.02},
@@ -208,6 +319,9 @@ function hud.update_flight(player, f)
         score_text = score_text .. string.format("  ×%d", f.combo)
     end
     hud.set(player, "score", {text = score_text})
+
+    -- vodováha — jen ve stíhačce, ponorka se nenaklání
+    att_update(player, f.roll or 0, f.pitch or 0, mtag == "")
 
     -- podélný sklon (▲ stoupání / ▼ klesání) + náklon
     local pdeg = math.deg(f.pitch or 0)

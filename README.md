@@ -54,7 +54,7 @@ Mouse-flight: the plane chases your crosshair. Steer by looking.
 |---|---|
 | Mouse / right stick | aim — the plane follows the crosshair |
 | W / S (left stick ↑↓) | throttle / brake (speed is persistent) |
-| A / D (left stick ←→) | yaw assist |
+| A / D (left stick ←→) | **bank** — rolls into the turn and comes round slowly |
 | Left mouse button, E (R2) | **shoot** |
 | Right mouse button (L2) | **boost** |
 | Space / Shift (X / ○) | nose up / down |
@@ -62,6 +62,15 @@ Mouse-flight: the plane chases your crosshair. Steer by looking.
 | hold Space ≥ 0.8 s | **Looping** |
 | double-tap S | **Immelmann** turn |
 | S + A/D | airbrake drift turn |
+
+Two ways to turn, and they feel different. Looking with the mouse or the
+right stick points the nose straight at where you want to go. The left
+stick banks instead: the plane rolls onto a wing and comes round about
+three times slower. Luanti cannot roll the horizon, so attitude is read off
+a level indicator under the minimap: a line that banks **with** the aircraft
+and rides above a fixed mark when climbing, below it when descending. Sitting
+flat on the mark means level flight. The numeric bank and vertical speed stay
+in the HUD as well.
 
 Steep dives build overspeed, climbing bleeds it off. Skimming close to
 terrain charges your boost meter, and tricks score points.
