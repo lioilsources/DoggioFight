@@ -1,5 +1,7 @@
 # DoggioWars ✈️
 
+**A standalone Luanti game — no Minetest Game required.**
+
 **You ARE the fighter plane.** An aerial dogfight arena set among floating
 voxel islands — fly, shoot, pull aerobatic tricks and race a golden rabbit
 through carved tunnels.
@@ -84,15 +86,45 @@ troubleshooting (in Czech).
 
 ## Installation
 
-Install from ContentDB (Luanti main menu → Content), or clone into your
-mods folder:
+Install from ContentDB (Luanti main menu → Content → Games), or clone into
+your games folder:
 
 ```
-git clone https://github.com/lioilsources/DoggioWars.git doggiowars
+git clone https://github.com/lioilsources/DoggioWars.git \
+    ~/.minetest/games/doggiowars
 ```
 
-Requires **Luanti 5.12+** and **Minetest Game**. Enable the mod for your
-world; a singlenode-style sky world is created automatically.
+Then create a world and pick **DoggioWars** as the game. Requires
+**Luanti 5.12+** and nothing else — no Minetest Game, no other mods.
+
+Where the games folder lives:
+
+- macOS: `~/Library/Application Support/minetest/games/`
+- Windows: `%APPDATA%\Minetest\games\`
+- Linux: `~/.minetest/games/`
+
+The gamepad is enabled by default (the game ships its own `minetest.conf`
+defaults). PS4/PS5 DualShock owners still need to pick the joystick type
+once — see [GAMEPAD.md](GAMEPAD.md).
+
+## How the game is put together
+
+```
+game.conf            game metadata; forces the singlenode mapgen
+minetest.conf        default settings for this game (gamepad on, view range)
+menu/                icon, header and background for the main menu
+mods/doggiowars/     all the gameplay — mapgen, flight, weapons, races
+mods/dw_nodes/       stand-ins for the minetest_game nodes the terrain uses
+tools/               procedural texture generator for dw_nodes
+```
+
+`dw_nodes` is what makes the game standalone. The terrain code names its
+blocks `default:stone`, `flowers:rose` and so on — the vocabulary of
+Minetest Game. Rather than bundle Minetest Game (LGPL 2.1 code and CC BY-SA
+3.0 media, which would mean shipping other people's assets), `dw_nodes`
+registers those ~70 names itself with textures drawn by
+`tools/gen_textures.py`. Nothing in the terrain code had to change, and all
+media in the repository stays original work.
 
 ## License
 

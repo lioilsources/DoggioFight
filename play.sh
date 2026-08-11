@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-# Spustí Luanti přímo do světa s aktuálně odbočenou verzí modu.
+# Spustí Luanti přímo do světa s aktuálně odbočenou verzí hry.
 #   ./play.sh                     -> aktuální větev
 #   ./play.sh main                -> přepne na main a spustí
 #   ./play.sh claude/submarine-mode
-# Mod je do Luanti připojen symlinkem, takže stačí přepnout větev a spustit.
+# Hra je do Luanti připojena symlinkem v games/, takže stačí přepnout
+# větev a spustit.
 set -euo pipefail
 
 LUANTI="${LUANTI:-$HOME/Downloads/luanti.app/Contents/MacOS/luanti}"
@@ -25,4 +26,4 @@ if [ $# -ge 1 ]; then
 fi
 
 echo "větev: $(git -C "$REPO" rev-parse --abbrev-ref HEAD)  svět: $WORLD"
-exec "$LUANTI" --go --worldname "$WORLD"
+exec "$LUANTI" --go --worldname "$WORLD" --gameid doggiowars

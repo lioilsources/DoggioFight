@@ -6,29 +6,33 @@ externí mapovač není potřeba. Funguje s Xbox 360 (drát) i PS4 DualShock
 
 ## Zapnutí
 
-**V singleplayeru to mod zapne sám** při prvním spuštění (`enable_joysticks`
-je klientské nastavení, na všech platformách vypnuté z výroby) — pak stačí
-**jednou restartovat Luanti**. Ve hře se objeví hláška, že se to stalo.
+**Hra si joystick zapne sama.** `enable_joysticks` je klientské nastavení,
+z výroby vypnuté na všech platformách; DoggioWars ho posílá jako svůj
+výchozí stav v `minetest.conf` hry (spolu s `joystick_deadzone = 4000`).
+Do tvého configu to nic nezapíše — jen se posune výchozí hodnota, dokud
+hraješ tuhle hru.
 
-Ruční nastavení (jiné počítače, servery) — do `minetest.conf` přidej:
+Zbývá **jedna věc, kterou za tebe udělat nejde**: typ ovladače. Je to
+vlastnost hardwaru, ne hry, a Luanti modu neprozradí, co je připojené.
 
-```
-enable_joysticks = true
-joystick_type = auto      # auto-detekce; DualShock (PS4/PS5) chce "ps5"
-joystick_deadzone = 4000
-joystick_frustum_sensitivity = 150.0   # rychlost otáčení pravou páčkou
-```
+**Nastavení → Ovládání → Gamepady → Joystick type**
 
-Kde `minetest.conf` bydlí:
+- **Xbox 360 / Xbox One** → `auto` stačí, nic neměň.
+- **PS4 / PS5 DualShock** → přepni na **`ps5`**. Na `auto` se osy pomíchají
+  a ovládání působí „rozhozeně".
+
+Ve stejné sekci je i `Joystick dead zone` (ujíždí-li kamera, zvyš) a
+`Joystick frustum sensitivity` (rychlost otáčení pravou páčkou).
+
+⚠️ Ovladač připoj **před** spuštěním hry.
+
+Kdo si to raději píše ručně do `minetest.conf` (servery, dávkové nasazení),
+najde ho tady — ale uprav ho, **když Luanti neběží**, protože při ukončení
+si ho hra přepisuje:
 
 - macOS: `~/Library/Application Support/minetest/minetest.conf`
 - Windows: `%APPDATA%\Minetest\minetest.conf`
 - Linux: `~/.minetest/minetest.conf`
-
-⚠️ Config uprav, **když Luanti neběží** (při ukončení si ho přepisuje),
-a projeví se **až po restartu**. Ovladač připoj **před** spuštěním
-(Xbox drátem funguje s `auto`; DualShock spáruj přes Bluetooth a nastav
-`joystick_type = ps5` — auto ho nepozná a osy se pomíchají).
 
 ## Ovládání (ověřeno na PS4 DualShock, `joystick_type = ps5`)
 

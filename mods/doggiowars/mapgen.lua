@@ -406,11 +406,13 @@ end)
 -- Vypnout defaultní mapgen (singlenode) — jen naše ostrovy
 ---------------------------------------------------------------------------
 
-minetest.register_on_mapgen_init(function(mgparams)
-    minetest.set_mapgen_params({
-        mgname = "singlenode",
-        flags  = "nolight",
-    })
+-- set_mapgen_params je deprecated (hlásilo to při každém startu);
+-- set_mapgen_setting s override_meta=true je jeho náhrada a přebije
+-- i map_meta.txt světů založených dřív. Hra navíc v game.conf povoluje
+-- jen singlenode, takže nový svět jinak než takhle ani nevznikne.
+minetest.register_on_mapgen_init(function()
+    minetest.set_mapgen_setting("mg_name", "singlenode", true)
+    minetest.set_mapgen_setting("mg_flags", "nolight", true)
 end)
 
 ---------------------------------------------------------------------------
