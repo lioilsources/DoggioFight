@@ -1,5 +1,7 @@
 # DoggioWars ✈️
 
+**A standalone Luanti game — no Minetest Game required.**
+
 **You ARE the fighter plane.** An aerial dogfight arena set among floating
 voxel islands — fly, shoot, pull aerobatic tricks and race a golden rabbit
 through carved tunnels.
@@ -84,15 +86,48 @@ troubleshooting (in Czech).
 
 ## Installation
 
-Install from ContentDB (Luanti main menu → Content), or clone into your
-mods folder:
+Install from ContentDB (Luanti main menu → Content → Games), or clone into
+your games folder:
 
 ```
-git clone https://github.com/lioilsources/DoggioWars.git doggiowars
+git clone https://github.com/lioilsources/DoggioWars.git \
+    ~/.minetest/games/doggiowars
 ```
 
-Requires **Luanti 5.12+** and **Minetest Game**. Enable the mod for your
-world; a singlenode-style sky world is created automatically.
+Then create a world and pick **DoggioWars** as the game. Requires
+**Luanti 5.12+** and nothing else — no Minetest Game, no other mods.
+
+Where the games folder lives:
+
+- macOS: `~/Library/Application Support/minetest/games/`
+- Windows: `%APPDATA%\Minetest\games\`
+- Linux: `~/.minetest/games/`
+
+The gamepad is enabled by default (the game ships its own `minetest.conf`
+defaults). PS4/PS5 DualShock owners still need to pick the joystick type
+once — see [GAMEPAD.md](GAMEPAD.md).
+
+## How the game is put together
+
+```
+game.conf            game metadata; forces the singlenode mapgen
+minetest.conf        default settings for this game (gamepad on, view range)
+menu/                icon, header and background for the main menu
+mods/doggiowars/     all the gameplay — mapgen, flight, weapons, races
+mods/dw_nodes/       stand-ins for the minetest_game nodes the terrain uses
+tools/               procedural texture generator for dw_nodes
+```
+
+`dw_nodes` is what makes the game standalone. The terrain used to be built
+from Minetest Game's blocks — `default:stone`, `flowers:rose` and so on.
+Bundling Minetest Game would have meant shipping other people's assets
+(LGPL 2.1 code, CC BY-SA 3.0 media), so `dw_nodes` provides all ~70 of them
+instead, in its **own** `dw_nodes:` namespace, with textures drawn by
+`tools/gen_textures.py`. Every asset in the repository stays original work.
+
+The old names still resolve: `dw_nodes` registers an alias for each one, so
+worlds saved by earlier versions load unchanged. New code should use
+`dw_nodes:` — aliases do not appear in `registered_nodes`.
 
 ## License
 

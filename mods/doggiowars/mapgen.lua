@@ -38,7 +38,7 @@ local c_stone
 
 local function init_mapgen_ids()
     c_air   = minetest.get_content_id("air")
-    c_stone = minetest.get_content_id("default:stone")
+    c_stone = minetest.get_content_id("dw_nodes:stone")
 end
 
 minetest.after(0, init_mapgen_ids)
@@ -406,11 +406,13 @@ end)
 -- Vypnout defaultní mapgen (singlenode) — jen naše ostrovy
 ---------------------------------------------------------------------------
 
-minetest.register_on_mapgen_init(function(mgparams)
-    minetest.set_mapgen_params({
-        mgname = "singlenode",
-        flags  = "nolight",
-    })
+-- set_mapgen_params je deprecated (hlásilo to při každém startu);
+-- set_mapgen_setting s override_meta=true je jeho náhrada a přebije
+-- i map_meta.txt světů založených dřív. Hra navíc v game.conf povoluje
+-- jen singlenode, takže nový svět jinak než takhle ani nevznikne.
+minetest.register_on_mapgen_init(function()
+    minetest.set_mapgen_setting("mg_name", "singlenode", true)
+    minetest.set_mapgen_setting("mg_flags", "nolight", true)
 end)
 
 ---------------------------------------------------------------------------

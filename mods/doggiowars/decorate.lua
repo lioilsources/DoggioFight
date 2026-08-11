@@ -76,8 +76,8 @@ end
 ---------------------------------------------------------------------------
 
 function doggiowars.place_tree(x, surface_yv, z, trunk, leaf)
-    trunk = has(trunk) and trunk or "default:tree"
-    leaf  = has(leaf) and leaf or "default:leaves"
+    trunk = has(trunk) and trunk or "dw_nodes:tree"
+    leaf  = has(leaf) and leaf or "dw_nodes:leaves"
     local trunk_h = math.random(4, 7)
     for dy = 1, trunk_h do
         set_if_air({x = x, y = surface_yv + dy, z = z}, trunk)
@@ -96,8 +96,8 @@ end
 
 -- Akácie — široká plochá koruna (savana)
 local function place_acacia(x, y, z)
-    local trunk = has("default:acacia_tree") and "default:acacia_tree" or "default:tree"
-    local leaf  = has("default:acacia_leaves") and "default:acacia_leaves" or "default:leaves"
+    local trunk = has("dw_nodes:acacia_tree") and "dw_nodes:acacia_tree" or "dw_nodes:tree"
+    local leaf  = has("dw_nodes:acacia_leaves") and "dw_nodes:acacia_leaves" or "dw_nodes:leaves"
     local h = math.random(4, 6)
     for dy = 1, h do
         set_if_air({x = x, y = y + dy, z = z}, trunk)
@@ -115,7 +115,7 @@ end
 
 -- Uschlý strom — holý kmen s pár pahýly větví
 local function place_dead_tree(x, y, z)
-    local trunk = has("default:acacia_tree") and "default:acacia_tree" or "default:tree"
+    local trunk = has("dw_nodes:acacia_tree") and "dw_nodes:acacia_tree" or "dw_nodes:tree"
     local h = math.random(3, 6)
     for dy = 1, h do
         set_if_air({x = x, y = y + dy, z = z}, trunk)
@@ -129,7 +129,7 @@ end
 
 -- Krystalový trs — svislé svítící krystaly
 local function place_crystal_cluster(x, y, z)
-    local name = has("doggiowars:crystal") and "doggiowars:crystal" or "default:ice"
+    local name = has("doggiowars:crystal") and "doggiowars:crystal" or "dw_nodes:ice"
     place_column(x, y, z, name, math.random(2, 5))
     for _ = 1, math.random(1, 3) do
         local ox, oz = math.random(-1, 1), math.random(-1, 1)
@@ -152,7 +152,7 @@ function doggiowars.place_giant_mushroom(island)
 
     local stem_h = math.random(4, 9)
     for dy = 1, stem_h do
-        set_if_air({x = mx, y = sy + dy, z = mz}, "default:tree")
+        set_if_air({x = mx, y = sy + dy, z = mz}, "dw_nodes:tree")
     end
 
     local cap_r = math.random(2, 4)
@@ -203,7 +203,7 @@ end
 -- Mělká ZADRŽENÁ tůň: kapalina zarovnaná s povrchem, s těsnícím dnem (y-1)
 -- a obvodovým valem, aby na kopcovitém terénu NEPŘETEKLA. mat = dno/val.
 local function carve_pond(cx, y, cz, rad, liquid, mat)
-    mat = mat or "default:dirt"
+    mat = mat or "dw_nodes:dirt"
     -- vnitřek: voda + pevné dno
     for dx = -rad, rad do
         for dz = -rad, rad do
@@ -235,7 +235,7 @@ local function carve_pond(cx, y, cz, rad, liquid, mat)
 end
 
 local function lava_mat()
-    return has("doggiowars:basalt") and "doggiowars:basalt" or "default:stone"
+    return has("doggiowars:basalt") and "doggiowars:basalt" or "dw_nodes:stone"
 end
 
 -- Lávové jezírko (kráter na vrcholu sopky)
@@ -243,7 +243,7 @@ function doggiowars.place_lava_pool(island)
     local pool_r = math.random(2, math.max(3, math.floor(island.radius * 0.12)))
     local sy = surface_y(island.x, island.z, island)
     if not sy then return end
-    carve_pond(island.x, sy, island.z, pool_r, "default:lava_source", lava_mat())
+    carve_pond(island.x, sy, island.z, pool_r, "dw_nodes:lava_source", lava_mat())
 end
 
 ---------------------------------------------------------------------------
@@ -260,7 +260,7 @@ local function top_solid(x, z, y_hi, y_lo)
 end
 
 local function finish_volcano(cx, cz, top_y, mr, crater_r, basalt)
-    local lava  = "default:lava_source"
+    local lava  = "dw_nodes:lava_source"
     local magma = has("doggiowars:magma_block") and "doggiowars:magma_block" or basalt
 
     -- Kráter na vrcholu: mísa (hladina lávy na top_y-1, dno top_y-3)
@@ -322,7 +322,7 @@ function doggiowars.build_volcano(island)
     local mr = math.max(18, math.min(math.floor(R * 0.42), 34))  -- ŠIROKÁ základna
     local crater_r = math.max(4, math.floor(mr * 0.22))
     local mh = math.max(11, math.floor(mr * 0.5))               -- výška (skutečná homole)
-    local basalt = has("doggiowars:basalt") and "doggiowars:basalt" or "default:obsidian"
+    local basalt = has("doggiowars:basalt") and "doggiowars:basalt" or "dw_nodes:obsidian"
 
     -- Robustní základní výška: medián povrchu na prstenci — ignoruje
     -- případnou úzkou šumovou špičku přesně ve středu ostrova.
@@ -385,7 +385,7 @@ function doggiowars.fill_atoll_center(island)
     local hole_r = math.max(3, math.floor(island.radius * 0.3))
     local sy = surface_y(island.x, island.z, island)
     if not sy then return end
-    carve_pond(island.x, sy, island.z, hole_r, "default:water_source", "default:sand")
+    carve_pond(island.x, sy, island.z, hole_r, "dw_nodes:water_source", "dw_nodes:sand")
 end
 
 ---------------------------------------------------------------------------
@@ -393,7 +393,7 @@ end
 ---------------------------------------------------------------------------
 
 local function waterfall_at(ix, iz, island, water)
-    water = has(water) and water or "default:water_flowing"
+    water = has(water) and water or "dw_nodes:water_flowing"
     local top_y = surface_y(ix, iz, island)
     if not top_y then return end
     for y = top_y + 1, top_y - 34, -1 do
@@ -411,7 +411,7 @@ function doggiowars.place_waterfall(island)
     local angle = math.random() * math.pi * 2
     local ex = math.floor(island.x + math.cos(angle) * (island.radius - 2))
     local ez = math.floor(island.z + math.sin(angle) * (island.radius - 2))
-    waterfall_at(ex, ez, island, "default:water_flowing")
+    waterfall_at(ex, ez, island, "dw_nodes:water_flowing")
 end
 
 ---------------------------------------------------------------------------
@@ -419,10 +419,10 @@ end
 ---------------------------------------------------------------------------
 
 function doggiowars.place_river(island)
-    local water = has("default:river_water_source")
-        and "default:river_water_source" or "default:water_source"
-    local flow = has("default:river_water_flowing")
-        and "default:river_water_flowing" or "default:water_flowing"
+    local water = has("dw_nodes:river_water_source")
+        and "dw_nodes:river_water_source" or "dw_nodes:water_source"
+    local flow = has("dw_nodes:river_water_flowing")
+        and "dw_nodes:river_water_flowing" or "dw_nodes:water_flowing"
 
     local ang = math.random() * math.pi * 2
     local x, z = island.x + 0.0, island.z + 0.0
@@ -459,8 +459,8 @@ end
 ---------------------------------------------------------------------------
 
 local FLOWERS = {
-    "flowers:rose", "flowers:tulip", "flowers:dandelion_yellow",
-    "flowers:dandelion_white", "flowers:geranium", "flowers:viola",
+    "dw_nodes:rose", "dw_nodes:tulip", "dw_nodes:dandelion_yellow",
+    "dw_nodes:dandelion_white", "dw_nodes:geranium", "dw_nodes:viola",
 }
 
 local function plant_one(x, y, z, names)
@@ -473,23 +473,23 @@ end
 ---------------------------------------------------------------------------
 
 local VERDANT_TREES = {
-    {"default:tree", "default:leaves"},
-    {"default:aspen_tree", "default:aspen_leaves"},
-    {"default:pine_tree", "default:pine_needles"},
+    {"dw_nodes:tree", "dw_nodes:leaves"},
+    {"dw_nodes:aspen_tree", "dw_nodes:aspen_leaves"},
+    {"dw_nodes:pine_tree", "dw_nodes:pine_needles"},
 }
 
 -- Travní podrost, kapradí, suché traviny (více variant = živější povrch)
-local GRASS     = {"default:grass_1", "default:grass_2", "default:grass_3",
-                   "default:grass_4", "default:grass_5"}
-local DRY_GRASS = {"default:dry_grass_1", "default:dry_grass_2", "default:dry_grass_3",
-                   "default:dry_grass_4", "default:dry_grass_5"}
-local FERNS     = {"default:fern_1", "default:fern_2", "default:fern_3"}
-local MARRAM    = {"default:marram_grass_1", "default:marram_grass_2", "default:marram_grass_3"}
+local GRASS     = {"dw_nodes:grass_1", "dw_nodes:grass_2", "dw_nodes:grass_3",
+                   "dw_nodes:grass_4", "dw_nodes:grass_5"}
+local DRY_GRASS = {"dw_nodes:dry_grass_1", "dw_nodes:dry_grass_2", "dw_nodes:dry_grass_3",
+                   "dw_nodes:dry_grass_4", "dw_nodes:dry_grass_5"}
+local FERNS     = {"dw_nodes:fern_1", "dw_nodes:fern_2", "dw_nodes:fern_3"}
+local MARRAM    = {"dw_nodes:marram_grass_1", "dw_nodes:marram_grass_2", "dw_nodes:marram_grass_3"}
 
 -- Malý keř: nízký kmínek + koule listí (i bobulový)
 local function place_bush(x, y, z, leaf)
     if not has(leaf) then return end
-    local stem = has("default:bush_stem") and "default:bush_stem" or nil
+    local stem = has("dw_nodes:bush_stem") and "dw_nodes:bush_stem" or nil
     if stem then set_if_air({x = x, y = y + 1, z = z}, stem) end
     local base = stem and (y + 2) or (y + 1)
     for dx = -1, 1 do
@@ -516,8 +516,8 @@ local function surface_col(x, z, y_top, y_bot)
     return nil
 end
 
-local JUNGLE_GROUND = {"default:junglegrass", "default:fern_1", "default:fern_2", "default:fern_3"}
-local SWAMP_MUSH    = {"flowers:mushroom_red", "flowers:mushroom_brown"}
+local JUNGLE_GROUND = {"dw_nodes:junglegrass", "dw_nodes:fern_1", "dw_nodes:fern_2", "dw_nodes:fern_3"}
+local SWAMP_MUSH    = {"dw_nodes:mushroom_red", "dw_nodes:mushroom_brown"}
 
 -- Umísti JEDEN prvek na povrch (x,y,z) podle biomu. Biomy jsou bujné —
 -- podrost (tráva/kapradí) je hustý, květin je hodně. "name" = povrch pod ním.
@@ -530,86 +530,86 @@ local function place_feature(kind, x, y, z, name, island)
         elseif r <= 77 then
             local t = VERDANT_TREES[math.random(#VERDANT_TREES)]
             doggiowars.place_tree(x, y, z, t[1], t[2])
-        elseif r <= 83 then place_bush(x, y, z, "default:bush_leaves")
-        elseif r <= 87 then place_bush(x, y, z, "default:blueberry_bush_leaves_with_berries")
+        elseif r <= 83 then place_bush(x, y, z, "dw_nodes:bush_leaves")
+        elseif r <= 87 then place_bush(x, y, z, "dw_nodes:blueberry_bush_leaves_with_berries")
         elseif r <= 90 then plant_one(x, y, z, SWAMP_MUSH)
         end
 
     elseif kind == "jungle" then
         if r <= 38 then plant_one(x, y, z, JUNGLE_GROUND)
         elseif r <= 56 then
-            doggiowars.place_tree(x, y, z, "default:jungletree", "default:jungleleaves")
+            doggiowars.place_tree(x, y, z, "dw_nodes:jungletree", "dw_nodes:jungleleaves")
         elseif r <= 68 then
-            if name ~= "default:water_source" then
-                place_column(x, y, z, "default:papyrus", math.random(2, 4))
+            if name ~= "dw_nodes:water_source" then
+                place_column(x, y, z, "dw_nodes:papyrus", math.random(2, 4))
             end
-        elseif r <= 77 then place_bush(x, y, z, "default:jungleleaves")
+        elseif r <= 77 then place_bush(x, y, z, "dw_nodes:jungleleaves")
         elseif r <= 86 then plant_one(x, y, z, FLOWERS)
         end
 
     elseif kind == "glacial" then
         if r <= 30 then place_column(x, y, z, "doggiowars:ice_crystal", math.random(1, 3))
-        elseif r <= 46 then set_if_air({x = x, y = y + 1, z = z}, "default:snow")
-        elseif r <= 58 then place_boulder(x, y, z, "default:ice", math.random(1, 2))
-        elseif r <= 64 then place_boulder(x, y, z, "default:cave_ice", 1)
+        elseif r <= 46 then set_if_air({x = x, y = y + 1, z = z}, "dw_nodes:snow")
+        elseif r <= 58 then place_boulder(x, y, z, "dw_nodes:ice", math.random(1, 2))
+        elseif r <= 64 then place_boulder(x, y, z, "dw_nodes:cave_ice", 1)
         end
 
     elseif kind == "crystal" then
         if r <= 34 then place_crystal_cluster(x, y, z)
         elseif r <= 46 then
             set_if_air({x = x, y = y + 1, z = z},
-                has("doggiowars:crystal") and "doggiowars:crystal" or "default:ice")
-        elseif r <= 56 then place_boulder(x, y, z, "default:silver_sandstone", math.random(1, 2))
+                has("doggiowars:crystal") and "doggiowars:crystal" or "dw_nodes:ice")
+        elseif r <= 56 then place_boulder(x, y, z, "dw_nodes:silver_sandstone", math.random(1, 2))
         end
 
     elseif kind == "volcanic" then
         if r <= 22 then set_if_air({x = x, y = y + 1, z = z}, "doggiowars:embers")
         elseif r <= 34 then place_boulder(x, y, z, "doggiowars:basalt", math.random(1, 2))
-        elseif r <= 42 then set_if_air({x = x, y = y + 1, z = z}, "fire:basic_flame")
-        elseif r <= 48 then carve_pond(x, y, z, math.random(1, 2), "default:lava_source", lava_mat())
+        elseif r <= 42 then set_if_air({x = x, y = y + 1, z = z}, "dw_nodes:basic_flame")
+        elseif r <= 48 then carve_pond(x, y, z, math.random(1, 2), "dw_nodes:lava_source", lava_mat())
         end
 
     elseif kind == "ashen" then
         if r <= 14 then place_dead_tree(x, y, z)
         elseif r <= 40 then set_if_air({x = x, y = y + 1, z = z}, "doggiowars:embers")
-        elseif r <= 52 then set_if_air({x = x, y = y + 1, z = z}, "fire:basic_flame")
-        elseif r <= 58 then carve_pond(x, y, z, 1, "default:lava_source", lava_mat())
-        elseif r <= 66 then set_if_air({x = x, y = y + 1, z = z}, "default:dry_shrub")
+        elseif r <= 52 then set_if_air({x = x, y = y + 1, z = z}, "dw_nodes:basic_flame")
+        elseif r <= 58 then carve_pond(x, y, z, 1, "dw_nodes:lava_source", lava_mat())
+        elseif r <= 66 then set_if_air({x = x, y = y + 1, z = z}, "dw_nodes:dry_shrub")
         end
 
     elseif kind == "atoll" then
-        if name == "default:water_source" then
-            if r <= 55 then set_if_air({x = x, y = y + 1, z = z}, "flowers:waterlily") end
+        if name == "dw_nodes:water_source" then
+            if r <= 55 then set_if_air({x = x, y = y + 1, z = z}, "dw_nodes:waterlily") end
         elseif r <= 30 then plant_one(x, y, z, MARRAM)
-        elseif r <= 40 then place_column(x, y, z, "default:papyrus", math.random(2, 3))
-        elseif r <= 48 then place_boulder(x, y, z, "default:coral_skeleton", 1)
-        elseif r <= 58 then carve_pond(x, y, z, math.random(1, 2), "default:water_source", "default:sand")
+        elseif r <= 40 then place_column(x, y, z, "dw_nodes:papyrus", math.random(2, 3))
+        elseif r <= 48 then place_boulder(x, y, z, "dw_nodes:coral_skeleton", 1)
+        elseif r <= 58 then carve_pond(x, y, z, math.random(1, 2), "dw_nodes:water_source", "dw_nodes:sand")
         end
 
     elseif kind == "swamp" then
-        if name == "default:water_source" then
-            if r <= 55 then set_if_air({x = x, y = y + 1, z = z}, "flowers:waterlily") end
+        if name == "dw_nodes:water_source" then
+            if r <= 55 then set_if_air({x = x, y = y + 1, z = z}, "dw_nodes:waterlily") end
         elseif r <= 22 then
-            carve_pond(x, y, z, math.random(1, 2), "default:water_source",
-                has("doggiowars:mud") and "doggiowars:mud" or "default:dirt")
-        elseif r <= 42 then place_column(x, y, z, "default:papyrus", math.random(2, 4))
+            carve_pond(x, y, z, math.random(1, 2), "dw_nodes:water_source",
+                has("doggiowars:mud") and "doggiowars:mud" or "dw_nodes:dirt")
+        elseif r <= 42 then place_column(x, y, z, "dw_nodes:papyrus", math.random(2, 4))
         elseif r <= 56 then plant_one(x, y, z, SWAMP_MUSH)
         elseif r <= 66 then plant_one(x, y, z, FERNS)
         elseif r <= 72 then place_boulder(x, y, z, "doggiowars:mossy_stone", math.random(1, 2))
         end
 
     elseif kind == "desert" then
-        if r <= 14 then place_column(x, y, z, "default:cactus", math.random(2, 4))
-        elseif r <= 40 then set_if_air({x = x, y = y + 1, z = z}, "default:dry_shrub")
+        if r <= 14 then place_column(x, y, z, "dw_nodes:cactus", math.random(2, 4))
+        elseif r <= 40 then set_if_air({x = x, y = y + 1, z = z}, "dw_nodes:dry_shrub")
         elseif r <= 55 then plant_one(x, y, z, DRY_GRASS)
-        elseif r <= 62 then place_boulder(x, y, z, "default:desert_sandstone", math.random(1, 2))
+        elseif r <= 62 then place_boulder(x, y, z, "dw_nodes:desert_sandstone", math.random(1, 2))
         end
 
     elseif kind == "savanna" then
         if r <= 8 then place_acacia(x, y, z)
         elseif r <= 55 then plant_one(x, y, z, DRY_GRASS)
-        elseif r <= 68 then set_if_air({x = x, y = y + 1, z = z}, "default:dry_shrub")
-        elseif r <= 73 then place_bush(x, y, z, "default:acacia_bush_leaves")
+        elseif r <= 68 then set_if_air({x = x, y = y + 1, z = z}, "dw_nodes:dry_shrub")
+        elseif r <= 73 then place_bush(x, y, z, "dw_nodes:acacia_bush_leaves")
         end
 
     elseif kind == "mycelial" then
@@ -618,9 +618,9 @@ local function place_feature(kind, x, y, z, name, island)
         end
 
     elseif kind == "barren" then
-        if r <= 12 then place_boulder(x, y, z, "default:stone", math.random(1, 2))
-        elseif r <= 20 then place_boulder(x, y, z, "default:gravel", 1)
-        elseif r <= 32 then set_if_air({x = x, y = y + 1, z = z}, "default:dry_shrub")
+        if r <= 12 then place_boulder(x, y, z, "dw_nodes:stone", math.random(1, 2))
+        elseif r <= 20 then place_boulder(x, y, z, "dw_nodes:gravel", 1)
+        elseif r <= 32 then set_if_air({x = x, y = y + 1, z = z}, "dw_nodes:dry_shrub")
         end
     end
 end

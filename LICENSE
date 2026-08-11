@@ -9,7 +9,8 @@ Code and documentation — MIT License
 ------------------------------------
 
 Applies to: everything in this repository except the media listed below —
-the Lua sources, mod.conf, and the Markdown documentation.
+the Lua sources, game.conf, minetest.conf, the mod.conf files, the scripts
+under tools/, and the Markdown documentation.
 
 Copyright (c) 2026 lioilsources
 
@@ -35,7 +36,8 @@ SOFTWARE.
 Media — CC BY-SA 4.0
 --------------------
 
-Applies to: everything under textures/ and models/, plus screenshot.png.
+Applies to: everything under mods/*/textures/ and mods/*/models/, plus
+screenshot.png and the images under menu/.
 
 Copyright (c) 2026 lioilsources
 
@@ -55,13 +57,28 @@ None. Every file in this repository is original work by the copyright holder
 above, and no asset packs, texture packs, model libraries or other external
 media were used. Specifically:
 
-  models/doggiowars_fighter_01.obj
+  mods/doggiowars/models/doggiowars_fighter_01.obj
       Hand-written OBJ — a 17-vertex placeholder fuselage authored directly
-      as text for this mod.
+      as text for this game.
 
-  textures/*.png
+  mods/doggiowars/textures/*.png
       Generated 16x16 PNGs: flat colour fills and procedural per-pixel noise,
-      produced for this mod.
+      produced for this game.
+
+  mods/dw_nodes/textures/dwn_*.png
+      Textures for the nodes the terrain is built from (dw_nodes:*, which
+      replaced the minetest_game blocks the game used to require). Drawn
+      procedurally by tools/gen_textures.py using nothing but the Python
+      standard library — no minetest_game texture, and no other third-party
+      image, was copied, traced or sampled. Re-runnable: the generator is
+      deterministic, so the committed PNGs can be reproduced byte for byte.
+
+  menu/icon.png
+      Drawn from scratch by tools/gen_icon.py — flat shapes and a gradient,
+      no photographic or third-party source.
+
+  menu/header.png, menu/background.png
+      Crops and downscales of screenshot.png (see above), made with sips.
 
   screenshot.png
       In-game capture of this mod.

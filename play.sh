@@ -1,16 +1,40 @@
 #!/usr/bin/env bash
-# Spustí Luanti přímo do světa s aktuálně odbočenou verzí modu.
+# Spustí Luanti přímo do světa s aktuálně odbočenou verzí hry.
 #   ./play.sh                     -> aktuální větev
 #   ./play.sh main                -> přepne na main a spustí
 #   ./play.sh claude/submarine-mode
-# Mod je do Luanti připojen symlinkem, takže stačí přepnout větev a spustit.
+# Hra je do Luanti připojena symlinkem v games/, takže stačí přepnout
+# větev a spustit. Svět se založí, pokud ještě není.
+#
+# Proměnné: WORLD (jméno světa), SEED (seed nového světa),
+#           LUANTI (cesta k binárce), WORLDS (složka se světy)
 set -euo pipefail
 
 LUANTI="${LUANTI:-$HOME/Downloads/luanti.app/Contents/MacOS/luanti}"
-WORLD="${WORLD:-Paja}"
+WORLD="${WORLD:-Doggio}"
+SEED="${SEED:-}"                 # prázdné = Luanti si vylosuje vlastní
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WORLDS="${WORLDS:-$HOME/Library/Application Support/minetest/worlds}"
 
 [ -x "$LUANTI" ] || { echo "Luanti nenalezen: $LUANTI (nastav LUANTI=...)" >&2; exit 1; }
+
+# Svět si založíme sami, ať "rozjet novou hru" je jeden příkaz. Luanti
+# umí --go jen do existujícího světa; bez tohohle by spadl na neznámý svět.
+if [ ! -d "$WORLDS/$WORLD" ]; then
+  echo "zakládám nový svět: $WORLD"
+  mkdir -p "$WORLDS/$WORLD"
+  cat > "$WORLDS/$WORLD/world.mt" <<EOF
+gameid = doggiowars
+world_name = $WORLD
+backend = sqlite3
+player_backend = sqlite3
+auth_backend = sqlite3
+mod_storage_backend = sqlite3
+server_announce = false
+EOF
+  [ -n "$SEED" ] && printf 'seed = %s\n[end_of_params]\n' "$SEED" \
+    > "$WORLDS/$WORLD/map_meta.txt"
+fi
 
 if [ $# -ge 1 ]; then
   branch="$1"
@@ -25,4 +49,4 @@ if [ $# -ge 1 ]; then
 fi
 
 echo "větev: $(git -C "$REPO" rev-parse --abbrev-ref HEAD)  svět: $WORLD"
-exec "$LUANTI" --go --worldname "$WORLD"
+exec "$LUANTI" --go --worldname "$WORLD" --gameid doggiowars

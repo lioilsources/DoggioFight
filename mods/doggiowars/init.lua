@@ -40,36 +40,19 @@ dofile(MP .. "/rabbit.lua")     -- Zajíc — AI loď pro chrtí závod
 dofile(MP .. "/race.lua")       -- Chrtí závod: trať, tunely, checkpointy
 dofile(MP .. "/sky.lua")        -- Sky, clouds, fog
 
--- Automatické zapnutí gamepadu. enable_joysticks je klientské nastavení
--- s výchozí hodnotou false na VŠECH platformách — bez něj žádný ovladač
--- nefunguje. V singleplayeru běží mod ve stejném procesu jako klient,
--- takže ho smíme zapnout sami; projeví se po restartu Luanti. Marker
--- zaručí, že to uděláme jen jednou — když si hráč joystick později
--- vědomě vypne, nebudeme mu ho přepisovat.
-if minetest.is_singleplayer() then
+-- Gamepad se zapíná deklarativně přes minetest.conf HRY (enable_joysticks,
+-- joystick_deadzone) — hra smí posouvat výchozí hodnoty nastavení, takže
+-- tady už nemusí být žádný zápis do hráčova configu. Zbývá jen připomenout
+-- DualShock, protože joystick_type je vlastnost hardwaru a uhodnout ho
+-- nejde (viz GAMEPAD.md).
+minetest.register_on_joinplayer(function(player)
+    -- has(), ne get() — get() vrací i enginový default ("auto"), takže by
+    -- podmínka platila vždycky a hláška by nevyskočila nikdy
     local s = minetest.settings
-    if not s:get_bool("doggiowars_gamepad_setup", false) then
-        s:set_bool("doggiowars_gamepad_setup", true)
-        if not s:get_bool("enable_joysticks", false) then
-            s:set_bool("enable_joysticks", true)
-            -- Pozor: get() vrací i enginový default (2048), takže by tahle
-            -- podmínka nikdy neprošla a deadzone se nikdy nenastavil.
-            -- has() jako jediné defaulty ignoruje a řekne, jestli hodnota
-            -- opravdu je v minetest.conf.
-            if not (s.has and s:has("joystick_deadzone")) then
-                s:set("joystick_deadzone", "4000")
-            end
-            minetest.register_on_joinplayer(function(player)
-                minetest.chat_send_player(player:get_player_name(),
-                    "Gamepad support enabled - restart Luanti once to use it."
-                    .. " DualShock (PS4/PS5): also set joystick_type = ps5"
-                    .. " (see GAMEPAD.md).")
-            end)
-            minetest.log("action",
-                "[doggiowars] enable_joysticks turned on (takes effect "
-                .. "after restart)")
-        end
-    end
-end
+    if s.has and s:has("joystick_type") then return end
+    minetest.chat_send_player(player:get_player_name(),
+        "Gamepad: PS4/PS5 DualShock needs Settings -> Controls -> Gamepads "
+        .. "-> Joystick type = ps5. Xbox works on 'auto'. See GAMEPAD.md.")
+end)
 
 minetest.log("action", "[doggiowars] Mod loaded successfully")

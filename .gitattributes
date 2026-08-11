@@ -1,5 +1,10 @@
-# Development notes — not part of the mod, keep them out of packaged archives
+# Development notes — not part of the game, keep them out of packaged archives
 # (honoured by `git archive`, which is how release zips are built).
 Prompts/ export-ignore
 .gitattributes export-ignore
 .gitignore export-ignore
+play.sh export-ignore
+
+# tools/ deliberately SHIPS: LICENSE cites tools/gen_textures.py as the
+# provenance of every dwn_*.png texture, so recipients must be able to
+# re-run it and check the claim themselves.
