@@ -60,7 +60,10 @@ zaměřovači, ne po ose trupu, takže jde předsadit cíl napříč zatáčkou 
 nebo sledovat něco za sebou. Když páčku pustíš, zaměřovač se sám vrátí
 na nos (~1 s).
 
-Kamera sedí v trupu, takže se svět otáčí spolu se strojem. Polohu ukazuje
+Kamera sedí v trupu, takže se svět otáčí spolu se strojem — **kromě chvíle,
+kdy zrovna míříš**. Dokud držíš pravou páčku, svět se s trupem neotáčí a ty
+se díváš, kam chceš; po puštění se zaměřovač vrátí na nos a kurz přinese
+s sebou. Je to daň za to, aby se server nepral s tvojí páčkou o pohled. Polohu ukazuje
 **vodováha pod minimapou** — čára se naklání spolu s letadlem a při stoupání
 se zvedne nad pevnou značku, při klesání pod ni. Když na značce leží, letíš
 rovně. Na klávesnici střílí **levé myšítko** (nebo `E`), boost je **pravé
