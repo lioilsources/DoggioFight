@@ -48,6 +48,10 @@ si ho hra přepisuje:
 | dvojšvih páčky **doleva/doprava** | **Barrel roll** (krátká nesmrtelnost) |
 | dvojité „dozadu" (`down`) | **Immelmann** (otočka 180°) |
 
+Polohu stroje ukazuje **vodováha pod minimapou** — čára se naklání spolu s
+letadlem a při stoupání se zvedne nad pevnou značku, při klesání pod ni.
+Když na značce leží, letíš rovně.
+
 Náklon máš **pod páčkou**: čím víc levou páčku vychýlíš do strany, tím víc
 letadlo položí na křídlo (plná výchylka ≈ 60°) a tím ochotněji se stáčí —
 ale pořád ~3× pomaleji, než když zamíříš pohledem. Něco navíc si letadlo
