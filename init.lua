@@ -16,6 +16,13 @@ doggiowars.const = {
     ROLL_MAX     = math.pi,
     ROLL_DECAY   = 1.5,     -- roll auto-level rate
     SPAWN_HEIGHT = 300,     -- výška spawnu / respawnu
+
+    -- Režim ponorky (/mode) — 5DoF hover
+    SUB_SPEED      = 20,    -- m/s max tah dopředu/dozadu
+    SUB_STRAFE     = 14,    -- m/s max úkrok do stran
+    SUB_VERT_SPEED = 12,    -- m/s max stoupání/klesání
+    SUB_ACCEL      = 25,    -- m/s^2 dojezd k cílové rychlosti (i brzda)
+    SUB_PITCH_MAX  = 0.9,   -- rad clamp sklonu trupu (strmější než PITCH_MAX)
 }
 
 local MP = minetest.get_modpath("doggiowars")
@@ -45,7 +52,11 @@ if minetest.is_singleplayer() then
         s:set_bool("doggiowars_gamepad_setup", true)
         if not s:get_bool("enable_joysticks", false) then
             s:set_bool("enable_joysticks", true)
-            if not s:get("joystick_deadzone") then
+            -- Pozor: get() vrací i enginový default (2048), takže by tahle
+            -- podmínka nikdy neprošla a deadzone se nikdy nenastavil.
+            -- has() jako jediné defaulty ignoruje a řekne, jestli hodnota
+            -- opravdu je v minetest.conf.
+            if not (s.has and s:has("joystick_deadzone")) then
                 s:set("joystick_deadzone", "4000")
             end
             minetest.register_on_joinplayer(function(player)

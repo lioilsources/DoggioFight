@@ -13,6 +13,16 @@ local respawn_pending = {}
 -- Gamepad diagnostika (přepíná /gp): živě ukazuje páčky a stisknutá tlačítka,
 -- aby šlo namapovat konkrétní ovladač (Xbox/PS4) na herní akce.
 doggiowars.gp_debug = doggiowars.gp_debug or {}
+
+-- Řídicí režim per hráč (/mode): "sub" = ponorka (VÝCHOZÍ), "fighter" =
+-- letadlo. Přežívá respawn entity — klíčem je jméno hráče, ne entita.
+doggiowars.mode = doggiowars.mode or {}
+
+-- Jediné místo, kde se rozhoduje o výchozím režimu — nezapsaný hráč jede
+-- ponorku
+function doggiowars.get_mode(name)
+    return doggiowars.mode[name or ""] or "sub"
+end
 local GP_KEYS = {"up", "down", "left", "right", "jump", "aux1",
                  "sneak", "dig", "place", "zoom"}
 local function gp_debug_str(ctrl, look_v, f)
@@ -75,7 +85,9 @@ function doggiowars.get_player_fighter(player)
     return nil
 end
 
-function doggiowars.mount_player(player, pos)
+-- yaw (nepovinný) = kterým směrem má stíhačka po nasazení koukat; spawnovací
+-- funkce ho vracejí tak, aby hráč měl ostrov před sebou
+function doggiowars.mount_player(player, pos, yaw)
     if not player or not player:is_player() then return end
     local name = player:get_player_name()
     if not pos then
@@ -88,6 +100,9 @@ function doggiowars.mount_player(player, pos)
     self.pilot = player
     self.pilot_name = name
     self.score = doggiowars.tricks.scores[name] or 0
+    if yaw then
+        obj:set_rotation({x = 0, y = yaw + math.pi, z = 0})
+    end
 
     player:set_attach(obj, "", {x = 0, y = 0, z = 0}, {x = 0, y = 0, z = 0})
     -- srovnat zaměřovač se směrem letu (letadlo se pak dotáčí za pohledem)
@@ -197,6 +212,7 @@ minetest.register_entity("doggiowars:fighter", {
             if self.is_dead then return end
         end
 
+        local sub_mode = doggiowars.get_mode(self.pilot_name) == "sub"
         local rot, vel
 
         if self.trick then
@@ -212,6 +228,74 @@ minetest.register_entity("doggiowars:fighter", {
                     minetest.dir_to_yaw({x = vel.x, y = 0, z = vel.z}))
                 pilot:set_look_vertical(-math.atan2(vel.y, th))
             end
+        elseif sub_mode then
+            -- PONORKA: 5DoF hover. Levá páčka = tah/úkrok, pohled (myš nebo
+            -- pravá páčka) = kurz+sklon, jump/sneak = stoupání/klesání.
+            -- Žádný roll, žádné triky (check_triggers se tu nevolá).
+            rot = self.object:get_rotation()
+            local look_h = pilot:get_look_horizontal()
+            local look_v = pilot:get_look_vertical()
+
+            -- yaw + pitch: trup se dotáčí za zaměřovačem; left/right/jump/
+            -- sneak pohledem NEhýbou — v ponorce mají nový význam
+            local chase = 2.0 * dtime
+            local dy = wrap_angle(look_h + math.pi - rot.y)
+            rot.y = rot.y + math.max(-chase, math.min(chase, dy))
+
+            local target_pitch = math.max(-C.SUB_PITCH_MAX,
+                math.min(C.SUB_PITCH_MAX, -look_v))
+            local pstep = C.PITCH_RATE * 1.5 * dtime
+            self.pitch = self.pitch + math.max(-pstep,
+                math.min(pstep, target_pitch - self.pitch))
+
+            -- roll: žádné bankování, plynule srovnat do nuly
+            local rstep = C.ROLL_DECAY * dtime
+            self.roll = (self.roll or 0)
+                - math.max(-rstep, math.min(rstep, self.roll or 0))
+
+            -- vstupy: levá páčka analogově, digitální klávesy jako záloha
+            -- (stejný deadzone vzor jako plyn stíhačky)
+            local thr = math.max(-1, math.min(1, ctrl.movement_y or 0))
+            if math.abs(thr) < 0.25 then
+                thr = (ctrl.up and 1 or 0) - (ctrl.down and 1 or 0)
+            end
+            self.dbg_thr = thr
+            local sway = math.max(-1, math.min(1, ctrl.movement_x or 0))
+            if math.abs(sway) < 0.25 then
+                sway = (ctrl.right and 1 or 0) - (ctrl.left and 1 or 0)
+            end
+            -- Svislý pohyb: sneak nahoru, jump dolů. Vypadá to obráceně, ale
+            -- sedí to na fyzická tlačítka DualShocku pod joystick_type=ps5,
+            -- kde X posílá sneak a ○ jump (ověřeno /gp) — X tedy stoupá.
+            local heave = (ctrl.sneak and 1 or 0) - (ctrl.jump and 1 or 0)
+
+            -- cílová rychlost: dopředu po skloněné ose trupu, úkrok vodorovně
+            -- kolmo na kurz (right = (f.z, -f.x)), heave svisle ve světových
+            -- osách nezávisle na sklonu nosu
+            local dir = minetest.yaw_to_dir(rot.y + math.pi)
+            local cp, sp = math.cos(self.pitch), math.sin(self.pitch)
+            local tvx = dir.x * cp * thr * C.SUB_SPEED
+                + dir.z * sway * C.SUB_STRAFE
+            local tvy = sp * thr * C.SUB_SPEED + heave * C.SUB_VERT_SPEED
+            local tvz = dir.z * cp * thr * C.SUB_SPEED
+                - dir.x * sway * C.SUB_STRAFE
+
+            -- hover model: rychlost se dojíždí k cílové, puštěné ovládání
+            -- znamená cíl (0,0,0) → ponorka plynule zastaví a visí
+            local v = self.sub_vel or self.object:get_velocity()
+                or {x = 0, y = 0, z = 0}
+            local astep = C.SUB_ACCEL * dtime
+            v.x = v.x + math.max(-astep, math.min(astep, tvx - v.x))
+            v.y = v.y + math.max(-astep, math.min(astep, tvy - v.y))
+            v.z = v.z + math.max(-astep, math.min(astep, tvz - v.z))
+            self.sub_vel = v
+            self.speed = math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z)
+
+            rot.x = -self.pitch
+            rot.z = self.roll
+            self.object:set_rotation(rot)
+            vel = v
+            self.object:set_velocity(vel)
         else
             rot = self.object:get_rotation()
 
@@ -452,10 +536,13 @@ minetest.register_entity("doggiowars:fighter", {
                 local p = minetest.get_player_by_name(pilot_name)
                 if not p then return end
                 local ppos = p:get_pos()
-                local sp = doggiowars.spawn_pos_near
-                    and doggiowars.spawn_pos_near(ppos.x, ppos.z)
-                    or {x = ppos.x, y = C.SPAWN_HEIGHT, z = ppos.z}
-                doggiowars.mount_player(p, sp)
+                local sp, yaw
+                if doggiowars.spawn_pos_near then
+                    sp, yaw = doggiowars.spawn_pos_near(ppos.x, ppos.z)
+                else
+                    sp = {x = ppos.x, y = C.SPAWN_HEIGHT, z = ppos.z}
+                end
+                doggiowars.mount_player(p, sp, yaw)
             end)
         end
 
@@ -501,9 +588,13 @@ minetest.register_on_respawnplayer(function(player)
     minetest.after(0.1, function()
         local p = minetest.get_player_by_name(name)
         if p and not doggiowars.get_player_fighter(p) then
-            local sp = doggiowars.spawn_pos and doggiowars.spawn_pos()
-                or {x = 0, y = C.SPAWN_HEIGHT, z = 0}
-            doggiowars.mount_player(p, sp)
+            local sp, yaw
+            if doggiowars.spawn_pos then
+                sp, yaw = doggiowars.spawn_pos()
+            else
+                sp = {x = 0, y = C.SPAWN_HEIGHT, z = 0}
+            end
+            doggiowars.mount_player(p, sp, yaw)
         end
     end)
     return true
@@ -548,7 +639,9 @@ minetest.register_chatcommand("respawn_fighter", {
 
 -- Přesun k nejbližšímu ostrovu (funguje v jakémkoli světě — chunk se
 -- v případě potřeby dogeneruje). Řeší "nevidím žádné ostrovy".
-local function fly_player_to(player, sp)
+-- yaw (nepovinný) = kam se má hráč po přeletu dívat. Bez něj zůstane
+-- pohled beze změny.
+local function fly_player_to(player, sp, yaw)
     -- zajistit vygenerování cílové oblasti, ať tam ostrov opravdu je
     if minetest.emerge_area then
         minetest.emerge_area(
@@ -559,8 +652,21 @@ local function fly_player_to(player, sp)
     if f and f.object then
         f.object:set_pos(sp)
         f.speed = 12
+        f.sub_vel = nil          -- ponorka: zahodit setrvačnost z minulého místa
+        if yaw then
+            -- trup i zaměřovač srovnat na ostrov (rot.y = look + PI, viz
+            -- dotáčení v on_step) — jinak by se letadlo teprve otáčelo
+            player:set_look_horizontal(yaw)
+            player:set_look_vertical(0)
+            f.pitch, f.roll = 0, 0
+            f.object:set_rotation({x = 0, y = yaw + math.pi, z = 0})
+        end
     else
         player:set_pos(sp)
+        if yaw then
+            player:set_look_horizontal(yaw)
+            player:set_look_vertical(0)
+        end
     end
 end
 
@@ -598,20 +704,21 @@ minetest.register_chatcommand("island", {
                 return false, "Unknown biome '" .. param .. "' (or none nearby). Biomes: "
                     .. table.concat(names, ", ")
             end
-            fly_player_to(player, doggiowars.island_vantage(isl))
+            fly_player_to(player,
+                doggiowars.island_approach(isl, pos.x, pos.z))
             return true, string.format(
-                "%s island at (%d, %d, %d), r=%d, %d blocks away - hovering "
-                    .. "above it. Give it a moment to generate.",
+                "%s island at (%d, %d, %d), r=%d, %d blocks away - it is "
+                    .. "right in front of you. Give it a moment to generate.",
                 isl.biome.name, isl.x, isl.y, isl.z, isl.radius,
                 math.floor(dist or 0))
         end
 
         local isl, dist = doggiowars.nearest_island(pos.x, pos.z)
-        local sp = doggiowars.spawn_pos_near(pos.x, pos.z)
-        fly_player_to(player, sp)
+        local sp, yaw = doggiowars.spawn_pos_near(pos.x, pos.z)
+        fly_player_to(player, sp, yaw)
         if isl then
             return true, string.format(
-                "%s island, r=%d, was %d blocks away - you are there. Give it a moment to generate.",
+                "%s island, r=%d, was %d blocks away - it is in front of you. Give it a moment to generate.",
                 isl.biome and isl.biome.name or "?", isl.radius, math.floor(dist or 0))
         end
         return true, "Moving to island."
@@ -653,8 +760,10 @@ minetest.register_on_mods_loaded(function()
         func = function(name)
             local player = minetest.get_player_by_name(name)
             if not player then return false, "Player not found" end
-            fly_player_to(player, doggiowars.spawn_pos())
-            return true, "Flying to the home island (0,0)."
+            local sp, yaw = doggiowars.spawn_pos()
+            fly_player_to(player, sp, yaw)
+            return true, "Flying to the home island (0,0) - it will be "
+                .. "in front of you."
         end,
     })
 end)
@@ -673,5 +782,41 @@ minetest.register_chatcommand("gp", {
                 .. "sleduj, co se rozsvítí uprostřed obrazovky."
         end
         return true, "Gamepad diagnostika VYP."
+    end,
+})
+
+minetest.register_chatcommand("mode", {
+    description = "Přepnutí ovládání: stíhačka <-> ponorka",
+    params = "[fighter|sub]",
+    privs = {interact = true},
+    func = function(name, param)
+        param = (param or ""):gsub("%s+", ""):lower()
+        local new
+        if param == "sub" or param == "submarine" then
+            new = "sub"
+        elseif param == "fighter" or param == "plane" then
+            new = "fighter"
+        else
+            new = doggiowars.get_mode(name) == "sub" and "fighter" or "sub"
+        end
+        doggiowars.mode[name] = new
+        local p = minetest.get_player_by_name(name)
+        local f = p and doggiowars.get_player_fighter(p)
+        if f then
+            -- Čistý přechod za letu: zrušit trik i boost a srovnat vstupní
+            -- hrany, ať držené klávesy nespustí hold-trik ve druhém režimu.
+            -- Záměrně NE tricks.init — ten by smazal boost_meter/combo/skóre.
+            f.trick = nil
+            f.boost_time = 0
+            f.input = {prev = {}, last_tap = {}, held_since = {}}
+            f.sub_vel = nil
+            if new == "fighter" then f.speed = 15 end
+            p:set_fov(0)
+        end
+        if new == "sub" then
+            return true, "PONORKA: levá páčka = tah/úkrok, pohled = kurz, "
+                .. "X = nahoru, ○ = dolů. Triky a boost vypnuty."
+        end
+        return true, "STÍHAČKA: klasické letecké ovládání."
     end,
 })

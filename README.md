@@ -24,6 +24,28 @@ immediately — there is no walking in DoggioWars.
 
 ## Controls
 
+Two control modes, toggled with **`/mode`**. **Submarine is the default** —
+it hovers, so you can stop and look around while you learn the world;
+`/mode fighter` switches to the aeroplane. The mode is per player and
+survives respawn.
+
+### Submarine (default)
+
+5DoF hover. Release the controls and the ship eases to a stop.
+
+| Input | Action |
+|---|---|
+| Mouse / right stick | heading + pitch — the hull chases the crosshair |
+| W / S (left stick ↑↓) | thrust forward / back along the hull axis |
+| A / D (left stick ←→) | strafe sideways (heading unchanged) |
+| Shift / Space (X / ○) | rise / sink vertically |
+| Left mouse button, E (R2) | **shoot** |
+
+Tricks, boost and drift are disabled in submarine mode — those buttons
+have a new meaning here.
+
+### Fighter (`/mode fighter`)
+
 Mouse-flight: the plane chases your crosshair. Steer by looking.
 
 | Input | Action |
@@ -50,8 +72,9 @@ troubleshooting (in Czech).
 
 | Command | Effect |
 |---|---|
-| `/island` | fly to the nearest island |
-| `/island <biome>` | fly above the nearest island of a biome (`ice`, `volcano`, `sand`, `green`, … or full names) |
+| `/mode` | toggle submarine ↔ fighter (`/mode sub`, `/mode fighter`) |
+| `/island` | fly to the nearest island — it ends up in front of you |
+| `/island <biome>` | same, for the nearest island of a biome (`ice`, `volcano`, `sand`, `green`, … or full names) |
 | `/goto <x> <z>` or `/goto <x> <y> <z>` | fly to coordinates |
 | `/home` | return to the home island at the origin |
 | `/race` | greyhound race — chase the golden rabbit (`/race stop` to cancel) |

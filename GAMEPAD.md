@@ -48,6 +48,35 @@ Náklon (bank) je **automatický** — letadlo se naklání samo podle ostrosti
 zatáčky. Na klávesnici střílí **levé myšítko** (nebo `E`), boost je **pravé
 myšítko** nebo dvojité W.
 
+## Režim ponorky — příkaz `/mode` (VÝCHOZÍ REŽIM)
+
+Ponorka je **výchozí** ovládání. Příkaz **`/mode`** přepíná na stíhačku a
+zpět (`/mode sub`, `/mode fighter` nastaví režim napřímo). Ponorka je
+„hover": puštěné ovládání plynule zastaví a loď visí na místě. Režim
+přežívá respawn.
+
+| Vstup | Akce |
+|---|---|
+| **Levá páčka nahoru/dolů** (W/S) | tah dopředu/dozadu po ose trupu |
+| **Levá páčka doleva/doprava** (A/D) | úkrok do stran (strafe, kurz se nemění) |
+| **Pravá páčka** (myš) | kurz + sklon (trup se dotáčí za zaměřovačem) |
+| **X** (`sneak`, Shift) | stoupání svisle nahoru |
+| **○ kolečko** (`jump`, Space) | klesání svisle dolů |
+| **R2** (`dig`) | střelba (funguje i v ponorce) |
+
+Triky, boost a drift jsou v ponorce **vypnuté** (tlačítka mají nový
+význam). Vertikální posun je na X/kolečku, protože D-pad Luanti modu
+neposílá (viz níže).
+
+⚠️ **Proč je stoupání na `sneak` a klesání na `jump`?** Vypadá to obráceně,
+ale je to kvůli fyzickým tlačítkům: pod `joystick_type = ps5` posílá
+DualShock **X jako `sneak`** a **○ jako `jump`** (ověřeno přes `/gp`).
+Aby X stoupalo — jak to na ovladači sedí do ruky — musí být `sneak`
+nahoru. **Daň za to platí klávesnice**: v ponorce je stoupání na
+**Shiftu** a klesání na **Space**, tedy naopak než ve stíhačce. Kdyby ti
+na jiném ovladači vyšlo mapování opačně, je to jeden řádek ve
+`vehicle.lua` (proměnná `heave`).
+
 Co ovladač NEUMÍ namapovat (klientské zkratky Luanti, mod je nezmění):
 
 - **Trojúhelník / čtverec, R1 / L1** — nic (Luanti je nemapuje vůbec).
