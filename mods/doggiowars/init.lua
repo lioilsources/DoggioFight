@@ -8,7 +8,15 @@ doggiowars = {}
 doggiowars.const = {
     SPEED_MAX    = 40,      -- m/s
     SPEED_MIN    = 5,       -- stall speed
-    TURN_SPEED   = 1.5,     -- rad/s
+    TURN_SPEED   = 1.5,     -- rad/s (rychlost otáčení za zaměřovačem)
+
+    -- Levá páčka = knipl do náklonu, ne otočka. Zatáčí zlomkem rychlosti
+    -- pohledu, zato se do zatáčky pořádně položí. Náklon horizontu Luanti
+    -- neumí, takže ten pocit nese natočení trupu + úklon kamery (eye-lean).
+    BANK_TURN    = 0.35,    -- násobek TURN_SPEED při zatáčení páčkou
+    BANK_ROLL    = 1.05,    -- rad (~60°) při plné výchylce páčky
+    BANK_ROLL_MAX = 2.2,    -- rad (~126°) strop pro náklon i s dotáčením
+
     PITCH_RATE   = 1.2,     -- rad/s
     PITCH_MAX    = 0.6,     -- max pitch angle
     PITCH_DECAY  = 0.8,     -- pitch return-to-center rate

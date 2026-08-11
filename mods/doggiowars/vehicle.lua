@@ -333,12 +333,17 @@ minetest.register_entity("doggiowars:fighter", {
             local look_h = pilot:get_look_horizontal()
             local look_v = pilot:get_look_vertical()
             local keys_steered = false
-            if ctrl.left then
-                look_h = look_h + turn * dtime * xmag
-                keys_steered = true
-            end
-            if ctrl.right then
-                look_h = look_h - turn * dtime * xmag
+
+            -- Levá páčka NENÍ druhý pohled — je to knipl do náklonu.
+            -- Zatáčí zlomkem rychlosti pohledu (BANK_TURN), zato letadlo
+            -- položí na křídlo. Při driftu (S+A/D) se náklon neškrtí:
+            -- to je vědomý manévr za cenu rychlosti a má zůstat ostrý.
+            local bank = 0
+            if ctrl.left then bank = xmag end
+            if ctrl.right then bank = -xmag end
+            if bank ~= 0 then
+                local rate = drifting and turn or (turn * C.BANK_TURN)
+                look_h = look_h + rate * dtime * bank
                 keys_steered = true
             end
             if ctrl.jump then
@@ -369,6 +374,17 @@ minetest.register_entity("doggiowars:fighter", {
             -- letadlo dotáčí za zaměřovačem); po srovnání kurzu se vyrovná
             local target_roll = math.max(-1, math.min(1, -dy * 2.0))
                 * C.ROLL_MAX * 0.7
+
+            -- Páčka klade letadlo na křídlo napřímo. Bez tohohle by se
+            -- náklon skoro neprojevil: odvozuje se z dy (rozdílu kurzu a
+            -- pohledu), a ten je při pomalém zatáčení páčkou malý — hráč
+            -- by zatáčel pomaleji a neviděl proč.
+            if bank ~= 0 then
+                target_roll = math.max(-C.BANK_ROLL_MAX,
+                    math.min(C.BANK_ROLL_MAX,
+                        target_roll - bank * C.BANK_ROLL))
+            end
+
             local rstep = C.ROLL_SPEED * dtime
             self.roll = (self.roll or 0)
                 + math.max(-rstep, math.min(rstep, target_roll - self.roll))

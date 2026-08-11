@@ -40,7 +40,7 @@ si ho hra přepisuje:
 |---|---|
 | **Pravá páčka** | míření / let (letadlo se dotáčí za zaměřovačem) |
 | **Levá páčka nahoru/dolů** | plyn / brzda (analogově dle výchylky) |
-| **Levá páčka doleva/doprava** | zatáčení (yaw) |
+| **Levá páčka doleva/doprava** | **náklon** — položí letadlo na křídlo a stáčí ho ~3× pomaleji než pohled |
 | **R2** (`dig`) | **STŘELBA** (držet = dávka ~6/s) |
 | **L2** (`place`) | **BOOST** (stojí 25 z metru) |
 | **X** (`jump`) | nos nahoru; podržet ≥0,8 s = **Looping** |
@@ -48,8 +48,10 @@ si ho hra přepisuje:
 | dvojšvih páčky **doleva/doprava** | **Barrel roll** (krátká nesmrtelnost) |
 | dvojité „dozadu" (`down`) | **Immelmann** (otočka 180°) |
 
-Náklon (bank) je **automatický** — letadlo se naklání samo podle ostrosti
-zatáčky. Na klávesnici střílí **levé myšítko** (nebo `E`), boost je **pravé
+Náklon máš **pod páčkou**: čím víc levou páčku vychýlíš do strany, tím víc
+letadlo položí na křídlo (plná výchylka ≈ 60°) a tím ochotněji se stáčí —
+ale pořád ~3× pomaleji, než když zamíříš pohledem. Něco navíc si letadlo
+přidá samo podle toho, jak ostře se dotáčí za zaměřovačem. Na klávesnici střílí **levé myšítko** (nebo `E`), boost je **pravé
 myšítko** nebo dvojité W.
 
 ## Režim ponorky — příkaz `/mode` (VÝCHOZÍ REŽIM)
