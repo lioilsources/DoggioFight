@@ -71,10 +71,10 @@ round on its own, faster the steeper you are. Let go and the wings level
 themselves. The elevator (X / ○) pitches the nose and it settles back to
 level when released.
 
-The right stick moves the gunsight within a cone around the nose — about
-52° sideways and 40° up and down — and touches nothing else. Shots go where
+The right stick moves the gunsight and touches nothing else. Shots go where
 the crosshair points, not where the nose does, so you can lead a target
-across your turn. Let go of it and the sight drifts back onto the nose.
+across your turn — or track one behind you. Let go and the sight glides back
+onto the nose in about a second.
 
 The camera rides in the airframe, so the world turns as the machine turns.
 Luanti cannot roll the horizon, so attitude is read off a level indicator

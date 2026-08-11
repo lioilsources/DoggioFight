@@ -103,6 +103,7 @@ function doggiowars.mount_player(player, pos, yaw)
     -- prev_* je reference "kde byl trup minule"; nil = první snímek nezavede
     -- žádný rozdíl, takže se kamera po nasazení nikam neškubne
     self.prev_yaw, self.prev_nose_v = nil, nil
+    self.last_look_h, self.last_look_v = nil, nil
     if yaw then
         obj:set_rotation({x = 0, y = yaw + math.pi, z = 0})
     end
@@ -235,6 +236,7 @@ minetest.register_entity("doggiowars:fighter", {
             -- otočka během triku nezapočítá jako rozdíl a kamera po
             -- dokončení neškubne.
             self.prev_yaw, self.prev_nose_v = nil, nil
+            self.last_look_h, self.last_look_v = nil, nil
         elseif sub_mode then
             -- PONORKA: 5DoF hover. Levá páčka = tah/úkrok, pohled (myš nebo
             -- pravá páčka) = kurz+sklon, jump/sneak = stoupání/klesání.
@@ -418,34 +420,40 @@ minetest.register_entity("doggiowars:fighter", {
             local dpitch = nose_v - (self.prev_nose_v or nose_v)
             self.prev_yaw, self.prev_nose_v = rot.y, nose_v
 
+            local look_h = pilot:get_look_horizontal()
+            local look_v = pilot:get_look_vertical()
             local dh, dv = dyaw, dpitch
 
-            -- Kužel míření: mimo něj zaměřovač dotlačíme zpátky, ale jen o
-            -- ten přesah — uvnitř kuželu do pohledu nesaháme vůbec.
-            local look_h = pilot:get_look_horizontal() + dh
-            local look_v = pilot:get_look_vertical() + dv
-            local off_h = wrap_angle(look_h - (rot.y + math.pi))
-            local off_v = look_v - nose_v
-            if off_h > C.AIM_YAW then
-                dh = dh - (off_h - C.AIM_YAW)
-            elseif off_h < -C.AIM_YAW then
-                dh = dh - (off_h + C.AIM_YAW)
-            end
-            if off_v > C.AIM_PITCH then
-                dv = dv - (off_v - C.AIM_PITCH)
-            elseif off_v < -C.AIM_PITCH then
-                dv = dv - (off_v + C.AIM_PITCH)
+            -- Míří hráč právě teď? Pohledem od minulého kroku hnul někdo
+            -- jiný než my — to je páčka nebo myš. Je to jen přepínač, ne
+            -- akumulátor: když nás zpožděný paket na jeden snímek splete,
+            -- odloží se tím návrat o snímek a nic víc.
+            local aiming =
+                math.abs(wrap_angle(look_h - (self.last_look_h or look_h))) > 1e-4
+                or math.abs(look_v - (self.last_look_v or look_v)) > 1e-4
+
+            -- Ruce pryč od páčky → zaměřovač se plynule vrátí na nos.
+            -- Žádný tvrdý kužel: dokud hráč míří, do pohledu vůbec
+            -- nezasahujeme, takže se páčka nemá s čím přetahovat ani na dorazu.
+            if not aiming then
+                local off_h = wrap_angle(look_h + dh - (rot.y + math.pi))
+                local off_v = (look_v + dv) - nose_v
+                local r = C.AIM_RETURN * dtime
+                dh = dh - math.max(-r, math.min(r, off_h))
+                dv = dv - math.max(-r, math.min(r, off_v))
             end
 
-            -- Rovný let bez míření = žádný zápis. Každý zápis je paket
-            -- klientovi a čím míň jich je, tím klidnější obraz.
+            -- Rovný let se zaměřovačem na nose = žádný zápis. Každý zápis je
+            -- paket klientovi a čím míň jich je, tím klidnější obraz.
+            local new_h = look_h + dh
+            local new_v = math.max(-1.4, math.min(1.4, look_v + dv))
             if math.abs(dh) > 1e-5 then
-                pilot:set_look_horizontal(pilot:get_look_horizontal() + dh)
+                pilot:set_look_horizontal(new_h)
             end
             if math.abs(dv) > 1e-5 then
-                pilot:set_look_vertical(math.max(-1.4, math.min(1.4,
-                    pilot:get_look_vertical() + dv)))
+                pilot:set_look_vertical(new_v)
             end
+            self.last_look_h, self.last_look_v = new_h, new_v
 
             -- Velocity from direction + speed
             local dir = minetest.yaw_to_dir(rot.y + math.pi)
@@ -693,6 +701,7 @@ local function fly_player_to(player, sp, yaw)
             player:set_look_vertical(0)
             f.pitch, f.roll = 0, 0
             f.prev_yaw, f.prev_nose_v = nil, nil
+            f.last_look_h, f.last_look_v = nil, nil
             f.object:set_rotation({x = 0, y = yaw + math.pi, z = 0})
         end
     else
@@ -845,6 +854,7 @@ minetest.register_chatcommand("mode", {
             f.input = {prev = {}, last_tap = {}, held_since = {}}
             f.sub_vel = nil
             f.prev_yaw, f.prev_nose_v = nil, nil
+            f.last_look_h, f.last_look_v = nil, nil
             if new == "fighter" then f.speed = 15 end
             p:set_fov(0)
         end

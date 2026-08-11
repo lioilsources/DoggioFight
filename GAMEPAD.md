@@ -38,7 +38,7 @@ si ho hra přepisuje:
 
 | Vstup | Akce |
 |---|---|
-| **Pravá páčka** | **jen míření** — zaměřovač v kuželu kolem nosu, do letu nezasahuje |
+| **Pravá páčka** | **jen míření** — do letu nezasahuje, po puštění se vrátí na nos |
 | **Levá páčka nahoru/dolů** | plyn / brzda (analogově dle výchylky) |
 | **Levá páčka doleva/doprava** | **náklon** — a ze sklonu vzniká zatáčka |
 | **R2** (`dig`) | **STŘELBA** (držet = dávka ~6/s) |
@@ -55,10 +55,10 @@ výchylka ≈ 60°) a zatáčka z něj teprve vznikne — čím strmější nák
 rychleji se nos stáčí (60° ≈ 57°/s). Po puštění se křídla srovnají sama.
 Výškovka (X/○) klopí nos a po puštění se vrací k horizontu.
 
-Pravá páčka hýbe **zaměřovačem v kuželu kolem nosu** (~52° do stran, 40°
-nahoru/dolů) a do letu nezasahuje. Střely letí po zaměřovači, ne po ose
-trupu, takže jde předsadit cíl napříč zatáčkou. Když páčku pustíš,
-zaměřovač se plynule vrátí na nos.
+Pravá páčka hýbe **zaměřovačem** a do letu nezasahuje. Střely letí po
+zaměřovači, ne po ose trupu, takže jde předsadit cíl napříč zatáčkou —
+nebo sledovat něco za sebou. Když páčku pustíš, zaměřovač se sám vrátí
+na nos (~1 s).
 
 Kamera sedí v trupu, takže se svět otáčí spolu se strojem. Polohu ukazuje
 **vodováha pod minimapou** — čára se naklání spolu s letadlem a při stoupání
