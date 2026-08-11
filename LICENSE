@@ -73,7 +73,11 @@ media were used. Specifically:
       image, was copied, traced or sampled. Re-runnable: the generator is
       deterministic, so the committed PNGs can be reproduced byte for byte.
 
-  menu/*.png
+  menu/icon.png
+      Drawn from scratch by tools/gen_icon.py — flat shapes and a gradient,
+      no photographic or third-party source.
+
+  menu/header.png, menu/background.png
       Crops and downscales of screenshot.png (see above), made with sips.
 
   screenshot.png
