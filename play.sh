@@ -10,7 +10,18 @@
 #           LUANTI (cesta k binárce), WORLDS (složka se světy)
 set -euo pipefail
 
-LUANTI="${LUANTI:-$HOME/Downloads/luanti.app/Contents/MacOS/luanti}"
+# Spouštíme binárku napřímo, ne přes `open`. Kromě rychlosti to obchází
+# App Translocation: appka stažená prohlížečem má na sobě karanténu a macOS
+# ji přes LaunchServices spouští z náhodné read-only kopie. Přímý start
+# LaunchServices míjí, takže hra běží ze své skutečné cesty.
+LUANTI="${LUANTI:-}"
+if [ -z "$LUANTI" ]; then
+  for c in /Applications/luanti.app/Contents/MacOS/luanti \
+           "$HOME/Applications/luanti.app/Contents/MacOS/luanti" \
+           "$HOME/Downloads/luanti.app/Contents/MacOS/luanti"; do
+    [ -x "$c" ] && LUANTI="$c" && break
+  done
+fi
 WORLD="${WORLD:-Doggio}"
 SEED="${SEED:-}"                 # prázdné = Luanti si vylosuje vlastní
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
