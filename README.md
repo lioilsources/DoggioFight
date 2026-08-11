@@ -100,10 +100,13 @@ your games folder:
 
 ```
 git clone https://github.com/lioilsources/DoggioWars.git \
-    ~/.minetest/games/doggiowars
+    ~/.minetest/games/doggiowars_game
 ```
 
-Then create a world and pick **DoggioWars** as the game. Requires
+The folder must be named `doggiowars_game`. Luanti takes the game id from
+the folder name but strips a `_game` suffix — the same reason `minetest_game`
+has the id `minetest` — so the game id stays `doggiowars` and worlds keep
+working. Then create a world and pick **DoggioWars** as the game. Requires
 **Luanti 5.12+** and nothing else — no Minetest Game, no other mods.
 
 Where the games folder lives:
