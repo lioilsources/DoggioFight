@@ -66,8 +66,9 @@ Mouse-flight: the plane chases your crosshair. Steer by looking.
 Two ways to turn, and they feel different. Looking with the mouse or the
 right stick points the nose straight at where you want to go. The left
 stick banks instead: the plane rolls onto a wing and comes round about
-three times slower. Luanti cannot roll the horizon, so the bank is carried
-by the hull and by the camera leaning into it.
+three times slower. Luanti cannot roll the horizon, so the bank is read off
+an artificial horizon in the HUD — a tilting line with a fixed aircraft mark
+in the gap, below the crosshair.
 
 Steep dives build overspeed, climbing bleeds it off. Skimming close to
 terrain charges your boost meter, and tricks score points.
