@@ -120,7 +120,13 @@ local ATT_SPACING = 22      -- px mezi dílky
 local ATT_PITCH_PX = 30     -- o kolik px se čára zvedne při plném stoupání
 
 -- Pod minimapou vpravo nahoře, ať nepřekáží uprostřed obrazovky.
-local ATT_POS = {x = 0.88, y = 0.30}
+--
+-- Kotvíme na PRAVÝ OKRAJ (position.x = 1) a odsazujeme v pixelech, ne na
+-- zlomek šířky: minimapa visí taky na pravém okraji, takže si takhle lícují
+-- pravou hranou na jakémkoli rozlišení. Přesné zarovnání na minimapu nejde
+-- — Luanti její polohu ani velikost do Lua nedává.
+local ATT_POS      = {x = 1, y = 0.38}
+local ATT_MARGIN_R = 16     -- px od pravého okraje k pravému konci čáry
 
 local PIP_TEX = "doggiowars_hud_pip.png^[colorize:#8FE3A0:255"
 local REF_TEX = "doggiowars_hud_ref.png^[colorize:#FFFFFF:255"
@@ -136,12 +142,20 @@ local function att_dist(i)
     return k * ATT_SPACING
 end
 
+-- poloměr čáry = od středu ke STŘEDU vnějšího dílku
+local ATT_RADIUS = (ATT_PIPS / 2) * ATT_SPACING
+-- dílek je po škálování 12 px široký, takže od svého středu přesahuje o 6;
+-- bez toho by okraj seděl o 6 px blíž k hraně, než říká ATT_MARGIN_R
+local ATT_PIP_HALF = 6
+-- vodorovný posun středu widgetu od pravého okraje (záporný = doleva)
+local ATT_BASE_X = -(ATT_MARGIN_R + ATT_RADIUS + ATT_PIP_HALF)
+
 local function att_add(player)
     for i = 1, ATT_PIPS do
         hud.add(player, att_key(i), {
             type      = "image",
             position  = ATT_POS,
-            offset    = {x = 0, y = 0},
+            offset    = {x = ATT_BASE_X, y = 0},
             text      = PIP_TEX,
             scale     = {x = 2, y = 2},
             alignment = {x = 0, y = 0},
@@ -152,7 +166,7 @@ local function att_add(player)
     hud.add(player, "att_ref", {
         type      = "image",
         position  = ATT_POS,
-        offset    = {x = 0, y = 0},
+        offset    = {x = ATT_BASE_X, y = 0},
         text      = REF_TEX,
         -- scale 1: značka je 31 px široká a vejde se do mezery ±22 px
         scale     = {x = 1, y = 1},
@@ -189,7 +203,7 @@ local function att_update(player, roll, pitch, show)
     for i = 1, ATT_PIPS do
         local d = att_dist(i)
         hud.set(player, att_key(i), {
-            offset = {x = math.floor(d * ca + 0.5),
+            offset = {x = ATT_BASE_X + math.floor(d * ca + 0.5),
                       y = math.floor(d * sa + dy + 0.5)},
         })
     end
