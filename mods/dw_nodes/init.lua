@@ -12,7 +12,9 @@
 -- Textury generuje tools/gen_textures.py — proceduálně, ze standardní
 -- knihovny, deterministicky. Přegenerování: python3 tools/gen_textures.py
 
-dw_nodes = dw_nodes or {}
+-- čistě přiřazení: `dw_nodes or {}` by globál nejdřív ČETL a Luanti
+-- to hlásí jako přístup k nedeklarované globální proměnné
+dw_nodes = {}
 
 local S = function(t) return t end     -- místo pro budoucí překlady
 
@@ -301,7 +303,7 @@ local function liquid_pair(base, tex, opts)
         groups = opts.groups or {},
     }
 
-    local src = {drawtype = "liquidsource", liquidtype = "source",
+    local src = {drawtype = "liquid", liquidtype = "source",
                  tiles = {"dwn_" .. tex .. ".png"},
                  description = S(opts.desc or "Liquid")}
     local flow = {drawtype = "flowingliquid", liquidtype = "flowing",

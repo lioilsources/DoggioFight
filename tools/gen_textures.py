@@ -267,6 +267,9 @@ SOLID = {
     "dry_grass_top": ((172, 150, 82), 14),
     "rainforest_litter_top": ((72, 106, 50), 14),
     "lava": ((226, 110, 26), 18),
+    # tekouci varianta MUSI existovat pro kazdou kapalinu:
+    # liquid_pair() ji sklada do special_tiles
+    "lava_flow": ((238, 132, 38), 22),
 }
 
 TRANSLUCENT = {
