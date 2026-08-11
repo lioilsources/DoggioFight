@@ -17,10 +17,11 @@ doggiowars.const = {
     BANK_ROLL_MAX = 1.40,   -- rad (~80°) v airbrake driftu
     TURN_RATE     = 1.30,   -- rad/s při svislém náklonu; škáluje sin(roll)
 
-    -- Zaměřovač se od nosu smí odchýlit jen v kuželu — pilot je připoutaný
+    -- Zaměřovač se od nosu smí odchýlit jen v kuželu — pilot je připoutaný.
+    -- Sám se na nos nevrací: to by znamenalo přepisovat pohled v každém
+    -- snímku, a právě zápisy do pohledu jsou zdrojem třesu.
     AIM_YAW       = 0.90,   -- rad (~52°) do stran
     AIM_PITCH     = 0.70,   -- rad (~40°) nahoru/dolů
-    AIM_RECENTER  = 0.80,   -- rad/s návrat zaměřovače na nos, když nemíříš
 
     PITCH_RATE   = 1.2,     -- rad/s
     PITCH_MAX    = 0.6,     -- max pitch angle
