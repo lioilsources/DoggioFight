@@ -33,7 +33,7 @@ doggiowars.const = {
     SUB_PITCH_MAX  = 0.9,   -- rad clamp sklonu trupu (strmější než PITCH_MAX)
 }
 
-local MP = minetest.get_modpath("doggiowars")
+local MP = minetest.get_modpath("dw_core")
 
 -- Load modules in dependency order
 dofile(MP .. "/nodes.lua")      -- Custom blocks (must be first for content IDs)

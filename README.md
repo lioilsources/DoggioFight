@@ -125,10 +125,15 @@ once — see [GAMEPAD.md](GAMEPAD.md).
 game.conf            game metadata; forces the singlenode mapgen
 minetest.conf        default settings for this game (gamepad on, view range)
 menu/                icon, header and background for the main menu
-mods/doggiowars/     all the gameplay — mapgen, flight, weapons, races
-mods/dw_nodes/       stand-ins for the minetest_game nodes the terrain uses
+mods/dw_core/        all the gameplay — mapgen, flight, weapons, races
+mods/dw_nodes/       the nodes the terrain is built from
 tools/               procedural texture generator for dw_nodes
 ```
+
+Both mods share the `dw_` prefix, which ContentDB requires of the mods a
+game introduces — and the game may not ship a mod named after an existing
+package, which `doggiowars` is. Item names still read `doggiowars:` so worlds
+saved by earlier versions load unchanged.
 
 `dw_nodes` is what makes the game standalone. The terrain used to be built
 from Minetest Game's blocks — `default:stone`, `flowers:rose` and so on.

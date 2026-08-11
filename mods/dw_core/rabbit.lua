@@ -74,7 +74,7 @@ local function fly_toward(self, target, speed, dtime)
     set_flight_rotation(self, vel, dtime)
 end
 
-minetest.register_entity("doggiowars:rabbit", {
+minetest.register_entity(":doggiowars:rabbit", {
     initial_properties = {
         visual            = "mesh",
         mesh              = "doggiowars_fighter_01.obj",
