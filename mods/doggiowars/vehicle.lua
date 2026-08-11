@@ -434,22 +434,12 @@ minetest.register_entity("doggiowars:fighter", {
             doggiowars.tricks.check_triggers(self, events, pilot)
         end
 
-        -- Eye-lean: kamera "sklouzne" do zatáčky podle bankování — engine
-        -- roll horizontu neumí (ověřeno v 5.15), tohle je pohybová náhrada.
-        -- Ve triku (barrel roll = plná otočka) se vrací k nule, ať nekmitá.
-        local lean = 0
-        if not self.trick then
-            lean = math.max(-1, math.min(1, (self.roll or 0) / 1.2))
-        end
-        local lx = lean * 1.6
-        local ly = -math.abs(lean) * 0.4
-        if math.abs(lx - (self.lean_x or 0)) > 0.03
-                or math.abs(ly - (self.lean_y or 0)) > 0.03 then
-            self.lean_x, self.lean_y = lx, ly
-            pilot:set_eye_offset(
-                {x = EYE_OFFSET.x + lx, y = EYE_OFFSET.y + ly, z = EYE_OFFSET.z},
-                EYE_OFFSET)
-        end
+        -- Tady bývala náhrada náklonu: kamera se posouvala do strany podle
+        -- rollu přes set_eye_offset. Vypadalo to jako třes celého světa a ne
+        -- jako náklon — set_eye_offset skáče po krocích a klient mezi nimi
+        -- neinterpoluje, takže při každé zatáčce obraz cukal. S páčkou jako
+        -- kniplem (roll až ±60° místo občasného záškubu) to bylo neúnosné.
+        -- Kamera teď drží pevný EYE_OFFSET nastavený při nasazení.
 
         local hlen = math.sqrt(vel.x * vel.x + vel.z * vel.z)
 
