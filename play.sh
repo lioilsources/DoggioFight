@@ -29,6 +29,14 @@ WORLDS="${WORLDS:-$HOME/Library/Application Support/minetest/worlds}"
 
 [ -x "$LUANTI" ] || { echo "Luanti nenalezen: $LUANTI (nastav LUANTI=...)" >&2; exit 1; }
 
+# DualShock 4 přes Bluetooth se na macOS odpojoval přesně ve chvíli, kdy
+# Luanti startovalo (v systémovém logu "disconnection indication" ve stejné
+# vteřině jako start SDL). SDL si totiž PS4 pad otevírá vlastním HIDAPI
+# driverem, jenže macOS ho už drží přes Game Controller framework. Tímhle
+# hintem SDL svůj driver vynechá a použije systémový.
+#   SDL_JOYSTICK_HIDAPI_PS4=1  ./play.sh   -> vrátí původní chování
+export SDL_JOYSTICK_HIDAPI_PS4="${SDL_JOYSTICK_HIDAPI_PS4:-0}"
+
 # Svět si založíme sami, ať "rozjet novou hru" je jeden příkaz. Luanti
 # umí --go jen do existujícího světa; bez tohohle by spadl na neznámý svět.
 if [ ! -d "$WORLDS/$WORLD" ]; then
