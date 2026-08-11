@@ -188,8 +188,8 @@ function hud.update_flight(player, f)
     if vy > 1 or vy < -1 then
         vs = string.format("VS %+d", math.floor(vy + 0.5))
     end
-    local mtag = doggiowars.mode
-        and doggiowars.mode[player:get_player_name()] == "sub"
+    local mtag = doggiowars.get_mode
+        and doggiowars.get_mode(player:get_player_name()) == "sub"
         and "SUB   " or ""
     hud.set(player, "speed", {text = string.format(
         "%sSPD %d   ALT %d   %s", mtag, f.speed or 0, alt, vs)})

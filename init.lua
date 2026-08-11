@@ -52,7 +52,11 @@ if minetest.is_singleplayer() then
         s:set_bool("doggiowars_gamepad_setup", true)
         if not s:get_bool("enable_joysticks", false) then
             s:set_bool("enable_joysticks", true)
-            if not s:get("joystick_deadzone") then
+            -- Pozor: get() vrací i enginový default (2048), takže by tahle
+            -- podmínka nikdy neprošla a deadzone se nikdy nenastavil.
+            -- has() jako jediné defaulty ignoruje a řekne, jestli hodnota
+            -- opravdu je v minetest.conf.
+            if not (s.has and s:has("joystick_deadzone")) then
                 s:set("joystick_deadzone", "4000")
             end
             minetest.register_on_joinplayer(function(player)

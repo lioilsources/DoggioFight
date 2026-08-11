@@ -422,16 +422,31 @@ local function island_top(isl)
     return isl.y + up
 end
 
--- Spawn tak, aby ostrov byl PŘED hráčem, ne pod ním.
--- Čerstvě nasazená stíhačka má yaw 0 → letí i kouká směrem -Z, takže
--- hráče posadíme na +Z stranu ostrova, mírně nad jeho povrch.
-local function frame_spawn(isl)
+-- Spawn/přílet tak, aby ostrov byl PŘED hráčem, ne pod ním.
+-- Hráče postavíme kus vedle ostrova na TU stranu, ze které přilétá (from_x,
+-- from_z) — letí pak nejkratší cestou a ostrov má v zorném poli. Bez zadání
+-- směru bereme +Z, což sedí čerstvě nasazené stíhačce (yaw 0 = letí na -Z).
+-- Druhá návratová hodnota je yaw pohledu namířený na střed ostrova.
+local APPROACH_MARGIN = 90     -- odstup od okraje ostrova (bloky)
+
+local function frame_spawn(isl, from_x, from_z)
+    local dx = (from_x or isl.x) - isl.x
+    local dz = (from_z or (isl.z + 1)) - isl.z
+    local d = math.sqrt(dx * dx + dz * dz)
+    if d < 1 then                                 -- přímo nad středem → +Z
+        dx, dz, d = 0, 1, 1
+    end
+    dx, dz = dx / d, dz / d
+
+    local dist = isl.radius + APPROACH_MARGIN
     local surf = isl.y + isl.radius * 0.55        -- ~ výška povrchu kupole
-    return {
-        x = isl.x,
-        y = surf + 18,
-        z = isl.z + isl.radius + 40,              -- kus za ostrovem na +Z
+    local pos = {
+        x = math.floor(isl.x + dx * dist),
+        y = math.floor(surf + 18),
+        z = math.floor(isl.z + dz * dist),
     }
+    -- pohled zpátky na ostrov (opačný směr, než kterým jsme se odsadili)
+    return pos, minetest.dir_to_yaw({x = -dx, y = 0, z = -dz})
 end
 
 -- Pozice u nejbližšího ostrova k (x,z); fallback = domovský ostrov
@@ -452,7 +467,7 @@ function doggiowars.spawn_pos_near(x, z, seed)
     end
     if not best then best = island_for_cell(0, 0, seed) end
     if not best then return {x = 0, y = ISLAND_LAYER_MIN + 60, z = 0} end
-    return frame_spawn(best)
+    return frame_spawn(best, x, z)
 end
 
 -- Domovský spawn (počátek světa)
@@ -507,9 +522,17 @@ function doggiowars.island_spawn(isl)
     return frame_spawn(isl)
 end
 
+-- Přílet k ostrovu ze strany hráče: ostrov skončí PŘED ním, ne pod ním.
+-- Vrací pozici + yaw pohledu na střed (viz frame_spawn).
+function doggiowars.island_approach(isl, from_x, from_z)
+    return frame_spawn(isl, from_x, from_z)
+end
+
 -- Vyhlídka NAD středem ostrova (prohlídka shora). Výška podle tvaru:
 -- spire (krystalová věž) je nejvyšší, cone strmý, ostatní ploché;
 -- rezerva pokryje i sopečnou homoli (~17 bloků) na sopečném ostrově.
+-- Používá už jen /goto bez zadané výšky — příkazy k ostrovům létají
+-- přes island_approach, aby hráč ostrov viděl před sebou.
 function doggiowars.island_vantage(isl)
     local fac = 0.75
     if isl.shape == "spire" then fac = 2.6
