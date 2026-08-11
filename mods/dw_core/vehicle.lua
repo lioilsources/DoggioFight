@@ -147,7 +147,7 @@ end
 -- Fighter entity definition
 ---------------------------------------------------------------------------
 
-minetest.register_entity("doggiowars:fighter", {
+minetest.register_entity(":doggiowars:fighter", {
     initial_properties = {
         visual            = "mesh",
         mesh              = "doggiowars_fighter_01.obj",

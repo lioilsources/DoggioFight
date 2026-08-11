@@ -26,7 +26,7 @@ local function node_tile(name)
     return t
 end
 
-minetest.register_entity("doggiowars:debris", {
+minetest.register_entity(":doggiowars:debris", {
     initial_properties = {
         visual            = "cube",
         visual_size       = {x = 0.8, y = 0.8, z = 0.8},
@@ -162,7 +162,7 @@ end
 -- Bullet entity
 ---------------------------------------------------------------------------
 
-minetest.register_entity("doggiowars:bullet", {
+minetest.register_entity(":doggiowars:bullet", {
     initial_properties = {
         visual            = "sprite",
         textures          = {"doggiowars_particle_engine.png"},
