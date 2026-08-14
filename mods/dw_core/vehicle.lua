@@ -3,6 +3,8 @@
 
 local C = doggiowars.const
 
+local S = minetest.get_translator("dw_core")
+
 -- Kamera "na nose": mesh (visual_size 2, collisionbox ±1.5) končí ~3 jednotky
 -- od středu entity, offset 4 dopředu drží celý mesh za near plane kamery
 local EYE_OFFSET = {x = 0, y = 0.5, z = 4}
@@ -775,7 +777,8 @@ minetest.register_on_mods_loaded(function()
 end)
 
 minetest.register_chatcommand("gp", {
-    description = "Gamepad diagnostika: ukáže živě páčky a stisknutá tlačítka",
+    description = S("Gamepad diagnostics: live view of sticks and "
+        .. "pressed buttons"),
     privs = {interact = true},
     func = function(name)
         doggiowars.gp_debug[name] = not doggiowars.gp_debug[name]
@@ -784,15 +787,15 @@ minetest.register_chatcommand("gp", {
             doggiowars.hud.set(p, "gpdebug", {text = ""})
         end
         if doggiowars.gp_debug[name] then
-            return true, "Gamepad diagnostika ZAP — mačkej tlačítka/páčky a "
-                .. "sleduj, co se rozsvítí uprostřed obrazovky."
+            return true, S("Gamepad diagnostics ON — press buttons and move the "
+                .. "sticks, and watch what lights up mid-screen.")
         end
-        return true, "Gamepad diagnostika VYP."
+        return true, S("Gamepad diagnostics OFF.")
     end,
 })
 
 minetest.register_chatcommand("mode", {
-    description = "Přepnutí ovládání: stíhačka <-> ponorka",
+    description = S("Switch controls: fighter <-> submarine"),
     params = "[fighter|sub]",
     privs = {interact = true},
     func = function(name, param)
@@ -820,9 +823,9 @@ minetest.register_chatcommand("mode", {
             p:set_fov(0)
         end
         if new == "sub" then
-            return true, "PONORKA: levá páčka = tah/úkrok, pohled = kurz, "
-                .. "X = nahoru, ○ = dolů. Triky a boost vypnuty."
+            return true, S("SUBMARINE: left stick = thrust/strafe, look = "
+                .. "heading, X = up, O = down. Tricks and boost are off.")
         end
-        return true, "STÍHAČKA: klasické letecké ovládání."
+        return true, S("FIGHTER: classic flight controls.")
     end,
 })

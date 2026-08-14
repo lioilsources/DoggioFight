@@ -1,0 +1,32 @@
+# textdomain: dw_core
+# Czech translation of DoggioWars. English is the source language, as
+# ContentDB requires (policy 2.3); this file is how other languages get in.
+
+# Race
+SLALOM! Stay on the hare=SLALOM! Drž se zajíce
+HARE: BARREL ROLL! (double-tap A/D)=ZAJÍC: BARREL ROLL! (dvojité A/D)
+HARD TURN! S+A/D @= airbrake drift=OSTRÁ ZATÁČKA! S+A/D @= airbrake drift
+TUNNEL! Slow down (S) and fly clean=TUNEL! Zpomal (S) a leť přesně
+CLIMB + DIVE! Shift down for extra speed=STOUPÁNÍ + STŘEMHLAV! Shift dolů @= rychlost navíc
+FINISH — @1  |  SCORE @2=CÍL — @1  |  SKÓRE @2
+Race finished in @1! Checkpoints @2/@3, score @4.=Závod dokončen za @1! Checkpointy @2/@3, skóre @4.
+Race failed — fighter destroyed.=Závod nedokončen — stíhačka zničena.
+Greyhound race — chase the golden hare! /race stop cancels it=Chrtí závod — leť za zlatým zajícem! /race stop @= zrušit
+Race cancelled.=Závod zrušen.
+No race is running.=Žádný závod neběží.
+A race is already running — end it with /race stop.=Závod už běží — ukonči ho přes /race stop.
+You are not in a fighter.=Nejsi ve stíhačce.
+Could not spawn the hare.=Nepodařilo se spawnout zajíce.
+RACE! Follow the golden hare!=ZÁVOD! Následuj zlatého zajíce!
+Race started — follow the hare!=Závod začal — následuj zajíce!
+HARE @1 m  ·  CP @2/@3=ZAJÍC @1 m  ·  CP @2/@3
+HARE WAITING — catch up!=ZAJÍC ČEKÁ — dohoň ho!
+HARE AT THE FINISH — fly to it!=ZAJÍC V CÍLI — doleť k němu!
+
+# Gamepad + control modes
+Gamepad diagnostics: live view of sticks and pressed buttons=Diagnostika gamepadu: živě ukáže páčky a stisknutá tlačítka
+Gamepad diagnostics ON — press buttons and move the sticks, and watch what lights up mid-screen.=Diagnostika gamepadu ZAP — mačkej tlačítka, hýbej páčkami a sleduj, co se rozsvítí uprostřed obrazovky.
+Gamepad diagnostics OFF.=Diagnostika gamepadu VYP.
+Switch controls: fighter <-> submarine=Přepnutí ovládání: stíhačka <-> ponorka
+SUBMARINE: left stick @= thrust/strafe, look @= heading, X @= up, O @= down. Tricks and boost are off.=PONORKA: levá páčka @= tah/úkrok, pohled @= kurz, X @= nahoru, ○ @= dolů. Triky a boost vypnuty.
+FIGHTER: classic flight controls.=STÍHAČKA: klasické letecké ovládání.

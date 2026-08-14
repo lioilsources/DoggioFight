@@ -3,6 +3,8 @@
 -- splajna, kutání tunelů, checkpointy, HUD a lifecycle. Králíka (AI loď,
 -- která trať letí) definuje rabbit.lua.
 
+local S = minetest.get_translator("dw_core")
+
 doggiowars.race = {}
 local race = doggiowars.race
 local hud = doggiowars.hud
@@ -85,11 +87,11 @@ end
 local SEG_TYPES = {"slalom", "showcase", "orbit", "slalom", "tunnel", "climb_dive"}
 
 local HINTS = {
-    slalom     = "SLALOM! Drž se zajíce",
-    showcase   = "ZAJÍC: BARREL ROLL! (double-tap LMB/RMB)",
-    orbit      = "OSTRÁ ZATÁČKA! S+A/D = airbrake drift",
-    tunnel     = "TUNEL! Zpomal (S) a leť přesně",
-    climb_dive = "STOUPÁNÍ + STŘEMHLAV! Shift dolů = rychlost navíc",
+    slalom     = S("SLALOM! Stay on the hare"),
+    showcase   = S("HARE: BARREL ROLL! (double-tap A/D)"),
+    orbit      = S("HARD TURN! S+A/D = airbrake drift"),
+    tunnel     = S("TUNNEL! Slow down (S) and fly clean"),
+    climb_dive = S("CLIMB + DIVE! Shift down for extra speed"),
 }
 
 function race.build_route(start_pos, heading, seed)
@@ -452,11 +454,12 @@ function race.finish(name, st, player)
     end
     local score = fighter and math.floor(fighter.score or 0) or 0
 
-    hud.flash(player, string.format("FINISH — %s  |  SKÓRE %d",
-        race.format_time(elapsed), score), 0x66FF88)
-    minetest.chat_send_player(name, string.format(
-        "Závod dokončen za %s! Checkpointy %d/%d, skóre %d.",
-        race.format_time(elapsed), st.cp_hit, #st.cp_indices, score))
+    hud.flash(player, S("FINISH — @1  |  SCORE @2",
+        race.format_time(elapsed), tostring(score)), 0x66FF88)
+    minetest.chat_send_player(name, S(
+        "Race finished in @1! Checkpoints @2/@3, score @4.",
+        race.format_time(elapsed), tostring(st.cp_hit),
+        tostring(#st.cp_indices), tostring(score)))
     remove_race_hud(player)
 
     -- králík slaví loopingy v cíli a po 8 s zmizí
@@ -478,7 +481,7 @@ function doggiowars.race_on_pilot_died(name)
     local st = race.active[name]
     if not st then return end
     race.notify(name, "RACE FAILED", 0xFF5040)
-    minetest.chat_send_player(name, "Závod nedokončen — stíhačka zničena.")
+    minetest.chat_send_player(name, S("Race failed — fighter destroyed."))
     race.cleanup(name)
 end
 
@@ -492,25 +495,26 @@ end
 
 minetest.register_chatcommand("race", {
     params = "[stop]",
-    description = "Chrtí závod — leť za zlatým zajícem! /race stop = zrušit",
+    description = S("Greyhound race — chase the golden hare! "
+        .. "/race stop cancels it"),
     privs = {interact = true},
     func = function(name, param)
         if param == "stop" then
             if race.active[name] then
                 race.cleanup(name)
-                return true, "Závod zrušen."
+                return true, S("Race cancelled.")
             end
-            return false, "Žádný závod neběží."
+            return false, S("No race is running.")
         end
 
         if race.active[name] then
-            return false, "Závod už běží — ukonči ho přes /race stop."
+            return false, S("A race is already running — end it with /race stop.")
         end
 
         local player = minetest.get_player_by_name(name)
         local fighter = player and doggiowars.get_player_fighter(player)
         if not fighter then
-            return false, "Nejsi ve stíhačce."
+            return false, S("You are not in a fighter.")
         end
 
         local pos = fighter.object:get_pos()
@@ -523,7 +527,7 @@ minetest.register_chatcommand("race", {
         local obj = minetest.add_entity(race.eval(route, rseg, rt),
             "doggiowars:rabbit")
         if not obj then
-            return false, "Nepodařilo se spawnout zajíce."
+            return false, S("Could not spawn the hare.")
         end
         local rent = obj:get_luaentity()
         rent.route = route
@@ -572,8 +576,8 @@ minetest.register_chatcommand("race", {
             end
         end
 
-        hud.flash(player, "ZÁVOD! Následuj zlatého zajíce!", 0xFFD75E)
-        return true, "Závod začal — následuj zajíce!"
+        hud.flash(player, S("RACE! Follow the golden hare!"), 0xFFD75E)
+        return true, S("Race started — follow the hare!")
     end,
 })
 
@@ -631,9 +635,9 @@ minetest.register_globalstep(function(dtime)
                     local rpos = st.rabbit and st.rabbit:get_pos()
                     if rpos and fpos then
                         hud.set(player, "race_info", {
-                            text = string.format("ZAJÍC %d m  ·  CP %d/%d",
-                                math.floor(vector.distance(fpos, rpos)),
-                                st.cp_hit, #st.cp_indices),
+                            text = S("HARE @1 m  ·  CP @2/@3",
+                                tostring(math.floor(vector.distance(fpos, rpos))),
+                                tostring(st.cp_hit), tostring(#st.cp_indices)),
                         })
                     end
                 end

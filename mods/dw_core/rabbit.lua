@@ -1,7 +1,9 @@
--- doggiowars/rabbit.lua
--- "Zajíc" — zlatá AI loď, která letí trať závodu před hráčem.
+-- dw_core/rabbit.lua
+-- "Hare" — zlatá AI loď, která letí trať závodu před hráčem.
 -- Sleduje Catmull-Rom splajnu (race.lua), rubber-banduje rychlost podle
 -- vzdálenosti hráče a když se hráč moc vzdálí, krouží a čeká (tutoriál).
+
+local S = minetest.get_translator("dw_core")
 
 local WAIT_ENTER_DIST  = 130  -- vzdálenost, při které králík začne čekat
 local WAIT_LEAVE_DIST  = 55   -- hráč se přiblížil → pokračuje
@@ -154,7 +156,7 @@ minetest.register_entity(":doggiowars:rabbit", {
             self.wait_mode = true
             self.wait_center = race.eval(self.route, self.seg, self.t)
             self.wait_angle = 0
-            race.notify(self.player_name, "ZAJÍC ČEKÁ — dohoň ho!", 0xFFD75E)
+            race.notify(self.player_name, S("HARE WAITING — catch up!"), 0xFFD75E)
             return
         end
 
@@ -177,7 +179,7 @@ minetest.register_entity(":doggiowars:rabbit", {
             self.celebrate = true
             self.cel_yaw = self.object:get_rotation().y
             race.notify(self.player_name,
-                "ZAJÍC V CÍLI — doleť k němu!", 0xFFD75E)
+                S("HARE AT THE FINISH — fly to it!"), 0xFFD75E)
             return
         end
 
