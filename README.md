@@ -6,7 +6,7 @@
 voxel islands — fly, shoot, pull aerobatic tricks and race a golden rabbit
 through carved tunnels.
 
-![screenshot](screenshot.png)
+![screenshot](https://raw.githubusercontent.com/lioilsources/DoggioWars/main/screenshot.png)
 
 ## The world
 
@@ -76,7 +76,7 @@ Steep dives build overspeed, climbing bleeds it off. Skimming close to
 terrain charges your boost meter, and tricks score points.
 
 **Gamepad**: native Luanti joystick support (Xbox 360, PS4 DualShock) —
-see [GAMEPAD.md](GAMEPAD.md) for setup, the button map and
+see [GAMEPAD.md](https://github.com/lioilsources/DoggioWars/blob/main/GAMEPAD.md) for setup, the button map and
 troubleshooting (in Czech).
 
 ## Chat commands
@@ -117,7 +117,7 @@ Where the games folder lives:
 
 The gamepad is enabled by default (the game ships its own `minetest.conf`
 defaults). PS4/PS5 DualShock owners still need to pick the joystick type
-once — see [GAMEPAD.md](GAMEPAD.md).
+once — see [GAMEPAD.md](https://github.com/lioilsources/DoggioWars/blob/main/GAMEPAD.md).
 
 ## How the game is put together
 
@@ -152,4 +152,4 @@ worlds saved by earlier versions load unchanged. New code should use
 - Media (`textures/`, `models/`, screenshot): **CC BY-SA 4.0**
 
 All media is original work — no third-party asset packs are bundled. See
-[LICENSE](LICENSE) for details.
+[LICENSE](https://github.com/lioilsources/DoggioWars/blob/main/LICENSE) for details.
