@@ -9,8 +9,9 @@ Code and documentation — MIT License
 ------------------------------------
 
 Applies to: everything in this repository except the media listed below —
-the Lua sources, game.conf, minetest.conf, the mod.conf files, the scripts
-under tools/, and the Markdown documentation.
+the Lua sources, game.conf, minetest.conf, the mod.conf files, the
+translation files under locale/, the scripts under tools/, and the Markdown
+documentation.
 
 Copyright (c) 2026 lioilsources
 
@@ -57,11 +58,11 @@ None. Every file in this repository is original work by the copyright holder
 above, and no asset packs, texture packs, model libraries or other external
 media were used. Specifically:
 
-  mods/doggiowars/models/doggiowars_fighter_01.obj
+  mods/dw_core/models/doggiowars_fighter_01.obj
       Hand-written OBJ — a 17-vertex placeholder fuselage authored directly
       as text for this game.
 
-  mods/doggiowars/textures/*.png
+  mods/dw_core/textures/*.png
       Generated 16x16 PNGs: flat colour fills and procedural per-pixel noise,
       produced for this game.
 
@@ -81,12 +82,7 @@ media were used. Specifically:
       Crops and downscales of screenshot.png (see above), made with sips.
 
   screenshot.png
-      In-game capture of this mod.
-
-The mod depends on Minetest Game (`default`, and optionally `flowers` and
-`fire`) at runtime and references some of its nodes and textures by name, but
-ships no copy of them; Minetest Game is licensed separately by its own
-authors and is not redistributed here.
+      In-game capture of this game.
 
 Historical note: the development plan kept in Prompts/ proposed sourcing a
 fighter model and terrain textures from Kenney.nl (CC0). That was a sketch

@@ -16,7 +16,7 @@
 -- to hlásí jako přístup k nedeklarované globální proměnné
 dw_nodes = {}
 
-local S = function(t) return t end     -- místo pro budoucí překlady
+local S = minetest.get_translator("dw_nodes")
 
 -- Stará jména pro aliasy: krátké jméno -> jmenný prostor, ze kterého node
 -- historicky pocházel

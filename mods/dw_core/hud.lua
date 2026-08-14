@@ -77,9 +77,11 @@ end
 -- Kompasová páska — sever = +Z, klouzavé okno ±60° kolem kurzu
 ---------------------------------------------------------------------------
 
+-- Záměrně BEZ překladače: páska se skládá znak po znaku a měří délku
+-- (#label), což na přeloženém řetězci nefunguje — nese escape sekvence.
 local CARDINALS = {
-    [0] = "S", [45] = "SV", [90] = "V", [135] = "JV",
-    [180] = "J", [225] = "JZ", [270] = "Z", [315] = "SZ",
+    [0] = "N", [45] = "NE", [90] = "E", [135] = "SE",
+    [180] = "S", [225] = "SW", [270] = "W", [315] = "NW",
 }
 
 local function compass_tape(heading)
@@ -263,7 +265,7 @@ function hud.init(player)
         type      = "text",
         position  = {x = 0.02, y = 0.06},
         alignment = {x = 1, y = 0},
-        text      = "SKÓRE 0",
+        text      = "SCORE 0",
         number    = 0xFFD75E,
         size      = {x = 2},
     })
@@ -313,7 +315,7 @@ function hud.update_flight(player, f)
     hud.set(player, "hull", {number = math.max(0, math.ceil((f.hp or 100) / 5))})
     hud.set(player, "boost", {number = math.floor((f.boost_meter or 0) / 10 + 0.5)})
 
-    local score_text = string.format("SKÓRE %d", f.score or 0)
+    local score_text = string.format("SCORE %d", f.score or 0)
     local now = minetest.get_us_time() / 1e6
     if (f.combo or 1) > 1 and now - (f.combo_last or -math.huge) < 4.0 then
         score_text = score_text .. string.format("  ×%d", f.combo)
