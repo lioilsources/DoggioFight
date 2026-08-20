@@ -146,6 +146,16 @@ The old names still resolve: `dw_nodes` registers an alias for each one, so
 worlds saved by earlier versions load unchanged. New code should use
 `dw_nodes:` — aliases do not appear in `registered_nodes`.
 
+## Roblox port (prototype)
+
+DoggioWars is also being ported to Roblox. The [roblox/](https://github.com/lioilsources/DoggioWars/tree/main/roblox)
+folder contains a playable Studio prototype: the full mouse-flight model and an
+infinite-sky island generator faithfully ported from the Luanti mapgen (same
+grid, shapes, biomes and flyable tunnels, deterministic per seed). Both
+platforms are maintained together in this repo — see
+[roblox/README.md](https://github.com/lioilsources/DoggioWars/blob/main/roblox/README.md)
+for setup and details.
+
 ## License
 
 - Code and documentation: **MIT**
