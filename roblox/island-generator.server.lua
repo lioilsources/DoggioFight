@@ -36,7 +36,13 @@ local GEN_DIST = 2               -- Cebysev: generovat 5x5 bunek kolem hrace
 local UNLOAD_DIST = 4            -- uvolnit bunky dal nez tohle
 local MAX_CELL = 28              -- limit Terrain boundu (~32k studu)
 
-Lighting.ClockTime = 14
+Lighting.ClockTime = 12.5
+Lighting.Brightness = 2.5
+Lighting.ExposureCompensation = 0.1
+Lighting.Ambient = Color3.fromRGB(80, 85, 95)
+Lighting.OutdoorAmbient = Color3.fromRGB(160, 170, 185)
+Lighting.EnvironmentDiffuseScale = 0.6
+Lighting.EnvironmentSpecularScale = 0.4
 Lighting.FogColor = Color3.fromRGB(190, 215, 235)
 Lighting.FogEnd = 5500
 local atm = Instance.new("Atmosphere")
@@ -450,6 +456,320 @@ local function generateIsland(isl)
 end
 
 ---------------------------------------------------------------------------
+-- Dekorace biomu -- zjednoduseny port decorate.lua: vulkan s lavou,
+-- laguna, rampouchy, obri houby, krystaly, stromy, balvany.
+-- Deterministicke z bunkoveho LCG (stejny ostrov = stejna dekorace).
+-- Party jdou do slozky per ostrov (unload ji znici), teren primo do mapy.
+---------------------------------------------------------------------------
+
+local decorRoot = Instance.new("Folder")
+decorRoot.Name = "DoggioDecor"
+decorRoot.Parent = workspace
+
+local terrainOnly = RaycastParams.new()
+terrainOnly.FilterType = Enum.RaycastFilterType.Include
+terrainOnly.FilterDescendantsInstances = {Terrain}
+
+local function make_rng(cx, cz)
+	local h = hash_2d(cx * 3 + 11, cz * 7 + 5, SEED + 999)
+	return function()
+		h = nexth(h)
+		return unit(h)
+	end
+end
+
+local function surfaceAt(isl, xs, zs)
+	local up, down = y_extents(isl)
+	local top = (isl.y + up + 8) * SCALE
+	local len = (up + down + 16) * SCALE
+	return workspace:Raycast(
+		Vector3.new(xs, top, zs), Vector3.new(0, -len, 0), terrainOnly)
+end
+
+local function undersideAt(isl, xs, zs)
+	local up, down = y_extents(isl)
+	local bottom = (isl.y - down - 8) * SCALE
+	local len = (up + down + 16) * SCALE
+	return workspace:Raycast(
+		Vector3.new(xs, bottom, zs), Vector3.new(0, len, 0), terrainOnly)
+end
+
+local function decorPart(folder, shape, size, cf, color, material)
+	local p = Instance.new("Part")
+	p.Shape = shape
+	p.Size = size
+	p.CFrame = cf
+	p.Anchored = true
+	p.CastShadow = false
+	p.Color = color
+	p.Material = material or Enum.Material.SmoothPlastic
+	p.Parent = folder
+	return p
+end
+
+local UP_CYL = CFrame.Angles(0, 0, math.pi / 2)  -- valec osou svisle
+
+local function tree(folder, pos, rng, trunkH, leafC)
+	local h = trunkH * SCALE
+	decorPart(folder, Enum.PartType.Cylinder,
+		Vector3.new(h, 0.9 * SCALE, 0.9 * SCALE),
+		CFrame.new(pos + Vector3.new(0, h / 2, 0)) * UP_CYL,
+		Color3.fromRGB(104, 76, 50), Enum.Material.Wood)
+	local n = 1 + math.floor(rng() * 2 + 0.5)
+	for _ = 1, n do
+		local d = (2.6 + rng() * 2.2) * SCALE
+		local off = Vector3.new(
+			(rng() - 0.5) * 2, (rng() - 0.5) * 0.8, (rng() - 0.5) * 2) * SCALE
+		decorPart(folder, Enum.PartType.Ball, Vector3.new(d, d, d),
+			CFrame.new(pos + Vector3.new(0, h, 0) + off),
+			leafC, Enum.Material.Grass)
+	end
+end
+
+local function acacia(folder, pos, rng)
+	local h = (4 + rng() * 2) * SCALE
+	decorPart(folder, Enum.PartType.Cylinder,
+		Vector3.new(h, 0.8 * SCALE, 0.8 * SCALE),
+		CFrame.new(pos + Vector3.new(0, h / 2, 0)) * UP_CYL,
+		Color3.fromRGB(104, 76, 50), Enum.Material.Wood)
+	decorPart(folder, Enum.PartType.Cylinder,
+		Vector3.new(0.8 * SCALE, 7 * SCALE, 7 * SCALE),
+		CFrame.new(pos + Vector3.new(0, h + 0.4 * SCALE, 0)) * UP_CYL,
+		Color3.fromRGB(120, 150, 60), Enum.Material.Grass)
+end
+
+local function cactus(folder, pos, rng)
+	local green = Color3.fromRGB(70, 130, 60)
+	local h = (2 + rng() * 2) * SCALE
+	decorPart(folder, Enum.PartType.Cylinder,
+		Vector3.new(h, 1.1 * SCALE, 1.1 * SCALE),
+		CFrame.new(pos + Vector3.new(0, h / 2, 0)) * UP_CYL,
+		green, Enum.Material.Grass)
+	if rng() < 0.7 then
+		local ah = 1.4 * SCALE
+		decorPart(folder, Enum.PartType.Cylinder,
+			Vector3.new(ah, 0.8 * SCALE, 0.8 * SCALE),
+			CFrame.new(pos + Vector3.new(1.1 * SCALE, h * 0.6, 0)) * UP_CYL,
+			green, Enum.Material.Grass)
+	end
+end
+
+local function deadTree(folder, pos, rng)
+	local h = (3 + rng() * 3) * SCALE
+	decorPart(folder, Enum.PartType.Cylinder,
+		Vector3.new(h, 0.6 * SCALE, 0.6 * SCALE),
+		CFrame.new(pos + Vector3.new(0, h / 2, 0)) * UP_CYL,
+		Color3.fromRGB(92, 82, 72), Enum.Material.Wood)
+	decorPart(folder, Enum.PartType.Cylinder,
+		Vector3.new(2 * SCALE, 0.4 * SCALE, 0.4 * SCALE),
+		CFrame.new(pos + Vector3.new(0.9 * SCALE, h * 0.7, 0)),
+		Color3.fromRGB(92, 82, 72), Enum.Material.Wood)
+end
+
+local function mushroom(folder, pos, rng, giant)
+	local h = (giant and 4 + rng() * 5 or 1 + rng()) * SCALE
+	local stemD = (giant and 1.6 or 0.7) * SCALE
+	decorPart(folder, Enum.PartType.Cylinder,
+		Vector3.new(h, stemD, stemD),
+		CFrame.new(pos + Vector3.new(0, h / 2, 0)) * UP_CYL,
+		Color3.fromRGB(225, 215, 190), Enum.Material.SmoothPlastic)
+	local capD = (giant and (4 + rng() * 4) or 1.4) * SCALE
+	local cap = decorPart(folder, Enum.PartType.Cylinder,
+		Vector3.new((giant and 1.4 or 0.5) * SCALE, capD, capD),
+		CFrame.new(pos + Vector3.new(0, h + 0.5 * SCALE, 0)) * UP_CYL,
+		Color3.fromRGB(150, 95, 185), Enum.Material.Neon)
+	if giant then
+		local l = Instance.new("PointLight")
+		l.Color = Color3.fromRGB(190, 130, 230)
+		l.Range = 10 * SCALE
+		l.Brightness = 0.8
+		l.Parent = cap
+	end
+end
+
+local function crystalCluster(folder, pos, rng)
+	local n = 2 + math.floor(rng() * 3)
+	local main
+	for _ = 1, n do
+		local h = (1.5 + rng() * 3.5) * SCALE
+		local off = Vector3.new((rng() - 0.5) * 3, 0, (rng() - 0.5) * 3) * SCALE
+		local p = decorPart(folder, Enum.PartType.Cylinder,
+			Vector3.new(h, (0.7 + rng() * 0.6) * SCALE,
+				(0.7 + rng() * 0.6) * SCALE),
+			CFrame.new(pos + off + Vector3.new(0, h / 2 - 0.3 * SCALE, 0))
+				* UP_CYL * CFrame.Angles(rng() * 0.5, rng() * math.pi, 0),
+			Color3.fromRGB(150, 225, 255), Enum.Material.Neon)
+		main = main or p
+	end
+	local l = Instance.new("PointLight")
+	l.Color = Color3.fromRGB(150, 225, 255)
+	l.Range = 12 * SCALE
+	l.Brightness = 1
+	l.Parent = main
+end
+
+local function terrainBall(pos, r_m, mat)
+	Terrain:FillBall(
+		pos - Vector3.new(0, r_m * 0.4 * SCALE, 0), r_m * SCALE, mat)
+end
+
+-- Vulkan (port build_volcano): basaltovy kuzel, krater s lavou,
+-- lavovy jazyk po svahu nahodnym smerem
+local function volcano(isl, rng)
+	local R = isl.radius
+	local mr = math.clamp(math.floor(R * 0.42), 18, 34)
+	local crater = math.max(4, math.floor(mr * 0.22))
+	local mh = math.max(11, math.floor(mr * 0.5))
+	local cxs, czs = isl.x * SCALE, isl.z * SCALE
+	local hit = surfaceAt(isl, cxs, czs)
+	if not hit then return end
+	local base = hit.Position.Y
+	local steps = 7
+	for i = 0, steps do
+		local f = i / steps
+		local rr = (crater + (mr - crater) * (1 - f) ^ 1.5 + 1) * SCALE
+		Terrain:FillCylinder(
+			CFrame.new(cxs, base + f * mh * SCALE, czs),
+			(mh / steps + 1) * SCALE, rr, Enum.Material.Basalt)
+	end
+	local topY = base + mh * SCALE
+	Terrain:FillCylinder(CFrame.new(cxs, topY + 2.5 * SCALE, czs),
+		6 * SCALE, crater * SCALE, Enum.Material.Air)
+	Terrain:FillCylinder(CFrame.new(cxs, topY - 0.8 * SCALE, czs),
+		2 * SCALE, (crater - 0.5) * SCALE, Enum.Material.CrackedLava)
+	local ang = rng() * 2 * math.pi
+	local dxu, dzu = math.cos(ang), math.sin(ang)
+	local d = crater
+	while d <= mr + 6 do
+		local px = cxs + dxu * d * SCALE
+		local pz = czs + dzu * d * SCALE
+		local sHit = workspace:Raycast(
+			Vector3.new(px, topY + 6 * SCALE, pz),
+			Vector3.new(0, -(mh + 30) * SCALE, 0), terrainOnly)
+		if sHit then
+			Terrain:FillBall(sHit.Position, 1.6 * SCALE,
+				Enum.Material.CrackedLava)
+		end
+		d = d + 1.6
+	end
+end
+
+-- Laguna atolu (port fill_atoll_center)
+local function lagoon(isl)
+	local hole = math.max(3, math.floor(isl.radius * 0.3))
+	local cxs, czs = isl.x * SCALE, isl.z * SCALE
+	local hit = surfaceAt(isl, cxs, czs)
+	if not hit then return end
+	local y = hit.Position.Y
+	Terrain:FillCylinder(CFrame.new(cxs, y + 1.5 * SCALE, czs),
+		5 * SCALE, hole * SCALE, Enum.Material.Air)
+	Terrain:FillCylinder(CFrame.new(cxs, y - 1.2 * SCALE, czs),
+		2.4 * SCALE, hole * SCALE, Enum.Material.Water)
+end
+
+-- Rampouchy pod okrajem ledovcove mesy (port place_icicles)
+local function icicles(isl, rng)
+	local n = 6 + math.floor(rng() * 7)
+	for _ = 1, n do
+		local ang = rng() * 2 * math.pi
+		local rad = isl.radius * (0.55 + rng() * 0.4) * SCALE
+		local xs = isl.x * SCALE + math.cos(ang) * rad
+		local zs = isl.z * SCALE + math.sin(ang) * rad
+		local hit = undersideAt(isl, xs, zs)
+		if hit then
+			for k = 0, 2 do
+				Terrain:FillBall(
+					hit.Position - Vector3.new(0, k * 1.6 * SCALE, 0),
+					math.max(0.6, 1.6 - k * 0.45) * SCALE,
+					Enum.Material.Glacier)
+			end
+		end
+	end
+end
+
+local TREE_GREEN = Color3.fromRGB(70, 140, 60)
+local JUNGLE_GREEN = Color3.fromRGB(45, 110, 45)
+
+local function decorateIsland(isl, key, cx, cz)
+	local folder = Instance.new("Folder")
+	folder.Name = key
+	folder.Parent = decorRoot
+	local rng = make_rng(cx, cz)
+	local function scatter(n, fn)
+		for _ = 1, n do
+			local ang = rng() * 2 * math.pi
+			local rad = isl.radius * (0.12 + 0.78 * math.sqrt(rng())) * SCALE
+			local xs = isl.x * SCALE + math.cos(ang) * rad
+			local zs = isl.z * SCALE + math.sin(ang) * rad
+			local hit = surfaceAt(isl, xs, zs)
+			if hit and hit.Material ~= Enum.Material.Water then
+				fn(hit.Position)
+			end
+		end
+	end
+	local b = isl.biome.name
+	if b == "verdant" then
+		scatter(8 + math.floor(rng() * 8), function(p)
+			tree(folder, p, rng, 4 + rng() * 3, TREE_GREEN)
+		end)
+		scatter(2, function(p)
+			terrainBall(p, 1.5 + rng(), Enum.Material.Rock)
+		end)
+	elseif b == "jungle" then
+		scatter(12 + math.floor(rng() * 8), function(p)
+			tree(folder, p, rng, 6 + rng() * 4, JUNGLE_GREEN)
+		end)
+	elseif b == "savanna" then
+		scatter(3 + math.floor(rng() * 3), function(p)
+			acacia(folder, p, rng)
+		end)
+	elseif b == "desert" then
+		scatter(4 + math.floor(rng() * 4), function(p)
+			cactus(folder, p, rng)
+		end)
+		scatter(2, function(p)
+			terrainBall(p, 1 + rng(), Enum.Material.Sandstone)
+		end)
+	elseif b == "volcanic" then
+		volcano(isl, rng)
+	elseif b == "ashen" then
+		scatter(2 + math.floor(rng() * 3), function(p)
+			deadTree(folder, p, rng)
+		end)
+		scatter(4 + math.floor(rng() * 3), function(p)
+			Terrain:FillBall(p, (1.5 + rng()) * SCALE,
+				Enum.Material.CrackedLava)
+		end)
+	elseif b == "mycelial" then
+		scatter(3 + math.floor(rng() * 6), function(p)
+			mushroom(folder, p, rng, true)
+		end)
+	elseif b == "swamp" then
+		scatter(4 + math.floor(rng() * 5), function(p)
+			mushroom(folder, p, rng, false)
+		end)
+	elseif b == "crystal" then
+		scatter(5 + math.floor(rng() * 5), function(p)
+			crystalCluster(folder, p, rng)
+		end)
+	elseif b == "barren" then
+		scatter(2 + math.floor(rng() * 4), function(p)
+			terrainBall(p, 1.5 + rng() * 1.5, Enum.Material.Rock)
+		end)
+	elseif b == "glacial" then
+		icicles(isl, rng)
+		scatter(3, function(p)
+			terrainBall(p, 1 + rng(), Enum.Material.Glacier)
+		end)
+	elseif b == "atoll" then
+		lagoon(isl)
+		scatter(3, function(p)
+			tree(folder, p, rng, 5 + rng() * 2, Color3.fromRGB(90, 160, 70))
+		end)
+	end
+end
+
+---------------------------------------------------------------------------
 -- Chunk manager: bunky kolem hracu do fronty (nejblizsi prvni),
 -- vzdalene vygenerovane bunky uvolnit (FillRegion Air + zapomenout)
 ---------------------------------------------------------------------------
@@ -527,6 +847,10 @@ task.spawn(function()
 							Region3.new(info.min, info.max),
 							VOX, Enum.Material.Air)
 					end
+					local df = decorRoot:FindFirstChild(key)
+					if df then
+						df:Destroy()
+					end
 					generated[key] = nil
 				end
 			end
@@ -548,8 +872,17 @@ task.spawn(function()
 						item[1], item[2], isl.biome.name, isl.radius, #queue))
 					local ok, rmin, rmax = pcall(generateIsland, isl)
 					if ok then
-						generated[key] = {min = rmin, max = rmax}
+						-- +88 studu rezerva nad AABB: vulkan/stromy at
+						-- nezustanou viset po unloadu
+						generated[key] = {min = rmin,
+							max = rmax + Vector3.new(0, 88, 0)}
 						done_count = done_count + 1
+						local dok, derr = pcall(decorateIsland, isl, key,
+							item[1], item[2])
+						if not dok then
+							warn("[DoggioWars] decor error: "
+								.. tostring(derr))
+						end
 						if key == "0:0" then
 							workspace:SetAttribute("MapgenHome", true)
 						end

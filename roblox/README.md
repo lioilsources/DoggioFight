@@ -25,6 +25,7 @@ dive/climb fyzika, boost, skimming) funguje na robloxím enginu.
 | LMB | střelba — **ničí terén** (`FillBall` vzduchem) |
 | RMB | boost (stojí 25 z metru) |
 | V | přepnutí kamery (chase / first-person "na nose") |
+| M | radar zap/vyp (v Luanti `/radar`) |
 | R | respawn |
 
 ## Co je portováno 1:1 z mapgen.lua / biomes.lua
@@ -42,6 +43,22 @@ dive/climb fyzika, boost, skimming) funguje na robloxím enginu.
   trubky ~9–18 studů v poloměru
 - domovský ostrov: buňka (0,0) vždy avatar R=190 m na y=320 m, biom ze seedu
 - 12 biomů s vrstvami materiálů (surface/filler/deep) dle hloubky, strop 6 m
+
+## Co je portováno z hud.lua
+
+- **kompasová páska** (klouzavé okno ±60°, `[S ]` aktuální kurz) + kurz
+  ve stupních; sever = +Z jako v Luanti
+- řádek **SPD / ALT / VS** (rychlost, výška, variometr — vše v metrech)
+- **hull** (červený) a **boost** (zlatý) bar vlevo, **SCORE** vlevo nahoře
+  (drift +50/s, proximity +2/s — přežívá respawn)
+- **vodováha**: čára se klopí s náklonem a stoupání ji zvedá nad pevný
+  kruh (Roblox `Rotation` místo skládání z dílků)
+- text sklonu/náklonu `▲ 12° BANK +45°` dole uprostřed
+- **radar** vpravo nahoře (přepíná **M** místo `/radar`): ostrovy si klient
+  počítá ze stejného deterministického LCG jako server — tečky barvené
+  podle biomu, velikost dle poloměru, dosah 512 m, sever nahoře
+- flash hlášky (zlaté, 1.2 s) na pozici Luanti `hud.flash`
+- kolizní poškození `(speed−10)×2.5` a zničení stíhačky s respawnem
 
 ## Co je portováno 1:1 z vehicle.lua / tricks.lua (mods/dw_core/)
 

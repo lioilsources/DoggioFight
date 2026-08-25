@@ -4,7 +4,13 @@
 -- ── stuby ────────────────────────────────────────────────────────────
 local write_stats = {solid = 0, mats = {}, calls = 0}
 
-Enum = {Material = setmetatable({}, {__index = function(_, k) return k end})}
+Enum = setmetatable({}, {__index = function(_, cls)
+    local sub = setmetatable({}, {__index = function(_, k) return cls .. "." .. k end})
+    rawset(Enum, cls, sub)
+    return sub
+end})
+CFrame = {new = function() return {} end, Angles = function() return {} end}
+RaycastParams = {new = function() return {} end}
 table.create = table.create or function(n, v)
     local t = {}
     for i = 1, n do t[i] = v end
