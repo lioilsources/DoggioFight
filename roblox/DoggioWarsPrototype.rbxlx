@@ -1,32 +1,2045 @@
-<roblox xmlns:xmime="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
+<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
+	<External>null</External>
+	<External>nil</External>
 	<Item class="Workspace" referent="RBXWS">
 		<Properties>
+			<float name="AirDensity">0.00120000006</float>
+			<float name="AirTurbulenceIntensity">0</float>
+			<bool name="AllowThirdPartySales">false</bool>
+			<token name="AuthorityMode">1</token>
+			<token name="AvatarUnificationMode">0</token>
+			<token name="ClientAnimatorThrottling">0</token>
+			<Ref name="CurrentCamera">RBXe7acc66fc13f43f9af6149a2e3cbd14b</Ref>
+			<double name="DistributedGameTime">0</double>
+			<token name="EnableSLIMAvatars">0</token>
+			<token name="ExpandedTerrain">0</token>
+			<bool name="ExplicitAutoJoints">true</bool>
+			<bool name="FallHeightEnabled">true</bool>
+			<float name="FallenPartsDestroyHeight">-500</float>
+			<token name="FluidForces">0</token>
+			<Vector3 name="GlobalWind">
+				<X>0</X>
+				<Y>0</Y>
+				<Z>0</Z>
+			</Vector3>
+			<float name="Gravity">196.199997</float>
+			<token name="IKControlConstraintSupport">0</token>
+			<token name="ImprovedAnimationConstraint">0</token>
+			<token name="ImprovedPhysicsReplication">0</token>
+			<token name="LayeredClothingCacheOptimizations">0</token>
+			<token name="LuauTypeCheckMode">0</token>
+			<token name="MeshPartHeadsAndAccessories">0</token>
+			<token name="MeshStreamingAndImprovedLods">0</token>
+			<token name="ModelStreamingBehavior">0</token>
+			<token name="NextGenerationReplication">0</token>
+			<token name="PathfindingUseImprovedSearch">0</token>
+			<token name="PhysicsSteppingMethod">0</token>
+			<token name="PlayerCharacterDestroyBehavior">0</token>
+			<token name="PlayerScriptsUseInputActionSystem">0</token>
+			<token name="PredictiveStreamingMode">0</token>
+			<token name="PrimalPhysicsSolver">0</token>
+			<token name="RejectCharacterDeletions">0</token>
+			<token name="RenderingCacheOptimizations">0</token>
+			<token name="ReplicateInstanceDestroySetting">0</token>
+			<token name="Retargeting">0</token>
+			<token name="SandboxedInstanceMode">0</token>
+			<token name="SignalBehavior2">0</token>
+			<token name="StreamOutBehavior">0</token>
+			<bool name="StreamingEnabled">false</bool>
+			<token name="StreamingIntegrityMode">0</token>
+			<int name="StreamingMinRadius">64</int>
+			<int name="StreamingTargetRadius">1024</int>
+			<bool name="TerrainWeldsFixed">true</bool>
+			<token name="TouchEventsUseCollisionGroups">0</token>
+			<bool name="TouchesUseCollisionGroups">false</bool>
+			<token name="UseFixedSimulation">0</token>
+			<token name="UseNewLuauTypeSolver">2</token>
+			<token name="ValidateEnabledProximityPrompt">0</token>
+			<BinaryString name="CollisionGroupData">AQEABP////8HRGVmYXVsdA==</BinaryString>
+			<token name="LevelOfDetail">0</token>
+			<CoordinateFrame name="ModelMeshCFrame">
+				<X>0</X>
+				<Y>0</Y>
+				<Z>0</Z>
+				<R00>1</R00>
+				<R01>0</R01>
+				<R02>0</R02>
+				<R10>0</R10>
+				<R11>1</R11>
+				<R12>0</R12>
+				<R20>0</R20>
+				<R21>0</R21>
+				<R22>1</R22>
+			</CoordinateFrame>
+			<SharedString name="ModelMeshData">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<Vector3 name="ModelMeshSize">
+				<X>0</X>
+				<Y>0</Y>
+				<Z>0</Z>
+			</Vector3>
+			<token name="ModelStreamingMode">0</token>
+			<bool name="NeedsPivotMigration">false</bool>
+			<Ref name="PrimaryPart">null</Ref>
+			<float name="ScaleFactor">1</float>
+			<SharedString name="SlimHash">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<OptionalCoordinateFrame name="WorldPivotData">
+				<CFrame>
+					<X>0</X>
+					<Y>1400</Y>
+					<Z>0</Z>
+					<R00>1</R00>
+					<R01>0</R01>
+					<R02>0</R02>
+					<R10>0</R10>
+					<R11>1</R11>
+					<R12>0</R12>
+					<R20>0</R20>
+					<R21>0</R21>
+					<R22>1</R22>
+				</CFrame>
+			</OptionalCoordinateFrame>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
 			<string name="Name">Workspace</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000002</UniqueId>
 		</Properties>
 		<Item class="SpawnLocation" referent="RBXSPAWN">
 			<Properties>
-				<string name="Name">SpawnLocation</string>
-				<bool name="Anchored">true</bool>
-				<bool name="CanCollide">false</bool>
-				<float name="Transparency">1</float>
+				<bool name="AllowTeamChangeOnTouch">false</bool>
 				<int name="Duration">0</int>
+				<bool name="Enabled">true</bool>
+				<bool name="Neutral">true</bool>
+				<int name="TeamColor">194</int>
+				<token name="shape">1</token>
+				<token name="formFactorRaw">1</token>
+				<bool name="Anchored">true</bool>
+				<bool name="AudioCanCollide">true</bool>
+				<float name="BackParamA">-0.5</float>
+				<float name="BackParamB">0.5</float>
+				<token name="BackSurface">0</token>
+				<token name="BackSurfaceInput">0</token>
+				<float name="BottomParamA">-0.5</float>
+				<float name="BottomParamB">0.5</float>
+				<token name="BottomSurface">4</token>
+				<token name="BottomSurfaceInput">0</token>
 				<CoordinateFrame name="CFrame">
-					<X>0</X><Y>1400</Y><Z>0</Z>
-					<R00>1</R00><R01>0</R01><R02>0</R02>
-					<R10>0</R10><R11>1</R11><R12>0</R12>
-					<R20>0</R20><R21>0</R21><R22>1</R22>
+					<X>0</X>
+					<Y>1400</Y>
+					<Z>0</Z>
+					<R00>1</R00>
+					<R01>0</R01>
+					<R02>0</R02>
+					<R10>0</R10>
+					<R11>1</R11>
+					<R12>0</R12>
+					<R20>0</R20>
+					<R21>0</R21>
+					<R22>1</R22>
 				</CoordinateFrame>
-				<Vector3 name="size"><X>12</X><Y>1</Y><Z>12</Z></Vector3>
+				<bool name="CanCollide">false</bool>
+				<bool name="CanQuery">true</bool>
+				<bool name="CanTouch">true</bool>
+				<bool name="CastShadow">true</bool>
+				<string name="CollisionGroup">Default</string>
+				<int name="CollisionGroupId">0</int>
+				<Color3uint8 name="Color3uint8">4288914085</Color3uint8>
+				<PhysicalProperties name="CustomPhysicalProperties">
+					<CustomPhysics>false</CustomPhysics>
+				</PhysicalProperties>
+				<bool name="EnableFluidForces">true</bool>
+				<float name="FrontParamA">-0.5</float>
+				<float name="FrontParamB">0.5</float>
+				<token name="FrontSurface">0</token>
+				<token name="FrontSurfaceInput">0</token>
+				<float name="LeftParamA">-0.5</float>
+				<float name="LeftParamB">0.5</float>
+				<token name="LeftSurface">0</token>
+				<token name="LeftSurfaceInput">0</token>
+				<bool name="Locked">false</bool>
+				<bool name="Massless">false</bool>
+				<token name="Material">256</token>
+				<string name="MaterialVariantSerialized"></string>
+				<CoordinateFrame name="PivotOffset">
+					<X>0</X>
+					<Y>0</Y>
+					<Z>0</Z>
+					<R00>1</R00>
+					<R01>0</R01>
+					<R02>0</R02>
+					<R10>0</R10>
+					<R11>1</R11>
+					<R12>0</R12>
+					<R20>0</R20>
+					<R21>0</R21>
+					<R22>1</R22>
+				</CoordinateFrame>
+				<float name="Reflectance">0</float>
+				<float name="RightParamA">-0.5</float>
+				<float name="RightParamB">0.5</float>
+				<token name="RightSurface">0</token>
+				<token name="RightSurfaceInput">0</token>
+				<int name="RootPriority">0</int>
+				<Vector3 name="RotVelocity">
+					<X>0</X>
+					<Y>0</Y>
+					<Z>0</Z>
+				</Vector3>
+				<float name="TopParamA">-0.5</float>
+				<float name="TopParamB">0.5</float>
+				<token name="TopSurface">3</token>
+				<token name="TopSurfaceInput">0</token>
+				<float name="Transparency">1</float>
+				<Vector3 name="Velocity">
+					<X>0</X>
+					<Y>0</Y>
+					<Z>0</Z>
+				</Vector3>
+				<Vector3 name="size">
+					<X>12</X>
+					<Y>1</Y>
+					<Z>12</Z>
+				</Vector3>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+				<bool name="DefinesCapabilities">false</bool>
+				<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+				<string name="Name">SpawnLocation</string>
+				<int64 name="SourceAssetId">-1</int64>
+				<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+				<UniqueId name="UniqueId">18de60858fe78ff20a983c32000003ba</UniqueId>
+			</Properties>
+		</Item>
+		<Item class="Terrain" referent="RBX49a4a0d5578a442a8736393741de9028">
+			<Properties>
+				<token name="AcquisitionMethod">0</token>
+				<bool name="Decoration">false</bool>
+				<float name="GrassLength">0.699999988</float>
+				<BinaryString name="MaterialColors"><![CDATA[AAAAAAAAan8/P39rf2Y/ilY+j35fi21PZmxvZbDqw8faiVpHOi4kHh4lZlw76JxKc3trhHta
+gcLgc4RKxr21zq2UlJSM]]></BinaryString>
+				<SharedString name="Materials">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+				<BinaryString name="PhysicsGrid">AgMAAAAAAAAAAAAAAAA=</BinaryString>
+				<BinaryString name="SmoothGrid">AQU=</BinaryString>
+				<bool name="SmoothVoxelsUpgraded">false</bool>
+				<Color3 name="WaterColor">
+					<R>0.0500000007</R>
+					<G>0.330000013</G>
+					<B>0.360000014</B>
+				</Color3>
+				<float name="WaterReflectance">1</float>
+				<float name="WaterTransparency">0.300000012</float>
+				<float name="WaterWaveSize">0.150000006</float>
+				<float name="WaterWaveSpeed">10</float>
+				<bool name="Anchored">true</bool>
+				<bool name="AudioCanCollide">true</bool>
+				<float name="BackParamA">-0.5</float>
+				<float name="BackParamB">0.5</float>
+				<token name="BackSurface">0</token>
+				<token name="BackSurfaceInput">0</token>
+				<float name="BottomParamA">-0.5</float>
+				<float name="BottomParamB">0.5</float>
+				<token name="BottomSurface">4</token>
+				<token name="BottomSurfaceInput">0</token>
+				<CoordinateFrame name="CFrame">
+					<X>0</X>
+					<Y>0</Y>
+					<Z>0</Z>
+					<R00>1</R00>
+					<R01>0</R01>
+					<R02>0</R02>
+					<R10>0</R10>
+					<R11>1</R11>
+					<R12>0</R12>
+					<R20>0</R20>
+					<R21>0</R21>
+					<R22>1</R22>
+				</CoordinateFrame>
+				<bool name="CanCollide">true</bool>
+				<bool name="CanQuery">true</bool>
+				<bool name="CanTouch">true</bool>
+				<bool name="CastShadow">true</bool>
+				<string name="CollisionGroup">Default</string>
+				<int name="CollisionGroupId">0</int>
+				<Color3uint8 name="Color3uint8">4288914085</Color3uint8>
+				<PhysicalProperties name="CustomPhysicalProperties">
+					<CustomPhysics>false</CustomPhysics>
+				</PhysicalProperties>
+				<bool name="EnableFluidForces">true</bool>
+				<float name="FrontParamA">-0.5</float>
+				<float name="FrontParamB">0.5</float>
+				<token name="FrontSurface">0</token>
+				<token name="FrontSurfaceInput">0</token>
+				<float name="LeftParamA">-0.5</float>
+				<float name="LeftParamB">0.5</float>
+				<token name="LeftSurface">0</token>
+				<token name="LeftSurfaceInput">0</token>
+				<bool name="Locked">true</bool>
+				<bool name="Massless">false</bool>
+				<token name="Material">256</token>
+				<string name="MaterialVariantSerialized"></string>
+				<CoordinateFrame name="PivotOffset">
+					<X>0</X>
+					<Y>0</Y>
+					<Z>0</Z>
+					<R00>1</R00>
+					<R01>0</R01>
+					<R02>0</R02>
+					<R10>0</R10>
+					<R11>1</R11>
+					<R12>0</R12>
+					<R20>0</R20>
+					<R21>0</R21>
+					<R22>1</R22>
+				</CoordinateFrame>
+				<float name="Reflectance">0</float>
+				<float name="RightParamA">-0.5</float>
+				<float name="RightParamB">0.5</float>
+				<token name="RightSurface">0</token>
+				<token name="RightSurfaceInput">0</token>
+				<int name="RootPriority">0</int>
+				<Vector3 name="RotVelocity">
+					<X>0</X>
+					<Y>0</Y>
+					<Z>0</Z>
+				</Vector3>
+				<float name="TopParamA">-0.5</float>
+				<float name="TopParamB">0.5</float>
+				<token name="TopSurface">3</token>
+				<token name="TopSurfaceInput">0</token>
+				<float name="Transparency">0</float>
+				<Vector3 name="Velocity">
+					<X>0</X>
+					<Y>0</Y>
+					<Z>0</Z>
+				</Vector3>
+				<Vector3 name="size">
+					<X>2044</X>
+					<Y>252</Y>
+					<Z>2044</Z>
+				</Vector3>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+				<bool name="DefinesCapabilities">false</bool>
+				<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+				<string name="Name">Terrain</string>
+				<int64 name="SourceAssetId">-1</int64>
+				<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+				<UniqueId name="UniqueId">18de60858fe78ff20a983c32000003c0</UniqueId>
+			</Properties>
+		</Item>
+		<Item class="Camera" referent="RBXe7acc66fc13f43f9af6149a2e3cbd14b">
+			<Properties>
+				<CoordinateFrame name="CFrame">
+					<X>0</X>
+					<Y>20</Y>
+					<Z>20</Z>
+					<R00>1</R00>
+					<R01>0</R01>
+					<R02>-0</R02>
+					<R10>-0</R10>
+					<R11>0.780868828</R11>
+					<R12>0.624695063</R12>
+					<R20>0</R20>
+					<R21>-0.624695063</R21>
+					<R22>0.780868828</R22>
+				</CoordinateFrame>
+				<Ref name="CameraSubject">null</Ref>
+				<token name="CameraType">0</token>
+				<float name="FieldOfView">70</float>
+				<token name="FieldOfViewMode">0</token>
+				<CoordinateFrame name="Focus">
+					<X>0</X>
+					<Y>0</Y>
+					<Z>-5</Z>
+					<R00>1</R00>
+					<R01>0</R01>
+					<R02>0</R02>
+					<R10>0</R10>
+					<R11>1</R11>
+					<R12>0</R12>
+					<R20>0</R20>
+					<R21>0</R21>
+					<R22>1</R22>
+				</CoordinateFrame>
+				<bool name="HeadLocked">true</bool>
+				<float name="HeadScale">1</float>
+				<bool name="VRTiltAndRollEnabled">false</bool>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+				<bool name="DefinesCapabilities">false</bool>
+				<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+				<string name="Name">Camera</string>
+				<int64 name="SourceAssetId">-1</int64>
+				<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+				<UniqueId name="UniqueId">18de60858fe78ff20a983c32000003cf</UniqueId>
 			</Properties>
 		</Item>
 	</Item>
+	<Item class="TimerService" referent="RBXcf569a66e91e4a128c2cddb9f757609a">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">TimerService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000348</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="CollectionService" referent="RBX7964127308474becb9e026f6bd546b79">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">CollectionService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000349</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="SoundService" referent="RBX8949f582ea1e47be96b340a53983e9d9">
+		<Properties>
+			<bool name="AcousticSimulationEnabled">false</bool>
+			<token name="AmbientReverb">0</token>
+			<token name="AudioApiByDefault">0</token>
+			<token name="CharacterSoundsUseNewApi">0</token>
+			<token name="DefaultListenerLocation">0</token>
+			<bool name="DiffractionEnabled">true</bool>
+			<float name="DistanceFactor">3.32999992</float>
+			<float name="DopplerScale">1</float>
+			<bool name="IsNewExpForAudioApiByDefault">false</bool>
+			<CoordinateFrame name="ListenerCFrame">
+				<X>0</X>
+				<Y>0</Y>
+				<Z>0</Z>
+				<R00>1</R00>
+				<R01>0</R01>
+				<R02>0</R02>
+				<R10>0</R10>
+				<R11>1</R11>
+				<R12>0</R12>
+				<R20>0</R20>
+				<R21>0</R21>
+				<R22>1</R22>
+			</CoordinateFrame>
+			<Ref name="ListenerObject">null</Ref>
+			<token name="ListenerType">0</token>
+			<bool name="OcclusionEnabled">true</bool>
+			<bool name="RespectFilteringEnabled">false</bool>
+			<bool name="ReverbEnabled">true</bool>
+			<float name="RolloffScale">1</float>
+			<token name="VolumetricAudio">1</token>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">SoundService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c320000034a</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="VideoCaptureService" referent="RBXa09b6098c8e344ebaf85c8f49d8c72f1">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">VideoCaptureService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000356</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="NonReplicatedCSGDictionaryService" referent="RBX6784523523e9479aa155198a81f95a75">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">NonReplicatedCSGDictionaryService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000357</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="CSGDictionaryService" referent="RBX545f8b7641ec4ecb8884e485dd099f25">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">CSGDictionaryService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000358</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="Chat" referent="RBX0c30cde22384458b9f556d16b567f5ee">
+		<Properties>
+			<bool name="BubbleChatEnabled">false</bool>
+			<bool name="IsAutoMigrated">false</bool>
+			<bool name="LoadDefaultChat">true</bool>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">Chat</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c320000035e</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="Players" referent="RBX27eded4aef594b8da0b18d63b5741f2a">
+		<Properties>
+			<bool name="BanningEnabled">true</bool>
+			<bool name="CharacterAutoLoads">true</bool>
+			<int name="MaxPlayersInternal">12</int>
+			<int name="PreferredPlayersInternal">0</int>
+			<float name="RespawnTime">5</float>
+			<bool name="UseStrafingAnimations">false</bool>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">Players</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000360</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="ReplicatedFirst" referent="RBX342a5c3809fa4434a8afd01f48f1f248">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">ReplicatedFirst</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000363</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="TweenService" referent="RBX2ddc0edf4482476c9483dce9bad71517">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">TweenService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000365</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="MaterialService" referent="RBX2b92f535f83249fcb2fcd60efe88dca2">
+		<Properties>
+			<string name="AsphaltName">Asphalt</string>
+			<string name="BasaltName">Basalt</string>
+			<string name="BrickName">Brick</string>
+			<string name="CardboardName">Cardboard</string>
+			<string name="CarpetName">Carpet</string>
+			<string name="CeramicTilesName">CeramicTiles</string>
+			<string name="ClayRoofTilesName">ClayRoofTiles</string>
+			<string name="CobblestoneName">Cobblestone</string>
+			<string name="ConcreteName">Concrete</string>
+			<string name="CorrodedMetalName">CorrodedMetal</string>
+			<string name="CrackedLavaName">CrackedLava</string>
+			<string name="DiamondPlateName">DiamondPlate</string>
+			<string name="FabricName">Fabric</string>
+			<string name="FoilName">Foil</string>
+			<string name="GlacierName">Glacier</string>
+			<string name="GraniteName">Granite</string>
+			<string name="GrassName">Grass</string>
+			<string name="GroundName">Ground</string>
+			<string name="IceName">Ice</string>
+			<string name="LeafyGrassName">LeafyGrass</string>
+			<string name="LeatherName">Leather</string>
+			<string name="LimestoneName">Limestone</string>
+			<string name="MarbleName">Marble</string>
+			<string name="MetalName">Metal</string>
+			<string name="MudName">Mud</string>
+			<string name="PavementName">Pavement</string>
+			<string name="PebbleName">Pebble</string>
+			<string name="PlasterName">Plaster</string>
+			<string name="PlasticName">Plastic</string>
+			<string name="RockName">Rock</string>
+			<string name="RoofShinglesName">RoofShingles</string>
+			<string name="RubberName">Rubber</string>
+			<string name="SaltName">Salt</string>
+			<string name="SandName">Sand</string>
+			<string name="SandstoneName">Sandstone</string>
+			<string name="SlateName">Slate</string>
+			<string name="SmoothPlasticName">SmoothPlastic</string>
+			<string name="SnowName">Snow</string>
+			<bool name="Use2022MaterialsXml">false</bool>
+			<string name="WoodName">Wood</string>
+			<string name="WoodPlanksName">WoodPlanks</string>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">MaterialService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000366</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="TextChatService" referent="RBXbec7b69dbe704b81be46d917527c57da">
+		<Properties>
+			<bool name="ChatTranslationFTUXShown">true</bool>
+			<bool name="ChatTranslationToggleEnabled">false</bool>
+			<token name="ChatVersion">0</token>
+			<bool name="CreateDefaultCommands">true</bool>
+			<bool name="CreateDefaultTextChannels">true</bool>
+			<bool name="HasSeenDeprecationDialog">false</bool>
+			<bool name="IsLegacyChatDisabled">false</bool>
+			<token name="PlatformIntegratedChat">0</token>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">TextChatService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000367</UniqueId>
+		</Properties>
+		<Item class="ChatWindowConfiguration" referent="RBX39331d6957e3472380a9fc86d08b86fd">
+			<Properties>
+				<Color3 name="BackgroundColor3">
+					<R>0.0980392173</R>
+					<G>0.105882354</G>
+					<B>0.113725491</B>
+				</Color3>
+				<double name="BackgroundTransparency">0.2999999999999999889</double>
+				<bool name="Enabled">true</bool>
+				<Font name="FontFace">
+					<Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family>
+					<Weight>500</Weight>
+					<Style>Normal</Style>
+					<CachedFaceId><url>rbxasset://fonts/Montserrat-Medium.ttf</url></CachedFaceId>
+				</Font>
+				<float name="HeightScale">1</float>
+				<token name="HorizontalAlignment">1</token>
+				<Color3 name="TextColor3">
+					<R>1</R>
+					<G>1</G>
+					<B>1</B>
+				</Color3>
+				<int64 name="TextSize">14</int64>
+				<Color3 name="TextStrokeColor3">
+					<R>0</R>
+					<G>0</G>
+					<B>0</B>
+				</Color3>
+				<double name="TextStrokeTransparency">0.5</double>
+				<token name="VerticalAlignment">1</token>
+				<float name="WidthScale">1</float>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+				<bool name="DefinesCapabilities">false</bool>
+				<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+				<string name="Name">ChatWindowConfiguration</string>
+				<int64 name="SourceAssetId">-1</int64>
+				<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+				<UniqueId name="UniqueId">18de60858fe78ff20a983c32000003c2</UniqueId>
+			</Properties>
+		</Item>
+		<Item class="ChatInputBarConfiguration" referent="RBXab80af781db34862be6689c47b769056">
+			<Properties>
+				<bool name="AutocompleteEnabled">true</bool>
+				<Color3 name="BackgroundColor3">
+					<R>0.0980392173</R>
+					<G>0.105882354</G>
+					<B>0.113725491</B>
+				</Color3>
+				<double name="BackgroundTransparency">0.2000000000000000111</double>
+				<bool name="Enabled">true</bool>
+				<Font name="FontFace">
+					<Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family>
+					<Weight>500</Weight>
+					<Style>Normal</Style>
+					<CachedFaceId><url>rbxasset://fonts/Montserrat-Medium.ttf</url></CachedFaceId>
+				</Font>
+				<token name="KeyboardKeyCode">47</token>
+				<Color3 name="PlaceholderColor3">
+					<R>0.698039234</R>
+					<G>0.698039234</G>
+					<B>0.698039234</B>
+				</Color3>
+				<Ref name="TargetTextChannel">null</Ref>
+				<Color3 name="TextColor3">
+					<R>1</R>
+					<G>1</G>
+					<B>1</B>
+				</Color3>
+				<int64 name="TextSize">14</int64>
+				<Color3 name="TextStrokeColor3">
+					<R>0</R>
+					<G>0</G>
+					<B>0</B>
+				</Color3>
+				<double name="TextStrokeTransparency">0.5</double>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+				<bool name="DefinesCapabilities">false</bool>
+				<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+				<string name="Name">ChatInputBarConfiguration</string>
+				<int64 name="SourceAssetId">-1</int64>
+				<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+				<UniqueId name="UniqueId">18de60858fe78ff20a983c32000003c3</UniqueId>
+			</Properties>
+		</Item>
+		<Item class="BubbleChatConfiguration" referent="RBXc2f7d7984c7b43889a873fa03ca28472">
+			<Properties>
+				<string name="AdorneeName">HumanoidRootPart</string>
+				<Color3 name="BackgroundColor3">
+					<R>0.980392158</R>
+					<G>0.980392158</G>
+					<B>0.980392158</B>
+				</Color3>
+				<double name="BackgroundTransparency">0.10000000000000000555</double>
+				<float name="BubbleDuration">15</float>
+				<float name="BubblesSpacing">6</float>
+				<bool name="Enabled">true</bool>
+				<token name="Font">18</token>
+				<Font name="FontFace">
+					<Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family>
+					<Weight>500</Weight>
+					<Style>Normal</Style>
+					<CachedFaceId><url>rbxasset://fonts/Montserrat-Medium.ttf</url></CachedFaceId>
+				</Font>
+				<Vector3 name="LocalPlayerStudsOffset">
+					<X>0</X>
+					<Y>0</Y>
+					<Z>0</Z>
+				</Vector3>
+				<float name="MaxBubbles">3</float>
+				<float name="MaxDistance">100</float>
+				<float name="MinimizeDistance">40</float>
+				<bool name="TailVisible">true</bool>
+				<Color3 name="TextColor3">
+					<R>0.223529413</R>
+					<G>0.23137255</G>
+					<B>0.239215687</B>
+				</Color3>
+				<int64 name="TextSize">16</int64>
+				<float name="VerticalStudsOffset">0</float>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+				<bool name="DefinesCapabilities">false</bool>
+				<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+				<string name="Name">BubbleChatConfiguration</string>
+				<int64 name="SourceAssetId">-1</int64>
+				<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+				<UniqueId name="UniqueId">18de60858fe78ff20a983c32000003c4</UniqueId>
+			</Properties>
+		</Item>
+		<Item class="ChannelTabsConfiguration" referent="RBX58e6d78bd5d447cdb8072831597e7760">
+			<Properties>
+				<Color3 name="BackgroundColor3">
+					<R>0.0980392173</R>
+					<G>0.105882354</G>
+					<B>0.113725491</B>
+				</Color3>
+				<double name="BackgroundTransparency">0</double>
+				<bool name="Enabled">false</bool>
+				<Font name="FontFace">
+					<Family><url>rbxasset://fonts/families/BuilderSans.json</url></Family>
+					<Weight>700</Weight>
+					<Style>Normal</Style>
+					<CachedFaceId><url>rbxasset://fonts/BuilderSans-Bold.otf</url></CachedFaceId>
+				</Font>
+				<Color3 name="HoverBackgroundColor3">
+					<R>0.490196079</R>
+					<G>0.490196079</G>
+					<B>0.490196079</B>
+				</Color3>
+				<Color3 name="SelectedTabTextColor3">
+					<R>1</R>
+					<G>1</G>
+					<B>1</B>
+				</Color3>
+				<Color3 name="TextColor3">
+					<R>0.686274529</R>
+					<G>0.686274529</G>
+					<B>0.686274529</B>
+				</Color3>
+				<int64 name="TextSize">18</int64>
+				<Color3 name="TextStrokeColor3">
+					<R>0</R>
+					<G>0</G>
+					<B>0</B>
+				</Color3>
+				<double name="TextStrokeTransparency">1</double>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+				<bool name="DefinesCapabilities">false</bool>
+				<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+				<string name="Name">ChannelTabsConfiguration</string>
+				<int64 name="SourceAssetId">-1</int64>
+				<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+				<UniqueId name="UniqueId">18de60858fe78ff20a983c32000003c5</UniqueId>
+			</Properties>
+		</Item>
+	</Item>
+	<Item class="PermissionsService" referent="RBXd66ec6a4f28043599848f81e72591643">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">PermissionsService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000369</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="PlayerEmulatorService" referent="RBX4ca9117f188b4a74ab810a6709d6e5e2">
+		<Properties>
+			<bool name="CustomPoliciesEnabled">false</bool>
+			<string name="EmulatedCountryCode"></string>
+			<string name="EmulatedGameLocale"></string>
+			<bool name="PlayerEmulationEnabled">false</bool>
+			<bool name="PseudolocalizationEnabled">false</bool>
+			<BinaryString name="SerializedEmulatedPolicyInfo"></BinaryString>
+			<int name="TextElongationFactor">0</int>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">PlayerEmulatorService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c320000036a</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="StudioData" referent="RBXd1066dcf216d4aeab27eae05c8f41f98">
+		<Properties>
+			<bool name="EnableScriptCollabByDefaultOnLoad">false</bool>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">StudioData</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c320000036d</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="StarterPlayer" referent="RBXSP">
+		<Properties>
+			<bool name="AllowCustomAnimations">true</bool>
+			<bool name="AutoJumpEnabled">true</bool>
+			<token name="AvatarJointUpgrade_SerializedRollout">0</token>
+			<float name="CameraMaxZoomDistance">400</float>
+			<float name="CameraMinZoomDistance">0.5</float>
+			<token name="CameraMode">0</token>
+			<bool name="CharacterBreakJointsOnDeath">true</bool>
+			<float name="CharacterJumpHeight">7.19999981</float>
+			<float name="CharacterJumpPower">50</float>
+			<float name="CharacterMaxSlopeAngle">89</float>
+			<bool name="CharacterUseJumpPower">true</bool>
+			<float name="CharacterWalkSpeed">16</float>
+			<bool name="ClassicDeath">true</bool>
+			<bool name="CreateDefaultPlayerModule">true</bool>
+			<token name="DevCameraOcclusionMode">0</token>
+			<token name="DevComputerCameraMovementMode">0</token>
+			<token name="DevComputerMovementMode">0</token>
+			<token name="DevTouchCameraMovementMode">0</token>
+			<token name="DevTouchMovementMode">0</token>
+			<token name="EnableDynamicHeads">0</token>
+			<bool name="EnableMouseLockOption">true</bool>
+			<int64 name="GameSettingsAssetIDFace">0</int64>
+			<int64 name="GameSettingsAssetIDHead">0</int64>
+			<int64 name="GameSettingsAssetIDLeftArm">0</int64>
+			<int64 name="GameSettingsAssetIDLeftLeg">0</int64>
+			<int64 name="GameSettingsAssetIDPants">0</int64>
+			<int64 name="GameSettingsAssetIDRightArm">0</int64>
+			<int64 name="GameSettingsAssetIDRightLeg">0</int64>
+			<int64 name="GameSettingsAssetIDShirt">0</int64>
+			<int64 name="GameSettingsAssetIDTeeShirt">0</int64>
+			<int64 name="GameSettingsAssetIDTorso">0</int64>
+			<token name="GameSettingsAvatar">1</token>
+			<token name="GameSettingsR15Collision">0</token>
+			<NumberRange name="GameSettingsScaleRangeBodyType">0 1 </NumberRange>
+			<NumberRange name="GameSettingsScaleRangeHead">0.95 1 </NumberRange>
+			<NumberRange name="GameSettingsScaleRangeHeight">0.9 1.05 </NumberRange>
+			<NumberRange name="GameSettingsScaleRangeProportion">0 1 </NumberRange>
+			<NumberRange name="GameSettingsScaleRangeWidth">0.7 1 </NumberRange>
+			<float name="HealthDisplayDistance">100</float>
+			<bool name="LoadCharacterAppearance">true</bool>
+			<token name="LoadCharacterLayeredClothing">0</token>
+			<token name="LuaCharacterController">0</token>
+			<float name="NameDisplayDistance">100</float>
+			<int name="PlayerModuleStatus">0</int>
+			<bool name="UserEmotesEnabled">true</bool>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">StarterPlayer</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c320000036f</UniqueId>
+		</Properties>
+		<Item class="StarterPlayerScripts" referent="RBXSPS">
+			<Properties>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+				<bool name="DefinesCapabilities">false</bool>
+				<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+				<string name="Name">StarterPlayerScripts</string>
+				<int64 name="SourceAssetId">-1</int64>
+				<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+				<UniqueId name="UniqueId">18de60858fe78ff20a983c32000003be</UniqueId>
+			</Properties>
+			<Item class="LocalScript" referent="RBXCLI">
+				<Properties>
+					<ProtectedString name="Source"><![CDATA[
+--!native
+--!optimize 2
+-- DoggioWars Roblox prototyp -- letovy model (klient)
+-- Port jadra z vehicle.lua (Luanti): mouse-flight, zamerovac vede a letadlo
+-- se za nim dotaci. Kinematicky let pres CFrame, zadna fyzika enginu --
+-- stejny pristup jako serverova entita v Luanti (set_velocity kazdy step).
+--
+-- Ovladani: mys = zamerovac | W/S plyn | A/D vyboceni | Space/Shift nos
+-- S+A/D drift | LMB strelba (nici teren) | RMB boost | V kamera | R respawn
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+
+local player = Players.LocalPlayer
+local camera = workspace.CurrentCamera
+local Terrain = workspace.Terrain
+
+-- Konstanty 1:1 z doggiowars.const (m/s, rad/s); SCALE prevadi metry na study
+local SCALE      = 3
+local SPEED_MAX  = 40
+local SPEED_MIN  = 5
+local TURN_SPEED = 1.5
+local PITCH_RATE = 1.2
+local PITCH_MAX  = 0.6
+local ROLL_SPEED = 1.8
+local BANK_MAX   = math.pi * 0.7    -- ROLL_MAX * 0.7, auto-naklon v zatacce
+local LOOK_CLAMP = 1.25
+local MOUSE_SENS = 0.0022
+local SPAWN_POS  = Vector3.new(0, 1400, -150)
+
+-- Stav letu (nazvy dle vehicle.lua)
+local aimYaw, aimPitch = 0, -0.15  -- look_h/look_v: kam miri zamerovac
+                                   -- (start mirne dolu, at je videt ostrov)
+local yaw, pitch, roll = 0, 0, 0   -- skutecna orientace letadla
+local speed = 15                   -- m/s; DRZI tam, kam ji hrac nastavi
+local boostMeter, boostTime = 50, 0
+local score, hp = 0, 100          -- SCORE prezije respawn (jako Luanti)
+local hudTimer, radarTimer = 0, 0
+local radarOn = true
+local pos = SPAWN_POS
+local proxTimer = 0
+local shootCooldown, crashCooldown = 0, 0
+local flashTime, msgTimeLeft = 0, 0
+local firstPerson = false
+
+local function wrapAngle(a)
+	while a > math.pi do a = a - 2 * math.pi end
+	while a < -math.pi do a = a + 2 * math.pi end
+	return a
+end
+
+local function resetFlight()
+	pos = SPAWN_POS
+	aimYaw, aimPitch = 0, -0.15
+	yaw, pitch, roll = 0, 0, 0
+	speed = 15
+	boostMeter, boostTime = 50, 0
+	hp = 100
+end
+
+---------------------------------------------------------------------------
+-- Model letadla z Partu (nahrada za doggiowars_fighter_01.obj; dopredu = -Z)
+---------------------------------------------------------------------------
+
+local RED   = Color3.fromRGB(200, 60, 50)
+local WHITE = Color3.fromRGB(235, 230, 220)
+local DARK  = Color3.fromRGB(45, 45, 58)
+
+local plane = Instance.new("Model")
+plane.Name = "DoggioFighter"
+
+local function makePart(size, cf, color, material)
+	local part = Instance.new("Part")
+	part.Size = size
+	part.CFrame = cf
+	part.Anchored = true
+	part.CanCollide = false
+	part.CastShadow = false
+	part.Color = color
+	part.Material = material or Enum.Material.SmoothPlastic
+	part.Parent = plane
+	return part
+end
+
+local hull = makePart(Vector3.new(3, 2.4, 12), CFrame.new(0, 0, 0), RED)
+makePart(Vector3.new(1.6, 1.2, 3.4), CFrame.new(0, 1.6, 0.6), DARK, Enum.Material.Glass)
+makePart(Vector3.new(16, 0.5, 4), CFrame.new(0, 0.4, -0.5), WHITE)
+makePart(Vector3.new(6, 0.4, 2.2), CFrame.new(0, 0.6, 5.2), WHITE)
+makePart(Vector3.new(0.4, 2.6, 2.4), CFrame.new(0, 1.6, 5.4), RED)
+makePart(Vector3.new(1.4, 1.4, 1.2), CFrame.new(0, 0, -6.4), DARK)
+plane.PrimaryPart = hull
+plane.Parent = workspace
+
+local exhaustAtt = Instance.new("Attachment")
+exhaustAtt.Position = Vector3.new(0, 0, 6.2)
+exhaustAtt.Parent = hull
+local exhaust = Instance.new("ParticleEmitter")
+exhaust.Texture = "rbxasset://textures/particles/smoke_main.dds"
+exhaust.Lifetime = NumberRange.new(0.3, 0.7)
+exhaust.Speed = NumberRange.new(8, 16)
+exhaust.Size = NumberSequence.new(1.2, 2.6)
+exhaust.Transparency = NumberSequence.new(0.4, 1)
+exhaust.Acceleration = Vector3.new(0, -2, 0)
+exhaust.Color = ColorSequence.new(
+	Color3.fromRGB(255, 190, 120), Color3.fromRGB(120, 120, 130))
+exhaust.Parent = exhaustAtt
+
+---------------------------------------------------------------------------
+-- Postava: neviditelna, ukotvena, leti s letadlem (drzi streaming/replikaci)
+---------------------------------------------------------------------------
+
+local charRoot = nil
+
+local rayParams = RaycastParams.new()
+rayParams.FilterType = Enum.RaycastFilterType.Exclude
+
+local function refreshRayFilter()
+	local list = {plane}
+	if player.Character then
+		table.insert(list, player.Character)
+	end
+	rayParams.FilterDescendantsInstances = list
+end
+
+local function hidePart(d)
+	if d:IsA("BasePart") then
+		d.LocalTransparencyModifier = 1
+		d.CanCollide = false
+	end
+end
+
+local function adoptCharacter(char)
+	local root = char:WaitForChild("HumanoidRootPart")
+	local humanoid = char:WaitForChild("Humanoid")
+	root.Anchored = true
+	humanoid.PlatformStand = true
+	for _, d in ipairs(char:GetDescendants()) do
+		hidePart(d)
+	end
+	char.DescendantAdded:Connect(hidePart)
+	charRoot = root
+	refreshRayFilter()
+end
+
+player.CharacterAdded:Connect(adoptCharacter)
+if player.Character then
+	adoptCharacter(player.Character)
+end
+refreshRayFilter()
+
+---------------------------------------------------------------------------
+-- HUD (nahrada hud.lua): zamerovac, rychlost, boost bar, hlasky
+---------------------------------------------------------------------------
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "DoggioHUD"
+gui.IgnoreGuiInset = true
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local function newFrame(size, position, color, transparency)
+	local f = Instance.new("Frame")
+	f.AnchorPoint = Vector2.new(0.5, 0.5)
+	f.Size = size
+	f.Position = position
+	f.BackgroundColor3 = color
+	f.BackgroundTransparency = transparency or 0
+	f.BorderSizePixel = 0
+	f.Parent = gui
+	return f
+end
+
+local function newLabel(size, position, textSize)
+	local l = Instance.new("TextLabel")
+	l.AnchorPoint = Vector2.new(0.5, 0.5)
+	l.Size = size
+	l.Position = position
+	l.BackgroundTransparency = 1
+	l.Font = Enum.Font.Code
+	l.TextSize = textSize
+	l.TextColor3 = Color3.new(1, 1, 1)
+	l.TextStrokeTransparency = 0.6
+	l.Parent = gui
+	return l
+end
+
+local dot = newFrame(UDim2.fromOffset(5, 5), UDim2.fromScale(0.5, 0.5),
+	Color3.new(1, 1, 1))
+local dotCorner = Instance.new("UICorner")
+dotCorner.CornerRadius = UDim.new(1, 0)
+dotCorner.Parent = dot
+
+local ring = newFrame(UDim2.fromOffset(30, 30), UDim2.fromScale(0.5, 0.5),
+	Color3.new(1, 1, 1), 1)
+local ringCorner = Instance.new("UICorner")
+ringCorner.CornerRadius = UDim.new(1, 0)
+ringCorner.Parent = ring
+local ringStroke = Instance.new("UIStroke")
+ringStroke.Color = Color3.new(1, 1, 1)
+ringStroke.Thickness = 1.5
+ringStroke.Transparency = 0.35
+ringStroke.Parent = ring
+
+-- Levy sloupec dle hud.lua: SPD/ALT/VS (0.94), hull (0.88), boost (0.84)
+local speedLabel = newLabel(UDim2.fromOffset(380, 24), UDim2.fromScale(0.02, 0.94), 20)
+speedLabel.AnchorPoint = Vector2.new(0, 0.5)
+speedLabel.TextXAlignment = Enum.TextXAlignment.Left
+speedLabel.TextColor3 = Color3.fromRGB(159, 216, 255)
+
+local function newBar(yScale, color)
+	local bg = newFrame(UDim2.fromOffset(200, 10), UDim2.fromScale(0.02, yScale),
+		Color3.fromRGB(20, 25, 35), 0.35)
+	bg.AnchorPoint = Vector2.new(0, 0.5)
+	local fill = Instance.new("Frame")
+	fill.Size = UDim2.fromScale(1, 1)
+	fill.BackgroundColor3 = color
+	fill.BorderSizePixel = 0
+	fill.Parent = bg
+	return fill
+end
+local hullFill = newBar(0.88, Color3.fromRGB(255, 80, 64))
+local boostFill = newBar(0.84, Color3.fromRGB(255, 215, 94))
+
+-- SCORE vlevo nahore (0.02/0.06), zlata
+local scoreLabel = newLabel(UDim2.fromOffset(300, 24), UDim2.fromScale(0.02, 0.06), 20)
+scoreLabel.AnchorPoint = Vector2.new(0, 0.5)
+scoreLabel.TextXAlignment = Enum.TextXAlignment.Left
+scoreLabel.TextColor3 = Color3.fromRGB(255, 215, 94)
+scoreLabel.Text = "SCORE 0"
+
+-- Kompasova paska (0.5/0.02, mono) + kurz ve stupnich pod ni
+local compassLabel = newLabel(UDim2.fromOffset(720, 22), UDim2.fromScale(0.5, 0.03), 18)
+local headingLabel = newLabel(UDim2.fromOffset(120, 18), UDim2.fromScale(0.5, 0.065), 15)
+headingLabel.TextColor3 = Color3.fromRGB(159, 216, 255)
+
+-- Podelny sklon + naklon textem (0.5/0.92)
+local bankLabel = newLabel(UDim2.fromOffset(420, 18), UDim2.fromScale(0.5, 0.92), 14)
+
+-- Vodovaha (att_* z hud.lua): cara se klopi SPOLU se strojem, stoupani
+-- ji zveda nad pevny kruh. Roblox ma Rotation, netreba skladat z dilku --
+-- dva zelene segmenty s mezerou v rotujicim ramu + pevna reference.
+local attBox = newFrame(UDim2.fromOffset(188, 76), UDim2.new(1, -110, 0.38, 0),
+	Color3.new(0, 0, 0), 1)
+local attLine = Instance.new("Frame")
+attLine.AnchorPoint = Vector2.new(0.5, 0.5)
+attLine.Size = UDim2.fromOffset(176, 12)
+attLine.Position = UDim2.fromScale(0.5, 0.5)
+attLine.BackgroundTransparency = 1
+attLine.Parent = attBox
+for _, x0 in ipairs({0, 110}) do
+	local seg = Instance.new("Frame")
+	seg.Size = UDim2.fromOffset(66, 4)
+	seg.Position = UDim2.new(0, x0, 0.5, -2)
+	seg.BackgroundColor3 = Color3.fromRGB(143, 227, 160)
+	seg.BorderSizePixel = 0
+	seg.Parent = attLine
+end
+local attRef = Instance.new("Frame")
+attRef.AnchorPoint = Vector2.new(0.5, 0.5)
+attRef.Size = UDim2.fromOffset(18, 18)
+attRef.Position = UDim2.fromScale(0.5, 0.5)
+attRef.BackgroundTransparency = 1
+attRef.Parent = attBox
+local attRefStroke = Instance.new("UIStroke")
+attRefStroke.Color = Color3.new(1, 1, 1)
+attRefStroke.Thickness = 2
+attRefStroke.Parent = attRef
+local attRefCorner = Instance.new("UICorner")
+attRefCorner.CornerRadius = UDim.new(1, 0)
+attRefCorner.Parent = attRef
+
+-- Radar (Luanti minimapa vpravo nahore, prepina M misto /radar)
+local RADAR_PX = 220
+local RADAR_RANGE = 512   -- m, jako minimap size 512
+local radarBox = newFrame(UDim2.fromOffset(RADAR_PX, RADAR_PX),
+	UDim2.new(1, -(RADAR_PX / 2 + 10), 0, RADAR_PX / 2 + 10),
+	Color3.fromRGB(10, 16, 26), 0.4)
+local radarCorner = Instance.new("UICorner")
+radarCorner.CornerRadius = UDim.new(1, 0)
+radarCorner.Parent = radarBox
+local radarStroke = Instance.new("UIStroke")
+radarStroke.Color = Color3.new(1, 1, 1)
+radarStroke.Transparency = 0.5
+radarStroke.Parent = radarBox
+local radarDots = {}
+for i = 1, 30 do
+	local d = Instance.new("Frame")
+	d.AnchorPoint = Vector2.new(0.5, 0.5)
+	d.BackgroundColor3 = Color3.new(1, 1, 1)
+	d.BorderSizePixel = 0
+	d.Visible = false
+	d.Parent = radarBox
+	local c = Instance.new("UICorner")
+	c.CornerRadius = UDim.new(1, 0)
+	c.Parent = d
+	radarDots[i] = d
+end
+local radarArrow = Instance.new("TextLabel")
+radarArrow.AnchorPoint = Vector2.new(0.5, 0.5)
+radarArrow.Position = UDim2.fromScale(0.5, 0.5)
+radarArrow.Size = UDim2.fromOffset(20, 20)
+radarArrow.BackgroundTransparency = 1
+radarArrow.Font = Enum.Font.Code
+radarArrow.TextSize = 16
+radarArrow.TextColor3 = Color3.new(1, 1, 1)
+radarArrow.Text = "▲"
+radarArrow.ZIndex = 3
+radarArrow.Parent = radarBox
+local northLabel = Instance.new("TextLabel")
+northLabel.AnchorPoint = Vector2.new(0.5, 0)
+northLabel.Position = UDim2.new(0.5, 0, 0, 4)
+northLabel.Size = UDim2.fromOffset(16, 14)
+northLabel.BackgroundTransparency = 1
+northLabel.Font = Enum.Font.Code
+northLabel.TextSize = 13
+northLabel.TextColor3 = Color3.new(1, 1, 1)
+northLabel.TextTransparency = 0.3
+northLabel.Text = "N"
+northLabel.Parent = radarBox
+
+local hint = newLabel(UDim2.fromScale(0.9, 0.03), UDim2.fromScale(0.5, 0.965), 14)
+hint.TextTransparency = 0.25
+hint.Text = "mys zamerovac | W/S plyn | A/D vyboceni | Space/Shift nos"
+	.. " | S+A/D drift | LMB strelba | RMB boost | V kamera | M radar | R respawn"
+
+-- flash (Luanti hud.flash): velky zlaty text na 0.5/0.35, mizi po 1.2 s
+local msgLabel = newLabel(UDim2.fromScale(0.6, 0.08), UDim2.fromScale(0.5, 0.35), 32)
+msgLabel.TextColor3 = Color3.fromRGB(255, 215, 94)
+msgLabel.Text = ""
+
+-- stav mapgenu ze serveru (workspace atribut Mapgen) -- diagnostika
+local mapgenLabel = newLabel(UDim2.fromScale(0.45, 0.025), UDim2.fromScale(0.02, 0.99), 12)
+mapgenLabel.AnchorPoint = Vector2.new(0, 0.5)
+mapgenLabel.TextXAlignment = Enum.TextXAlignment.Left
+mapgenLabel.TextTransparency = 0.3
+mapgenLabel.Text = "mapgen: cekam na server..."
+
+local flash = newFrame(UDim2.fromScale(1.2, 1.2), UDim2.fromScale(0.5, 0.5),
+	Color3.fromRGB(255, 60, 40), 1)
+flash.ZIndex = 5
+
+local function showMsg(text)
+	msgLabel.Text = text
+	msgTimeLeft = 1.2
+end
+
+-- Nativni Roblox UI pryc (chat, playerlist...) -- HUD je cely vlastni
+task.spawn(function()
+	local sg = game:GetService("StarterGui")
+	for _ = 1, 10 do
+		if pcall(function()
+			sg:SetCoreGuiEnabled(Enum.CoreGuiType.All, false)
+		end) then
+			break
+		end
+		task.wait(0.5)
+	end
+end)
+
+---------------------------------------------------------------------------
+-- Kompasova paska (port compass_tape) + radar: ostrovy si klient spocita
+-- ze stejneho deterministickeho LCG jako server (SEED musi sedet!)
+---------------------------------------------------------------------------
+
+local CARDINALS = {
+	[0] = "N", [45] = "NE", [90] = "E", [135] = "SE",
+	[180] = "S", [225] = "SW", [270] = "W", [315] = "NW",
+}
+
+local function compassTape(heading)
+	local base = math.floor(heading / 15 + 0.5) * 15
+	local parts = {}
+	for off = -60, 60, 15 do
+		local a = (base + off) % 360
+		local label = CARDINALS[a] or "·"
+		if #label == 1 then
+			label = label .. " "
+		end
+		if off == 0 then
+			label = "[" .. label .. "]"
+		else
+			label = " " .. label .. " "
+		end
+		parts[#parts + 1] = label
+	end
+	return table.concat(parts)
+end
+
+local MAPGEN_SEED = 7
+local ISLAND_GRID = 340
+
+local function hash_2d(cx, cz, seed)
+	local h = cx * 73856093 + cz * 19349663 + seed
+	h = math.abs(h)
+	return (h * 1103515245 + 12345) % 2147483648
+end
+
+local function nexth(h)
+	return (h * 1103515245 + 12345) % 2147483648
+end
+
+local function unit(h)
+	return math.floor(h / 32768) / 65536
+end
+
+local BIOME_DOTS = {
+	[0] = Color3.fromRGB(76, 175, 80),    -- verdant
+	[1] = Color3.fromRGB(232, 244, 255),  -- glacial
+	[2] = Color3.fromRGB(178, 70, 50),    -- volcanic
+	[3] = Color3.fromRGB(232, 216, 160),  -- atoll
+	[4] = Color3.fromRGB(156, 107, 181),  -- mycelial
+	[5] = Color3.fromRGB(138, 138, 138),  -- barren
+	[6] = Color3.fromRGB(46, 125, 50),    -- jungle
+	[7] = Color3.fromRGB(217, 192, 122),  -- desert
+	[8] = Color3.fromRGB(159, 232, 255),  -- crystal
+	[9] = Color3.fromRGB(92, 92, 92),     -- ashen
+	[10] = Color3.fromRGB(168, 160, 85),  -- savanna
+	[11] = Color3.fromRGB(107, 122, 79),  -- swamp
+}
+
+-- zkracene island_for_cell: jen pozice/polomer/biom (stejne poradi tahu!)
+local function islandForCell(cx, cz)
+	if cx == 0 and cz == 0 then
+		local hb = nexth(hash_2d(777, 333, MAPGEN_SEED))
+		return 0, 0, 190, math.floor(unit(hb) * 12)
+	end
+	local h = hash_2d(cx, cz, MAPGEN_SEED)
+	if unit(h) * 100 >= 82 then
+		return nil
+	end
+	h = nexth(h)
+	local radius = math.floor(72 + unit(h) ^ 1.2 * 93)
+	h = nexth(h)
+	local biome = math.floor(unit(h) * 12)
+	h = nexth(h)
+	local pad = math.min(radius, 166)
+	local span = math.max(1, ISLAND_GRID - 2 * radius)
+	local ox = cx * ISLAND_GRID + pad + math.floor(unit(h) * span)
+	h = nexth(h)
+	local oz = cz * ISLAND_GRID + pad + math.floor(unit(h) * span)
+	return ox, oz, radius, biome
+end
+
+---------------------------------------------------------------------------
+-- Strelba: paprsek podle zamerovace, zasah nici teren (FillBall vzduchem)
+---------------------------------------------------------------------------
+
+local function boomAt(p)
+	local fx = Instance.new("Part")
+	fx.Anchored = true
+	fx.CanCollide = false
+	fx.Transparency = 1
+	fx.Size = Vector3.new(1, 1, 1)
+	fx.CFrame = CFrame.new(p)
+	fx.Parent = workspace
+	local att = Instance.new("Attachment")
+	att.Parent = fx
+	local pe = Instance.new("ParticleEmitter")
+	pe.Texture = "rbxasset://textures/particles/fire_main.dds"
+	pe.Speed = NumberRange.new(20, 45)
+	pe.Lifetime = NumberRange.new(0.2, 0.6)
+	pe.Size = NumberSequence.new(4, 8)
+	pe.Color = ColorSequence.new(
+		Color3.fromRGB(255, 170, 60), Color3.fromRGB(90, 80, 70))
+	pe.Enabled = false
+	pe.Parent = att
+	pe:Emit(24)
+	task.delay(1.2, function()
+		fx:Destroy()
+	end)
+end
+
+local function shoot()
+	local aimDir = CFrame.fromEulerAnglesYXZ(aimPitch, aimYaw, 0).LookVector
+	local origin = pos + aimDir * 8
+	local hit = workspace:Raycast(origin, aimDir * 1200, rayParams)
+	local target = hit and hit.Position or origin + aimDir * 1200
+	local dist = (target - origin).Magnitude
+
+	local tracer = Instance.new("Part")
+	tracer.Anchored = true
+	tracer.CanCollide = false
+	tracer.Size = Vector3.new(0.4, 0.4, math.max(dist, 1))
+	tracer.CFrame = CFrame.lookAt(origin + (target - origin) * 0.5, target)
+	tracer.Color = Color3.fromRGB(255, 220, 80)
+	tracer.Material = Enum.Material.Neon
+	tracer.Transparency = 0.2
+	tracer.Parent = workspace
+	task.delay(0.06, function()
+		tracer:Destroy()
+	end)
+
+	if hit and hit.Instance == Terrain then
+		Terrain:FillBall(hit.Position, 6, Enum.Material.Air)
+		boomAt(hit.Position)
+	end
+end
+
+---------------------------------------------------------------------------
+-- Vstup: mys hybe zamerovacem (LockCenter jako first-person v Luanti)
+---------------------------------------------------------------------------
+
+UserInputService.InputChanged:Connect(function(input, processed)
+	if processed then return end
+	if input.UserInputType == Enum.UserInputType.MouseMovement then
+		aimYaw = aimYaw - input.Delta.X * MOUSE_SENS
+		aimPitch = math.clamp(
+			aimPitch - input.Delta.Y * MOUSE_SENS, -LOOK_CLAMP, LOOK_CLAMP)
+	end
+end)
+
+UserInputService.InputBegan:Connect(function(input, processed)
+	if processed then return end
+	if input.KeyCode == Enum.KeyCode.V then
+		firstPerson = not firstPerson
+	elseif input.KeyCode == Enum.KeyCode.R then
+		resetFlight()
+		showMsg("RESPAWN")
+	elseif input.KeyCode == Enum.KeyCode.M then
+		radarOn = not radarOn
+		radarBox.Visible = radarOn
+	end
+end)
+
+---------------------------------------------------------------------------
+-- Hlavni smycka -- primy port on_step z vehicle.lua
+---------------------------------------------------------------------------
+
+RunService.RenderStepped:Connect(function(dt)
+	dt = math.min(dt, 1 / 20)
+	UserInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
+	UserInputService.MouseIconEnabled = false
+	camera.CameraType = Enum.CameraType.Scriptable
+
+	local function down(k)
+		return UserInputService:IsKeyDown(k)
+	end
+
+	-- Plyn (W/S): rychlost DRZI, zadne samovolne vraceni
+	local thr = (down(Enum.KeyCode.W) and 1 or 0)
+		- (down(Enum.KeyCode.S) and 1 or 0)
+	if thr > 0 and speed < SPEED_MAX then
+		speed = math.min(speed + 8 * dt * thr, SPEED_MAX)
+	elseif thr < 0 then
+		speed = math.max(speed + 10 * dt * thr, SPEED_MIN)
+	end
+
+	-- Airbrake drift: S + A/D = ostra zatacka za cenu rychlosti
+	local turn = TURN_SPEED
+	local drifting = down(Enum.KeyCode.S)
+		and (down(Enum.KeyCode.A) or down(Enum.KeyCode.D))
+	if drifting then
+		turn = TURN_SPEED * 2.2
+		speed = math.max(speed - 12 * dt, SPEED_MIN)
+		score = score + 50 * dt
+	end
+
+	-- Klavesy hybou zamerovacem stejne jako mys (A/D yaw, Space/Shift pitch)
+	if down(Enum.KeyCode.A) then
+		aimYaw = aimYaw + turn * dt
+	end
+	if down(Enum.KeyCode.D) then
+		aimYaw = aimYaw - turn * dt
+	end
+	if down(Enum.KeyCode.Space) then
+		aimPitch = math.min(aimPitch + PITCH_RATE * dt, LOOK_CLAMP)
+	elseif down(Enum.KeyCode.LeftShift) then
+		aimPitch = math.max(aimPitch - PITCH_RATE * dt, -LOOK_CLAMP)
+	end
+
+	-- Yaw: dotaceni za zamerovacem nejkratsi cestou
+	local chase = math.max(turn * 1.3, 2.0) * dt
+	local dy = wrapAngle(aimYaw - yaw)
+	yaw = yaw + math.clamp(dy, -chase, chase)
+
+	-- Pitch: cil ze svisleho pohledu, clamp PITCH_MAX
+	local targetPitch = math.clamp(aimPitch, -PITCH_MAX, PITCH_MAX)
+	local pstep = PITCH_RATE * 1.5 * dt
+	pitch = pitch + math.clamp(targetPitch - pitch, -pstep, pstep)
+
+	-- Naklon: automaticky do zatacky, po srovnani kurzu se vyrovna
+	local targetRoll = math.clamp(dy * 2.0, -1, 1) * BANK_MAX
+	local rstep = ROLL_SPEED * dt
+	roll = roll + math.clamp(targetRoll - roll, -rstep, rstep)
+
+	-- Boost + gravitacni fyzika: strmy dive zrychluje, stoupani krvaci
+	-- rychlost (plny plyn vykryje 70 % ztraty), overspeed se vycerpa
+	if boostTime > 0 then
+		boostTime = boostTime - dt
+		speed = 60
+	elseif pitch < -0.45 then
+		speed = math.min(speed + 80 * dt * (-pitch - 0.45), SPEED_MAX * 1.5)
+	else
+		if pitch > 0.3 then
+			local bleed = 40 * (pitch - 0.3) * (1 - 0.7 * math.max(thr, 0))
+			speed = math.max(speed - bleed * dt, SPEED_MIN)
+		end
+		if speed > SPEED_MAX then
+			speed = math.max(SPEED_MAX, speed - 12 * dt)
+		end
+	end
+
+	-- Boost: RMB, stoji 25 z metru (plneho boostu si vsimne az po vyprseni)
+	if UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2)
+			and boostMeter >= 25 and boostTime <= 0 then
+		boostMeter = boostMeter - 25
+		boostTime = 2.0
+		showMsg("BOOST!")
+	end
+
+	-- Pohyb presne jako Luanti: horizontalni smer z yaw * speed,
+	-- svisla slozka sin(pitch) * speed
+	local hdir = Vector3.new(-math.sin(yaw), 0, -math.cos(yaw))
+	local vel = (hdir * speed
+		+ Vector3.new(0, math.sin(pitch) * speed, 0)) * SCALE
+	-- Nez server dogeneruje domovsky ostrov, letadlo visi na miste
+	if not workspace:GetAttribute("MapgenHome") then
+		vel = Vector3.zero
+		msgLabel.Text = "GENERUJI SVET..."
+		msgTimeLeft = 0.5
+	end
+	local newPos = pos + vel * dt
+
+	-- Kolize s terenem: naraz nad 15 m/s = crash (rychlost na minimum),
+	-- pomale skrtnuti je zdarma -- uci opatrne letani
+	crashCooldown = math.max(0, crashCooldown - dt)
+	local step = newPos - pos
+	if step.Magnitude > 0.001 then
+		local hit = workspace:Raycast(pos, step + step.Unit * 4, rayParams)
+		if hit then
+			local destroyed = false
+			if speed > 15 and crashCooldown <= 0 then
+				crashCooldown = 0.5
+				flashTime = 0.35
+				-- kolizni poskozeni jako vehicle.lua: (speed - 10) * 2.5
+				hp = hp - math.floor((speed - 10) * 2.5)
+				speed = SPEED_MIN
+				if hp <= 0 then
+					destroyed = true
+					resetFlight()
+					showMsg("FIGHTER DESTROYED!")
+				else
+					showMsg("CRASH!")
+				end
+			end
+			if destroyed then
+				newPos = pos
+			else
+				newPos = hit.Position + hit.Normal * 4
+			end
+		end
+	end
+	pos = newPos
+
+	-- Pad do prazdna -> respawn (dno ostrovu muze sahat k ~ -180 studum)
+	if pos.Y < -700 then
+		resetFlight()
+		showMsg("VOID -- RESPAWN")
+	end
+
+	-- Proximity charge: let tesne kolem terenu (do 6 m) pri rychlosti
+	-- nad 30 m/s nabiji boost -- port tricks.update_passive
+	proxTimer = proxTimer + dt
+	if proxTimer >= 0.2 then
+		proxTimer = 0
+		if speed > 30 then
+			local reach = 6 * SCALE
+			local dirs = {
+				Vector3.new(0, -1, 0),
+				Vector3.new(0, 1, 0),
+				hdir,
+				Vector3.new(-hdir.Z, 0, hdir.X),
+				Vector3.new(hdir.Z, 0, -hdir.X),
+			}
+			for _, d in ipairs(dirs) do
+				if workspace:Raycast(pos, d * reach, rayParams) then
+					boostMeter = math.min(boostMeter + 8 * 0.2, 100)
+					score = score + 10 * 0.2
+					break
+				end
+			end
+		end
+	end
+
+	-- Strelba: LMB, cooldown 0.15 s jako weapons.lua
+	shootCooldown = math.max(0, shootCooldown - dt)
+	if UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1)
+			and shootCooldown <= 0 then
+		shootCooldown = 0.15
+		shoot()
+	end
+
+	-- Vykresleni letadla + postava leti s nim
+	local planeCF = CFrame.new(pos)
+		* CFrame.fromEulerAnglesYXZ(pitch, yaw, roll)
+	plane:PivotTo(planeCF)
+	if charRoot then
+		charRoot.CFrame = planeCF
+	end
+	exhaust.Rate = 8 + speed * 1.5
+
+	-- Kamera: zamerovac vzdy uprostred, letadlo se pod nim dotaci.
+	-- Eye-lean z vehicle.lua: kamera sklouzne do zatacky podle naklonu
+	local aimCF = CFrame.fromEulerAnglesYXZ(aimPitch, aimYaw, 0)
+	local aimDir = aimCF.LookVector
+	local lean = math.clamp(roll / 1.2, -1, 1)
+	local camPos
+	if firstPerson then
+		local noRoll = CFrame.new(pos)
+			* CFrame.fromEulerAnglesYXZ(pitch, yaw, 0)
+		camPos = noRoll:PointToWorldSpace(Vector3.new(
+			lean * 1.6 * SCALE,
+			(0.5 - math.abs(lean) * 0.4) * SCALE,
+			-4 * SCALE))
+	else
+		camPos = pos - aimDir * 34 + Vector3.new(0, 9, 0)
+			+ aimCF.RightVector * lean * 5
+		local camHit = workspace:Raycast(pos, camPos - pos, rayParams)
+		if camHit then
+			camPos = camHit.Position + camHit.Normal * 2
+		end
+	end
+	camera.CFrame = CFrame.lookAt(camPos, pos + aimDir * 300)
+	camera.FieldOfView = 70
+		+ 20 * math.clamp((speed - SPEED_MAX) / 20, 0, 1)
+		+ 5 * math.clamp(speed / SPEED_MAX, 0, 1)
+
+	-- HUD: texty 0.15 s throttle (jako hud.update_flight), bary, vodovaha
+	-- a radar kazdy frame / 0.25 s
+	local heading = math.deg(
+		math.atan2(-math.sin(aimYaw), -math.cos(aimYaw))) % 360
+	hudTimer = hudTimer + dt
+	if hudTimer >= 0.15 then
+		hudTimer = 0
+		local alt = math.floor(pos.Y / SCALE + 0.5)
+		local vy = math.sin(pitch) * speed
+		local vs = "VS  0"
+		if vy > 1 or vy < -1 then
+			vs = string.format("VS %+d", math.floor(vy + 0.5))
+		end
+		speedLabel.Text = string.format("SPD %d   ALT %d   %s",
+			math.floor(speed + 0.5), alt, vs)
+		compassLabel.Text = compassTape(heading)
+		headingLabel.Text = string.format("%03d\u{00B0}",
+			math.floor(heading + 0.5) % 360)
+		scoreLabel.Text = string.format("SCORE %d", math.floor(score))
+		local pdeg = math.deg(pitch)
+		local bank = math.deg(roll)
+		local att = ""
+		if pdeg > 3 then
+			att = string.format("\u{25B2} %d\u{00B0}", math.floor(pdeg + 0.5))
+		elseif pdeg < -3 then
+			att = string.format("\u{25BC} %d\u{00B0}", math.floor(-pdeg + 0.5))
+		end
+		if math.abs(bank) > 5 then
+			att = att .. (att ~= "" and "    " or "")
+				.. string.format("BANK %+d\u{00B0}", math.floor(bank + 0.5))
+		end
+		bankLabel.Text = att
+		local mg = workspace:GetAttribute("Mapgen")
+		mapgenLabel.Text = "mapgen: " .. (mg or "cekam na server...")
+		if mg and string.sub(mg, 1, 5) == "CHYBA" then
+			mapgenLabel.TextColor3 = Color3.fromRGB(255, 90, 70)
+		end
+	end
+	hullFill.Size = UDim2.fromScale(math.max(0, hp) / 100, 1)
+	boostFill.Size = UDim2.fromScale(boostMeter / 100, 1)
+	attLine.Rotation = math.deg(roll)
+	attLine.Position = UDim2.new(0.5, 0, 0.5,
+		-math.clamp(pitch / PITCH_MAX, -1, 1) * 30)
+	radarArrow.Rotation = heading
+	radarTimer = radarTimer + dt
+	if radarOn and radarTimer >= 0.25 then
+		radarTimer = 0
+		local pxm = pos.X / SCALE
+		local pzm = pos.Z / SCALE
+		local pcx = math.floor(pxm / ISLAND_GRID)
+		local pcz = math.floor(pzm / ISLAND_GRID)
+		local sc = (RADAR_PX / 2) / RADAR_RANGE
+		local di = 0
+		for dcx = -2, 2 do
+			for dcz = -2, 2 do
+				local ox, oz, r, biome = islandForCell(pcx + dcx, pcz + dcz)
+				if ox then
+					local rx = (ox - pxm) * sc
+					local rz = (oz - pzm) * sc
+					if rx * rx + rz * rz < (RADAR_PX / 2 - 6) ^ 2
+							and di < #radarDots then
+						di = di + 1
+						local d2 = radarDots[di]
+						d2.Visible = true
+						d2.Position = UDim2.new(0.5, rx, 0.5, -rz)
+						local ds = math.max(5, r * 2 * sc)
+						d2.Size = UDim2.fromOffset(ds, ds)
+						d2.BackgroundColor3 = BIOME_DOTS[biome]
+						d2.BackgroundTransparency = 0.25
+					end
+				end
+			end
+		end
+		for i = di + 1, #radarDots do
+			radarDots[i].Visible = false
+		end
+	end
+	flashTime = math.max(0, flashTime - dt)
+	flash.BackgroundTransparency = 1 - math.min(flashTime * 1.6, 0.55)
+	msgTimeLeft = math.max(0, msgTimeLeft - dt)
+	msgLabel.TextTransparency = msgTimeLeft > 0
+		and math.max(0, 1 - msgTimeLeft * 3) or 1
+end)
+]]></ProtectedString>
+					<bool name="Disabled">false</bool>
+					<Content name="LinkedSource"><null></null></Content>
+					<token name="RunContext">0</token>
+					<string name="ScriptGuid">{2a54202a-07d0-4733-aace-b0e5b9535172}</string>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+					<bool name="DefinesCapabilities">false</bool>
+					<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+					<string name="Name">FlightController</string>
+					<int64 name="SourceAssetId">-1</int64>
+					<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+					<UniqueId name="UniqueId">18de60858fe78ff20a983c32000003bf</UniqueId>
+				</Properties>
+			</Item>
+		</Item>
+		<Item class="StarterCharacterScripts" referent="RBX878dd492849c4a6ebb4da92ab546f76b">
+			<Properties>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+				<bool name="DefinesCapabilities">false</bool>
+				<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+				<string name="Name">StarterCharacterScripts</string>
+				<int64 name="SourceAssetId">-1</int64>
+				<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+				<UniqueId name="UniqueId">18de60858fe78ff20a983c32000003c1</UniqueId>
+			</Properties>
+		</Item>
+	</Item>
+	<Item class="StarterPack" referent="RBXa3ac596c54d24ab280d0465f21f96e99">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">StarterPack</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000370</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="StarterGui" referent="RBX572be4abb7604931a04bfd7f237fcc50">
+		<Properties>
+			<token name="ClipsDescendantsSupportsRotation">0</token>
+			<bool name="ResetPlayerGuiOnSpawn">true</bool>
+			<token name="RtlTextSupport">0</token>
+			<token name="ScreenOrientation">2</token>
+			<bool name="ShowDevelopmentGui">true</bool>
+			<Ref name="StudioDefaultStyleSheet">null</Ref>
+			<Ref name="StudioInsertWidgetLayerCollectorAutoLinkStyleSheet">null</Ref>
+			<token name="VirtualCursorMode">0</token>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">StarterGui</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000371</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="LocalizationService" referent="RBX366afb249ec740d69f7fa494b1af13fa">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">LocalizationService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000373</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="TeleportService" referent="RBXe7a5423ff6114a36af5afbcc439ba215">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">Teleport Service</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000377</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="PhysicsService" referent="RBXef7f5040c336406691307fa348ff9156">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">PhysicsService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000379</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="InsertService" referent="RBX31cdd436baed409eaf74b6586f47c73e">
+		<Properties>
+			<bool name="AllowInsertFreeModels">false</bool>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">InsertService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c320000037c</UniqueId>
+		</Properties>
+		<Item class="StringValue" referent="RBX58f9f8191ad649d28b337de6249daf4d">
+			<Properties>
+				<string name="Value">{91359575-d647-46ed-b13a-7bfd4f1bb864}</string>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+				<bool name="DefinesCapabilities">false</bool>
+				<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+				<string name="Name">InsertionHash</string>
+				<int64 name="SourceAssetId">-1</int64>
+				<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+				<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000c07</UniqueId>
+			</Properties>
+		</Item>
+	</Item>
+	<Item class="GamePassService" referent="RBXc9d0952e39c54a9b9043ec4695cfab33">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">GamePassService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c320000037d</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="Debris" referent="RBXd74115b4f7974b56b4f7c839d0b1a4cf">
+		<Properties>
+			<int name="MaxItems">1000</int>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">Debris</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c320000037e</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="CookiesService" referent="RBXdecfde2191a44ca68636946a795a2552">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">CookiesService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c320000037f</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="Selection" referent="RBX79e84bd91a834a0f8d14669cf6c69ee5">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">Selection</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000380</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="VRService" referent="RBXbb876a47638441b9949380e378f168a2">
+		<Properties>
+			<token name="AutomaticScaling">0</token>
+			<bool name="AvatarGestures">false</bool>
+			<token name="ControllerModels">1</token>
+			<bool name="FadeOutViewOnCollision">true</bool>
+			<token name="LaserPointer">1</token>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">VRService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000384</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="ContextActionService" referent="RBX8fa2d7a1dbc444a282676c53a529cfa4">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">ContextActionService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000385</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="ScriptService" referent="RBX086e027a49a54fac939b430b0cc03da1">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">ScriptService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000386</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="AssetService" referent="RBX3f6880cc0bf641b3b415f822584d6498">
+		<Properties>
+			<bool name="AllowInsertFreeAssets">false</bool>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">AssetService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000387</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="TouchInputService" referent="RBX757fd586b8ea444594bf534b28743d54">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">TouchInputService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000389</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="AvatarSettings" referent="RBXae9c6f6f2c0147a2a34855d971811ab6">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">AvatarSettings</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c320000038f</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="Packages" referent="RBX7f787c14454b4830ac05413c8d60857f">
+		<Properties>
+			<bool name="IsDehydrated">false</bool>
+			<int name="ShellPackagesCount">0</int>
+			<int name="SkippedInstancesCount">0</int>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">Packages</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000393</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="GuidRegistryService" referent="RBXc216223ab0a34b49a1654a448cd09f24">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">GuidRegistryService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c3200000394</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="LuaWebService" referent="RBX3bdf0e68cf914f31b4608c08a91a32a8">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">LuaWebService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c320000039d</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="ProcessInstancePhysicsService" referent="RBX91e2f97f3a6443c59e4814a9b8a9e5d3">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">ProcessInstancePhysicsService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c320000039e</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="ReplicatedStorage" referent="RBXdce5c43e76b847b18a4f6390146449aa">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">ReplicatedStorage</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c320000039f</UniqueId>
+		</Properties>
+	</Item>
 	<Item class="ServerScriptService" referent="RBXSSS">
 		<Properties>
+			<bool name="LoadStringEnabled">false</bool>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
 			<string name="Name">ServerScriptService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c32000003a0</UniqueId>
 		</Properties>
 		<Item class="Script" referent="RBXSRV">
 			<Properties>
-				<string name="Name">IslandGenerator</string>
 				<ProtectedString name="Source"><![CDATA[
 --!native
 --!optimize 2
@@ -66,7 +2079,13 @@ local GEN_DIST = 2               -- Cebysev: generovat 5x5 bunek kolem hrace
 local UNLOAD_DIST = 4            -- uvolnit bunky dal nez tohle
 local MAX_CELL = 28              -- limit Terrain boundu (~32k studu)
 
-Lighting.ClockTime = 14
+Lighting.ClockTime = 12.5
+Lighting.Brightness = 2.5
+Lighting.ExposureCompensation = 0.1
+Lighting.Ambient = Color3.fromRGB(80, 85, 95)
+Lighting.OutdoorAmbient = Color3.fromRGB(160, 170, 185)
+Lighting.EnvironmentDiffuseScale = 0.6
+Lighting.EnvironmentSpecularScale = 0.4
 Lighting.FogColor = Color3.fromRGB(190, 215, 235)
 Lighting.FogEnd = 5500
 local atm = Instance.new("Atmosphere")
@@ -480,6 +2499,320 @@ local function generateIsland(isl)
 end
 
 ---------------------------------------------------------------------------
+-- Dekorace biomu -- zjednoduseny port decorate.lua: vulkan s lavou,
+-- laguna, rampouchy, obri houby, krystaly, stromy, balvany.
+-- Deterministicke z bunkoveho LCG (stejny ostrov = stejna dekorace).
+-- Party jdou do slozky per ostrov (unload ji znici), teren primo do mapy.
+---------------------------------------------------------------------------
+
+local decorRoot = Instance.new("Folder")
+decorRoot.Name = "DoggioDecor"
+decorRoot.Parent = workspace
+
+local terrainOnly = RaycastParams.new()
+terrainOnly.FilterType = Enum.RaycastFilterType.Include
+terrainOnly.FilterDescendantsInstances = {Terrain}
+
+local function make_rng(cx, cz)
+	local h = hash_2d(cx * 3 + 11, cz * 7 + 5, SEED + 999)
+	return function()
+		h = nexth(h)
+		return unit(h)
+	end
+end
+
+local function surfaceAt(isl, xs, zs)
+	local up, down = y_extents(isl)
+	local top = (isl.y + up + 8) * SCALE
+	local len = (up + down + 16) * SCALE
+	return workspace:Raycast(
+		Vector3.new(xs, top, zs), Vector3.new(0, -len, 0), terrainOnly)
+end
+
+local function undersideAt(isl, xs, zs)
+	local up, down = y_extents(isl)
+	local bottom = (isl.y - down - 8) * SCALE
+	local len = (up + down + 16) * SCALE
+	return workspace:Raycast(
+		Vector3.new(xs, bottom, zs), Vector3.new(0, len, 0), terrainOnly)
+end
+
+local function decorPart(folder, shape, size, cf, color, material)
+	local p = Instance.new("Part")
+	p.Shape = shape
+	p.Size = size
+	p.CFrame = cf
+	p.Anchored = true
+	p.CastShadow = false
+	p.Color = color
+	p.Material = material or Enum.Material.SmoothPlastic
+	p.Parent = folder
+	return p
+end
+
+local UP_CYL = CFrame.Angles(0, 0, math.pi / 2)  -- valec osou svisle
+
+local function tree(folder, pos, rng, trunkH, leafC)
+	local h = trunkH * SCALE
+	decorPart(folder, Enum.PartType.Cylinder,
+		Vector3.new(h, 0.9 * SCALE, 0.9 * SCALE),
+		CFrame.new(pos + Vector3.new(0, h / 2, 0)) * UP_CYL,
+		Color3.fromRGB(104, 76, 50), Enum.Material.Wood)
+	local n = 1 + math.floor(rng() * 2 + 0.5)
+	for _ = 1, n do
+		local d = (2.6 + rng() * 2.2) * SCALE
+		local off = Vector3.new(
+			(rng() - 0.5) * 2, (rng() - 0.5) * 0.8, (rng() - 0.5) * 2) * SCALE
+		decorPart(folder, Enum.PartType.Ball, Vector3.new(d, d, d),
+			CFrame.new(pos + Vector3.new(0, h, 0) + off),
+			leafC, Enum.Material.Grass)
+	end
+end
+
+local function acacia(folder, pos, rng)
+	local h = (4 + rng() * 2) * SCALE
+	decorPart(folder, Enum.PartType.Cylinder,
+		Vector3.new(h, 0.8 * SCALE, 0.8 * SCALE),
+		CFrame.new(pos + Vector3.new(0, h / 2, 0)) * UP_CYL,
+		Color3.fromRGB(104, 76, 50), Enum.Material.Wood)
+	decorPart(folder, Enum.PartType.Cylinder,
+		Vector3.new(0.8 * SCALE, 7 * SCALE, 7 * SCALE),
+		CFrame.new(pos + Vector3.new(0, h + 0.4 * SCALE, 0)) * UP_CYL,
+		Color3.fromRGB(120, 150, 60), Enum.Material.Grass)
+end
+
+local function cactus(folder, pos, rng)
+	local green = Color3.fromRGB(70, 130, 60)
+	local h = (2 + rng() * 2) * SCALE
+	decorPart(folder, Enum.PartType.Cylinder,
+		Vector3.new(h, 1.1 * SCALE, 1.1 * SCALE),
+		CFrame.new(pos + Vector3.new(0, h / 2, 0)) * UP_CYL,
+		green, Enum.Material.Grass)
+	if rng() < 0.7 then
+		local ah = 1.4 * SCALE
+		decorPart(folder, Enum.PartType.Cylinder,
+			Vector3.new(ah, 0.8 * SCALE, 0.8 * SCALE),
+			CFrame.new(pos + Vector3.new(1.1 * SCALE, h * 0.6, 0)) * UP_CYL,
+			green, Enum.Material.Grass)
+	end
+end
+
+local function deadTree(folder, pos, rng)
+	local h = (3 + rng() * 3) * SCALE
+	decorPart(folder, Enum.PartType.Cylinder,
+		Vector3.new(h, 0.6 * SCALE, 0.6 * SCALE),
+		CFrame.new(pos + Vector3.new(0, h / 2, 0)) * UP_CYL,
+		Color3.fromRGB(92, 82, 72), Enum.Material.Wood)
+	decorPart(folder, Enum.PartType.Cylinder,
+		Vector3.new(2 * SCALE, 0.4 * SCALE, 0.4 * SCALE),
+		CFrame.new(pos + Vector3.new(0.9 * SCALE, h * 0.7, 0)),
+		Color3.fromRGB(92, 82, 72), Enum.Material.Wood)
+end
+
+local function mushroom(folder, pos, rng, giant)
+	local h = (giant and 4 + rng() * 5 or 1 + rng()) * SCALE
+	local stemD = (giant and 1.6 or 0.7) * SCALE
+	decorPart(folder, Enum.PartType.Cylinder,
+		Vector3.new(h, stemD, stemD),
+		CFrame.new(pos + Vector3.new(0, h / 2, 0)) * UP_CYL,
+		Color3.fromRGB(225, 215, 190), Enum.Material.SmoothPlastic)
+	local capD = (giant and (4 + rng() * 4) or 1.4) * SCALE
+	local cap = decorPart(folder, Enum.PartType.Cylinder,
+		Vector3.new((giant and 1.4 or 0.5) * SCALE, capD, capD),
+		CFrame.new(pos + Vector3.new(0, h + 0.5 * SCALE, 0)) * UP_CYL,
+		Color3.fromRGB(150, 95, 185), Enum.Material.Neon)
+	if giant then
+		local l = Instance.new("PointLight")
+		l.Color = Color3.fromRGB(190, 130, 230)
+		l.Range = 10 * SCALE
+		l.Brightness = 0.8
+		l.Parent = cap
+	end
+end
+
+local function crystalCluster(folder, pos, rng)
+	local n = 2 + math.floor(rng() * 3)
+	local main
+	for _ = 1, n do
+		local h = (1.5 + rng() * 3.5) * SCALE
+		local off = Vector3.new((rng() - 0.5) * 3, 0, (rng() - 0.5) * 3) * SCALE
+		local p = decorPart(folder, Enum.PartType.Cylinder,
+			Vector3.new(h, (0.7 + rng() * 0.6) * SCALE,
+				(0.7 + rng() * 0.6) * SCALE),
+			CFrame.new(pos + off + Vector3.new(0, h / 2 - 0.3 * SCALE, 0))
+				* UP_CYL * CFrame.Angles(rng() * 0.5, rng() * math.pi, 0),
+			Color3.fromRGB(150, 225, 255), Enum.Material.Neon)
+		main = main or p
+	end
+	local l = Instance.new("PointLight")
+	l.Color = Color3.fromRGB(150, 225, 255)
+	l.Range = 12 * SCALE
+	l.Brightness = 1
+	l.Parent = main
+end
+
+local function terrainBall(pos, r_m, mat)
+	Terrain:FillBall(
+		pos - Vector3.new(0, r_m * 0.4 * SCALE, 0), r_m * SCALE, mat)
+end
+
+-- Vulkan (port build_volcano): basaltovy kuzel, krater s lavou,
+-- lavovy jazyk po svahu nahodnym smerem
+local function volcano(isl, rng)
+	local R = isl.radius
+	local mr = math.clamp(math.floor(R * 0.42), 18, 34)
+	local crater = math.max(4, math.floor(mr * 0.22))
+	local mh = math.max(11, math.floor(mr * 0.5))
+	local cxs, czs = isl.x * SCALE, isl.z * SCALE
+	local hit = surfaceAt(isl, cxs, czs)
+	if not hit then return end
+	local base = hit.Position.Y
+	local steps = 7
+	for i = 0, steps do
+		local f = i / steps
+		local rr = (crater + (mr - crater) * (1 - f) ^ 1.5 + 1) * SCALE
+		Terrain:FillCylinder(
+			CFrame.new(cxs, base + f * mh * SCALE, czs),
+			(mh / steps + 1) * SCALE, rr, Enum.Material.Basalt)
+	end
+	local topY = base + mh * SCALE
+	Terrain:FillCylinder(CFrame.new(cxs, topY + 2.5 * SCALE, czs),
+		6 * SCALE, crater * SCALE, Enum.Material.Air)
+	Terrain:FillCylinder(CFrame.new(cxs, topY - 0.8 * SCALE, czs),
+		2 * SCALE, (crater - 0.5) * SCALE, Enum.Material.CrackedLava)
+	local ang = rng() * 2 * math.pi
+	local dxu, dzu = math.cos(ang), math.sin(ang)
+	local d = crater
+	while d <= mr + 6 do
+		local px = cxs + dxu * d * SCALE
+		local pz = czs + dzu * d * SCALE
+		local sHit = workspace:Raycast(
+			Vector3.new(px, topY + 6 * SCALE, pz),
+			Vector3.new(0, -(mh + 30) * SCALE, 0), terrainOnly)
+		if sHit then
+			Terrain:FillBall(sHit.Position, 1.6 * SCALE,
+				Enum.Material.CrackedLava)
+		end
+		d = d + 1.6
+	end
+end
+
+-- Laguna atolu (port fill_atoll_center)
+local function lagoon(isl)
+	local hole = math.max(3, math.floor(isl.radius * 0.3))
+	local cxs, czs = isl.x * SCALE, isl.z * SCALE
+	local hit = surfaceAt(isl, cxs, czs)
+	if not hit then return end
+	local y = hit.Position.Y
+	Terrain:FillCylinder(CFrame.new(cxs, y + 1.5 * SCALE, czs),
+		5 * SCALE, hole * SCALE, Enum.Material.Air)
+	Terrain:FillCylinder(CFrame.new(cxs, y - 1.2 * SCALE, czs),
+		2.4 * SCALE, hole * SCALE, Enum.Material.Water)
+end
+
+-- Rampouchy pod okrajem ledovcove mesy (port place_icicles)
+local function icicles(isl, rng)
+	local n = 6 + math.floor(rng() * 7)
+	for _ = 1, n do
+		local ang = rng() * 2 * math.pi
+		local rad = isl.radius * (0.55 + rng() * 0.4) * SCALE
+		local xs = isl.x * SCALE + math.cos(ang) * rad
+		local zs = isl.z * SCALE + math.sin(ang) * rad
+		local hit = undersideAt(isl, xs, zs)
+		if hit then
+			for k = 0, 2 do
+				Terrain:FillBall(
+					hit.Position - Vector3.new(0, k * 1.6 * SCALE, 0),
+					math.max(0.6, 1.6 - k * 0.45) * SCALE,
+					Enum.Material.Glacier)
+			end
+		end
+	end
+end
+
+local TREE_GREEN = Color3.fromRGB(70, 140, 60)
+local JUNGLE_GREEN = Color3.fromRGB(45, 110, 45)
+
+local function decorateIsland(isl, key, cx, cz)
+	local folder = Instance.new("Folder")
+	folder.Name = key
+	folder.Parent = decorRoot
+	local rng = make_rng(cx, cz)
+	local function scatter(n, fn)
+		for _ = 1, n do
+			local ang = rng() * 2 * math.pi
+			local rad = isl.radius * (0.12 + 0.78 * math.sqrt(rng())) * SCALE
+			local xs = isl.x * SCALE + math.cos(ang) * rad
+			local zs = isl.z * SCALE + math.sin(ang) * rad
+			local hit = surfaceAt(isl, xs, zs)
+			if hit and hit.Material ~= Enum.Material.Water then
+				fn(hit.Position)
+			end
+		end
+	end
+	local b = isl.biome.name
+	if b == "verdant" then
+		scatter(8 + math.floor(rng() * 8), function(p)
+			tree(folder, p, rng, 4 + rng() * 3, TREE_GREEN)
+		end)
+		scatter(2, function(p)
+			terrainBall(p, 1.5 + rng(), Enum.Material.Rock)
+		end)
+	elseif b == "jungle" then
+		scatter(12 + math.floor(rng() * 8), function(p)
+			tree(folder, p, rng, 6 + rng() * 4, JUNGLE_GREEN)
+		end)
+	elseif b == "savanna" then
+		scatter(3 + math.floor(rng() * 3), function(p)
+			acacia(folder, p, rng)
+		end)
+	elseif b == "desert" then
+		scatter(4 + math.floor(rng() * 4), function(p)
+			cactus(folder, p, rng)
+		end)
+		scatter(2, function(p)
+			terrainBall(p, 1 + rng(), Enum.Material.Sandstone)
+		end)
+	elseif b == "volcanic" then
+		volcano(isl, rng)
+	elseif b == "ashen" then
+		scatter(2 + math.floor(rng() * 3), function(p)
+			deadTree(folder, p, rng)
+		end)
+		scatter(4 + math.floor(rng() * 3), function(p)
+			Terrain:FillBall(p, (1.5 + rng()) * SCALE,
+				Enum.Material.CrackedLava)
+		end)
+	elseif b == "mycelial" then
+		scatter(3 + math.floor(rng() * 6), function(p)
+			mushroom(folder, p, rng, true)
+		end)
+	elseif b == "swamp" then
+		scatter(4 + math.floor(rng() * 5), function(p)
+			mushroom(folder, p, rng, false)
+		end)
+	elseif b == "crystal" then
+		scatter(5 + math.floor(rng() * 5), function(p)
+			crystalCluster(folder, p, rng)
+		end)
+	elseif b == "barren" then
+		scatter(2 + math.floor(rng() * 4), function(p)
+			terrainBall(p, 1.5 + rng() * 1.5, Enum.Material.Rock)
+		end)
+	elseif b == "glacial" then
+		icicles(isl, rng)
+		scatter(3, function(p)
+			terrainBall(p, 1 + rng(), Enum.Material.Glacier)
+		end)
+	elseif b == "atoll" then
+		lagoon(isl)
+		scatter(3, function(p)
+			tree(folder, p, rng, 5 + rng() * 2, Color3.fromRGB(90, 160, 70))
+		end)
+	end
+end
+
+---------------------------------------------------------------------------
 -- Chunk manager: bunky kolem hracu do fronty (nejblizsi prvni),
 -- vzdalene vygenerovane bunky uvolnit (FillRegion Air + zapomenout)
 ---------------------------------------------------------------------------
@@ -557,6 +2890,10 @@ task.spawn(function()
 							Region3.new(info.min, info.max),
 							VOX, Enum.Material.Air)
 					end
+					local df = decorRoot:FindFirstChild(key)
+					if df then
+						df:Destroy()
+					end
 					generated[key] = nil
 				end
 			end
@@ -578,8 +2915,17 @@ task.spawn(function()
 						item[1], item[2], isl.biome.name, isl.radius, #queue))
 					local ok, rmin, rmax = pcall(generateIsland, isl)
 					if ok then
-						generated[key] = {min = rmin, max = rmax}
+						-- +88 studu rezerva nad AABB: vulkan/stromy at
+						-- nezustanou viset po unloadu
+						generated[key] = {min = rmin,
+							max = rmax + Vector3.new(0, 88, 0)}
 						done_count = done_count + 1
+						local dok, derr = pcall(decorateIsland, isl, key,
+							item[1], item[2])
+						if not dok then
+							warn("[DoggioWars] decor error: "
+								.. tostring(derr))
+						end
 						if key == "0:0" then
 							workspace:SetAttribute("MapgenHome", true)
 						end
@@ -609,550 +2955,158 @@ end)
 setStatus("startuji, seed " .. SEED)
 print("[DoggioWars] Infinite mapgen ready, seed " .. SEED)
 ]]></ProtectedString>
+				<bool name="Disabled">false</bool>
+				<Content name="LinkedSource"><null></null></Content>
+				<token name="RunContext">0</token>
+				<string name="ScriptGuid">{0d994ebb-2947-4521-aaf6-a9b054ca01b1}</string>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+				<bool name="DefinesCapabilities">false</bool>
+				<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+				<string name="Name">IslandGenerator</string>
+				<int64 name="SourceAssetId">-1</int64>
+				<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+				<UniqueId name="UniqueId">18de60858fe78ff20a983c32000003bc</UniqueId>
 			</Properties>
 		</Item>
 	</Item>
-	<Item class="StarterPlayer" referent="RBXSP">
+	<Item class="ServerStorage" referent="RBX23790d0620ec4c9189ae0585a944d36c">
 		<Properties>
-			<string name="Name">StarterPlayer</string>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">ServerStorage</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c32000003a1</UniqueId>
 		</Properties>
-		<Item class="StarterPlayerScripts" referent="RBXSPS">
-			<Properties>
-				<string name="Name">StarterPlayerScripts</string>
-			</Properties>
-			<Item class="LocalScript" referent="RBXCLI">
-				<Properties>
-					<string name="Name">FlightController</string>
-					<ProtectedString name="Source"><![CDATA[
---!native
---!optimize 2
--- DoggioWars Roblox prototyp -- letovy model (klient)
--- Port jadra z vehicle.lua (Luanti): mouse-flight, zamerovac vede a letadlo
--- se za nim dotaci. Kinematicky let pres CFrame, zadna fyzika enginu --
--- stejny pristup jako serverova entita v Luanti (set_velocity kazdy step).
---
--- Ovladani: mys = zamerovac | W/S plyn | A/D vyboceni | Space/Shift nos
--- S+A/D drift | LMB strelba (nici teren) | RMB boost | V kamera | R respawn
-
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-local UserInputService = game:GetService("UserInputService")
-
-local player = Players.LocalPlayer
-local camera = workspace.CurrentCamera
-local Terrain = workspace.Terrain
-
--- Konstanty 1:1 z doggiowars.const (m/s, rad/s); SCALE prevadi metry na study
-local SCALE      = 3
-local SPEED_MAX  = 40
-local SPEED_MIN  = 5
-local TURN_SPEED = 1.5
-local PITCH_RATE = 1.2
-local PITCH_MAX  = 0.6
-local ROLL_SPEED = 1.8
-local BANK_MAX   = math.pi * 0.7    -- ROLL_MAX * 0.7, auto-naklon v zatacce
-local LOOK_CLAMP = 1.25
-local MOUSE_SENS = 0.0022
-local SPAWN_POS  = Vector3.new(0, 1400, -150)
-
--- Stav letu (nazvy dle vehicle.lua)
-local aimYaw, aimPitch = 0, -0.15  -- look_h/look_v: kam miri zamerovac
-                                   -- (start mirne dolu, at je videt ostrov)
-local yaw, pitch, roll = 0, 0, 0   -- skutecna orientace letadla
-local speed = 15                   -- m/s; DRZI tam, kam ji hrac nastavi
-local boostMeter, boostTime = 50, 0
-local pos = SPAWN_POS
-local proxTimer, lastProx = 0, -10
-local shootCooldown, crashCooldown = 0, 0
-local flashTime, msgTimeLeft = 0, 0
-local firstPerson = false
-local clock = 0
-
-local function wrapAngle(a)
-	while a > math.pi do a = a - 2 * math.pi end
-	while a < -math.pi do a = a + 2 * math.pi end
-	return a
-end
-
-local function resetFlight()
-	pos = SPAWN_POS
-	aimYaw, aimPitch = 0, -0.15
-	yaw, pitch, roll = 0, 0, 0
-	speed = 15
-	boostMeter, boostTime = 50, 0
-end
-
----------------------------------------------------------------------------
--- Model letadla z Partu (nahrada za doggiowars_fighter_01.obj; dopredu = -Z)
----------------------------------------------------------------------------
-
-local RED   = Color3.fromRGB(200, 60, 50)
-local WHITE = Color3.fromRGB(235, 230, 220)
-local DARK  = Color3.fromRGB(45, 45, 58)
-
-local plane = Instance.new("Model")
-plane.Name = "DoggioFighter"
-
-local function makePart(size, cf, color, material)
-	local part = Instance.new("Part")
-	part.Size = size
-	part.CFrame = cf
-	part.Anchored = true
-	part.CanCollide = false
-	part.CastShadow = false
-	part.Color = color
-	part.Material = material or Enum.Material.SmoothPlastic
-	part.Parent = plane
-	return part
-end
-
-local hull = makePart(Vector3.new(3, 2.4, 12), CFrame.new(0, 0, 0), RED)
-makePart(Vector3.new(1.6, 1.2, 3.4), CFrame.new(0, 1.6, 0.6), DARK, Enum.Material.Glass)
-makePart(Vector3.new(16, 0.5, 4), CFrame.new(0, 0.4, -0.5), WHITE)
-makePart(Vector3.new(6, 0.4, 2.2), CFrame.new(0, 0.6, 5.2), WHITE)
-makePart(Vector3.new(0.4, 2.6, 2.4), CFrame.new(0, 1.6, 5.4), RED)
-makePart(Vector3.new(1.4, 1.4, 1.2), CFrame.new(0, 0, -6.4), DARK)
-plane.PrimaryPart = hull
-plane.Parent = workspace
-
-local exhaustAtt = Instance.new("Attachment")
-exhaustAtt.Position = Vector3.new(0, 0, 6.2)
-exhaustAtt.Parent = hull
-local exhaust = Instance.new("ParticleEmitter")
-exhaust.Texture = "rbxasset://textures/particles/smoke_main.dds"
-exhaust.Lifetime = NumberRange.new(0.3, 0.7)
-exhaust.Speed = NumberRange.new(8, 16)
-exhaust.Size = NumberSequence.new(1.2, 2.6)
-exhaust.Transparency = NumberSequence.new(0.4, 1)
-exhaust.Acceleration = Vector3.new(0, -2, 0)
-exhaust.Color = ColorSequence.new(
-	Color3.fromRGB(255, 190, 120), Color3.fromRGB(120, 120, 130))
-exhaust.Parent = exhaustAtt
-
----------------------------------------------------------------------------
--- Postava: neviditelna, ukotvena, leti s letadlem (drzi streaming/replikaci)
----------------------------------------------------------------------------
-
-local charRoot = nil
-
-local rayParams = RaycastParams.new()
-rayParams.FilterType = Enum.RaycastFilterType.Exclude
-
-local function refreshRayFilter()
-	local list = {plane}
-	if player.Character then
-		table.insert(list, player.Character)
-	end
-	rayParams.FilterDescendantsInstances = list
-end
-
-local function hidePart(d)
-	if d:IsA("BasePart") then
-		d.LocalTransparencyModifier = 1
-		d.CanCollide = false
-	end
-end
-
-local function adoptCharacter(char)
-	local root = char:WaitForChild("HumanoidRootPart")
-	local humanoid = char:WaitForChild("Humanoid")
-	root.Anchored = true
-	humanoid.PlatformStand = true
-	for _, d in ipairs(char:GetDescendants()) do
-		hidePart(d)
-	end
-	char.DescendantAdded:Connect(hidePart)
-	charRoot = root
-	refreshRayFilter()
-end
-
-player.CharacterAdded:Connect(adoptCharacter)
-if player.Character then
-	adoptCharacter(player.Character)
-end
-refreshRayFilter()
-
----------------------------------------------------------------------------
--- HUD (nahrada hud.lua): zamerovac, rychlost, boost bar, hlasky
----------------------------------------------------------------------------
-
-local gui = Instance.new("ScreenGui")
-gui.Name = "DoggioHUD"
-gui.IgnoreGuiInset = true
-gui.ResetOnSpawn = false
-gui.Parent = player:WaitForChild("PlayerGui")
-
-local function newFrame(size, position, color, transparency)
-	local f = Instance.new("Frame")
-	f.AnchorPoint = Vector2.new(0.5, 0.5)
-	f.Size = size
-	f.Position = position
-	f.BackgroundColor3 = color
-	f.BackgroundTransparency = transparency or 0
-	f.BorderSizePixel = 0
-	f.Parent = gui
-	return f
-end
-
-local function newLabel(size, position, textSize)
-	local l = Instance.new("TextLabel")
-	l.AnchorPoint = Vector2.new(0.5, 0.5)
-	l.Size = size
-	l.Position = position
-	l.BackgroundTransparency = 1
-	l.Font = Enum.Font.Code
-	l.TextSize = textSize
-	l.TextColor3 = Color3.new(1, 1, 1)
-	l.TextStrokeTransparency = 0.6
-	l.Parent = gui
-	return l
-end
-
-local dot = newFrame(UDim2.fromOffset(5, 5), UDim2.fromScale(0.5, 0.5),
-	Color3.new(1, 1, 1))
-local dotCorner = Instance.new("UICorner")
-dotCorner.CornerRadius = UDim.new(1, 0)
-dotCorner.Parent = dot
-
-local ring = newFrame(UDim2.fromOffset(30, 30), UDim2.fromScale(0.5, 0.5),
-	Color3.new(1, 1, 1), 1)
-local ringCorner = Instance.new("UICorner")
-ringCorner.CornerRadius = UDim.new(1, 0)
-ringCorner.Parent = ring
-local ringStroke = Instance.new("UIStroke")
-ringStroke.Color = Color3.new(1, 1, 1)
-ringStroke.Thickness = 1.5
-ringStroke.Transparency = 0.35
-ringStroke.Parent = ring
-
-local speedLabel = newLabel(UDim2.fromOffset(220, 28),
-	UDim2.new(0.5, -220, 0.92, 0), 20)
-local boostBg = newFrame(UDim2.fromOffset(260, 12),
-	UDim2.fromScale(0.5, 0.92), Color3.fromRGB(20, 25, 35), 0.35)
-local boostFill = Instance.new("Frame")
-boostFill.Size = UDim2.fromScale(0.5, 1)
-boostFill.BackgroundColor3 = Color3.fromRGB(80, 180, 255)
-boostFill.BorderSizePixel = 0
-boostFill.Parent = boostBg
-local boostLabel = newLabel(UDim2.fromOffset(300, 18),
-	UDim2.new(0.5, 0, 0.92, -18), 13)
-boostLabel.Text = "BOOST"
-
-local hint = newLabel(UDim2.fromScale(0.9, 0.03), UDim2.fromScale(0.5, 0.965), 14)
-hint.TextTransparency = 0.25
-hint.Text = "mys zamerovac | W/S plyn | A/D vyboceni | Space/Shift nos"
-	.. " | S+A/D drift | LMB strelba | RMB boost | V kamera | R respawn"
-
-local msgLabel = newLabel(UDim2.fromScale(0.6, 0.08), UDim2.fromScale(0.5, 0.3), 32)
-msgLabel.Text = ""
-
--- stav mapgenu ze serveru (workspace atribut Mapgen) -- diagnostika
-local mapgenLabel = newLabel(UDim2.fromScale(0.5, 0.03), UDim2.fromScale(0.27, 0.86), 14)
-mapgenLabel.TextXAlignment = Enum.TextXAlignment.Left
-mapgenLabel.TextTransparency = 0.3
-mapgenLabel.Text = "mapgen: cekam na server..."
-
-local flash = newFrame(UDim2.fromScale(1.2, 1.2), UDim2.fromScale(0.5, 0.5),
-	Color3.fromRGB(255, 60, 40), 1)
-flash.ZIndex = 5
-
-local function showMsg(text)
-	msgLabel.Text = text
-	msgTimeLeft = 1.6
-end
-
----------------------------------------------------------------------------
--- Strelba: paprsek podle zamerovace, zasah nici teren (FillBall vzduchem)
----------------------------------------------------------------------------
-
-local function boomAt(p)
-	local fx = Instance.new("Part")
-	fx.Anchored = true
-	fx.CanCollide = false
-	fx.Transparency = 1
-	fx.Size = Vector3.new(1, 1, 1)
-	fx.CFrame = CFrame.new(p)
-	fx.Parent = workspace
-	local att = Instance.new("Attachment")
-	att.Parent = fx
-	local pe = Instance.new("ParticleEmitter")
-	pe.Texture = "rbxasset://textures/particles/fire_main.dds"
-	pe.Speed = NumberRange.new(20, 45)
-	pe.Lifetime = NumberRange.new(0.2, 0.6)
-	pe.Size = NumberSequence.new(4, 8)
-	pe.Color = ColorSequence.new(
-		Color3.fromRGB(255, 170, 60), Color3.fromRGB(90, 80, 70))
-	pe.Enabled = false
-	pe.Parent = att
-	pe:Emit(24)
-	task.delay(1.2, function()
-		fx:Destroy()
-	end)
-end
-
-local function shoot()
-	local aimDir = CFrame.fromEulerAnglesYXZ(aimPitch, aimYaw, 0).LookVector
-	local origin = pos + aimDir * 8
-	local hit = workspace:Raycast(origin, aimDir * 1200, rayParams)
-	local target = hit and hit.Position or origin + aimDir * 1200
-	local dist = (target - origin).Magnitude
-
-	local tracer = Instance.new("Part")
-	tracer.Anchored = true
-	tracer.CanCollide = false
-	tracer.Size = Vector3.new(0.4, 0.4, math.max(dist, 1))
-	tracer.CFrame = CFrame.lookAt(origin + (target - origin) * 0.5, target)
-	tracer.Color = Color3.fromRGB(255, 220, 80)
-	tracer.Material = Enum.Material.Neon
-	tracer.Transparency = 0.2
-	tracer.Parent = workspace
-	task.delay(0.06, function()
-		tracer:Destroy()
-	end)
-
-	if hit and hit.Instance == Terrain then
-		Terrain:FillBall(hit.Position, 6, Enum.Material.Air)
-		boomAt(hit.Position)
-	end
-end
-
----------------------------------------------------------------------------
--- Vstup: mys hybe zamerovacem (LockCenter jako first-person v Luanti)
----------------------------------------------------------------------------
-
-UserInputService.InputChanged:Connect(function(input, processed)
-	if processed then return end
-	if input.UserInputType == Enum.UserInputType.MouseMovement then
-		aimYaw = aimYaw - input.Delta.X * MOUSE_SENS
-		aimPitch = math.clamp(
-			aimPitch - input.Delta.Y * MOUSE_SENS, -LOOK_CLAMP, LOOK_CLAMP)
-	end
-end)
-
-UserInputService.InputBegan:Connect(function(input, processed)
-	if processed then return end
-	if input.KeyCode == Enum.KeyCode.V then
-		firstPerson = not firstPerson
-	elseif input.KeyCode == Enum.KeyCode.R then
-		resetFlight()
-		showMsg("RESPAWN")
-	end
-end)
-
----------------------------------------------------------------------------
--- Hlavni smycka -- primy port on_step z vehicle.lua
----------------------------------------------------------------------------
-
-RunService.RenderStepped:Connect(function(dt)
-	dt = math.min(dt, 1 / 20)
-	clock = clock + dt
-	UserInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
-	UserInputService.MouseIconEnabled = false
-	camera.CameraType = Enum.CameraType.Scriptable
-
-	local function down(k)
-		return UserInputService:IsKeyDown(k)
-	end
-
-	-- Plyn (W/S): rychlost DRZI, zadne samovolne vraceni
-	local thr = (down(Enum.KeyCode.W) and 1 or 0)
-		- (down(Enum.KeyCode.S) and 1 or 0)
-	if thr > 0 and speed < SPEED_MAX then
-		speed = math.min(speed + 8 * dt * thr, SPEED_MAX)
-	elseif thr < 0 then
-		speed = math.max(speed + 10 * dt * thr, SPEED_MIN)
-	end
-
-	-- Airbrake drift: S + A/D = ostra zatacka za cenu rychlosti
-	local turn = TURN_SPEED
-	local drifting = down(Enum.KeyCode.S)
-		and (down(Enum.KeyCode.A) or down(Enum.KeyCode.D))
-	if drifting then
-		turn = TURN_SPEED * 2.2
-		speed = math.max(speed - 12 * dt, SPEED_MIN)
-	end
-
-	-- Klavesy hybou zamerovacem stejne jako mys (A/D yaw, Space/Shift pitch)
-	if down(Enum.KeyCode.A) then
-		aimYaw = aimYaw + turn * dt
-	end
-	if down(Enum.KeyCode.D) then
-		aimYaw = aimYaw - turn * dt
-	end
-	if down(Enum.KeyCode.Space) then
-		aimPitch = math.min(aimPitch + PITCH_RATE * dt, LOOK_CLAMP)
-	elseif down(Enum.KeyCode.LeftShift) then
-		aimPitch = math.max(aimPitch - PITCH_RATE * dt, -LOOK_CLAMP)
-	end
-
-	-- Yaw: dotaceni za zamerovacem nejkratsi cestou
-	local chase = math.max(turn * 1.3, 2.0) * dt
-	local dy = wrapAngle(aimYaw - yaw)
-	yaw = yaw + math.clamp(dy, -chase, chase)
-
-	-- Pitch: cil ze svisleho pohledu, clamp PITCH_MAX
-	local targetPitch = math.clamp(aimPitch, -PITCH_MAX, PITCH_MAX)
-	local pstep = PITCH_RATE * 1.5 * dt
-	pitch = pitch + math.clamp(targetPitch - pitch, -pstep, pstep)
-
-	-- Naklon: automaticky do zatacky, po srovnani kurzu se vyrovna
-	local targetRoll = math.clamp(dy * 2.0, -1, 1) * BANK_MAX
-	local rstep = ROLL_SPEED * dt
-	roll = roll + math.clamp(targetRoll - roll, -rstep, rstep)
-
-	-- Boost + gravitacni fyzika: strmy dive zrychluje, stoupani krvaci
-	-- rychlost (plny plyn vykryje 70 % ztraty), overspeed se vycerpa
-	if boostTime > 0 then
-		boostTime = boostTime - dt
-		speed = 60
-	elseif pitch < -0.45 then
-		speed = math.min(speed + 80 * dt * (-pitch - 0.45), SPEED_MAX * 1.5)
-	else
-		if pitch > 0.3 then
-			local bleed = 40 * (pitch - 0.3) * (1 - 0.7 * math.max(thr, 0))
-			speed = math.max(speed - bleed * dt, SPEED_MIN)
-		end
-		if speed > SPEED_MAX then
-			speed = math.max(SPEED_MAX, speed - 12 * dt)
-		end
-	end
-
-	-- Boost: RMB, stoji 25 z metru (plneho boostu si vsimne az po vyprseni)
-	if UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2)
-			and boostMeter >= 25 and boostTime <= 0 then
-		boostMeter = boostMeter - 25
-		boostTime = 2.0
-		showMsg("BOOST!")
-	end
-
-	-- Pohyb presne jako Luanti: horizontalni smer z yaw * speed,
-	-- svisla slozka sin(pitch) * speed
-	local hdir = Vector3.new(-math.sin(yaw), 0, -math.cos(yaw))
-	local vel = (hdir * speed
-		+ Vector3.new(0, math.sin(pitch) * speed, 0)) * SCALE
-	-- Nez server dogeneruje domovsky ostrov, letadlo visi na miste
-	if not workspace:GetAttribute("MapgenHome") then
-		vel = Vector3.zero
-		msgLabel.Text = "GENERUJI SVET..."
-		msgTimeLeft = 0.5
-	end
-	local newPos = pos + vel * dt
-
-	-- Kolize s terenem: naraz nad 15 m/s = crash (rychlost na minimum),
-	-- pomale skrtnuti je zdarma -- uci opatrne letani
-	crashCooldown = math.max(0, crashCooldown - dt)
-	local step = newPos - pos
-	if step.Magnitude > 0.001 then
-		local hit = workspace:Raycast(pos, step + step.Unit * 4, rayParams)
-		if hit then
-			if speed > 15 and crashCooldown <= 0 then
-				crashCooldown = 0.5
-				flashTime = 0.35
-				speed = SPEED_MIN
-				showMsg("CRASH!")
-			end
-			newPos = hit.Position + hit.Normal * 4
-		end
-	end
-	pos = newPos
-
-	-- Pad do prazdna -> respawn (dno ostrovu muze sahat k ~ -180 studum)
-	if pos.Y < -700 then
-		resetFlight()
-		showMsg("VOID -- RESPAWN")
-	end
-
-	-- Proximity charge: let tesne kolem terenu (do 6 m) pri rychlosti
-	-- nad 30 m/s nabiji boost -- port tricks.update_passive
-	proxTimer = proxTimer + dt
-	if proxTimer >= 0.2 then
-		proxTimer = 0
-		if speed > 30 then
-			local reach = 6 * SCALE
-			local dirs = {
-				Vector3.new(0, -1, 0),
-				Vector3.new(0, 1, 0),
-				hdir,
-				Vector3.new(-hdir.Z, 0, hdir.X),
-				Vector3.new(hdir.Z, 0, -hdir.X),
-			}
-			for _, d in ipairs(dirs) do
-				if workspace:Raycast(pos, d * reach, rayParams) then
-					boostMeter = math.min(boostMeter + 8 * 0.2, 100)
-					lastProx = clock
-					break
-				end
-			end
-		end
-	end
-
-	-- Strelba: LMB, cooldown 0.15 s jako weapons.lua
-	shootCooldown = math.max(0, shootCooldown - dt)
-	if UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1)
-			and shootCooldown <= 0 then
-		shootCooldown = 0.15
-		shoot()
-	end
-
-	-- Vykresleni letadla + postava leti s nim
-	local planeCF = CFrame.new(pos)
-		* CFrame.fromEulerAnglesYXZ(pitch, yaw, roll)
-	plane:PivotTo(planeCF)
-	if charRoot then
-		charRoot.CFrame = planeCF
-	end
-	exhaust.Rate = 8 + speed * 1.5
-
-	-- Kamera: zamerovac vzdy uprostred, letadlo se pod nim dotaci.
-	-- Eye-lean z vehicle.lua: kamera sklouzne do zatacky podle naklonu
-	local aimCF = CFrame.fromEulerAnglesYXZ(aimPitch, aimYaw, 0)
-	local aimDir = aimCF.LookVector
-	local lean = math.clamp(roll / 1.2, -1, 1)
-	local camPos
-	if firstPerson then
-		local noRoll = CFrame.new(pos)
-			* CFrame.fromEulerAnglesYXZ(pitch, yaw, 0)
-		camPos = noRoll:PointToWorldSpace(Vector3.new(
-			lean * 1.6 * SCALE,
-			(0.5 - math.abs(lean) * 0.4) * SCALE,
-			-4 * SCALE))
-	else
-		camPos = pos - aimDir * 34 + Vector3.new(0, 9, 0)
-			+ aimCF.RightVector * lean * 5
-		local camHit = workspace:Raycast(pos, camPos - pos, rayParams)
-		if camHit then
-			camPos = camHit.Position + camHit.Normal * 2
-		end
-	end
-	camera.CFrame = CFrame.lookAt(camPos, pos + aimDir * 300)
-	camera.FieldOfView = 70
-		+ 20 * math.clamp((speed - SPEED_MAX) / 20, 0, 1)
-		+ 5 * math.clamp(speed / SPEED_MAX, 0, 1)
-
-	-- HUD
-	speedLabel.Text = string.format("SPD %3d m/s", math.floor(speed + 0.5))
-	boostFill.Size = UDim2.fromScale(boostMeter / 100, 1)
-	if clock - lastProx < 0.5 then
-		boostFill.BackgroundColor3 = Color3.fromRGB(120, 255, 160)
-	elseif boostMeter >= 25 then
-		boostFill.BackgroundColor3 = Color3.fromRGB(80, 180, 255)
-	else
-		boostFill.BackgroundColor3 = Color3.fromRGB(140, 140, 160)
-	end
-	flashTime = math.max(0, flashTime - dt)
-	flash.BackgroundTransparency = 1 - math.min(flashTime * 1.6, 0.55)
-	msgTimeLeft = math.max(0, msgTimeLeft - dt)
-	msgLabel.TextTransparency = msgTimeLeft > 0
-		and math.max(0, 1 - msgTimeLeft * 3) or 1
-	local mg = workspace:GetAttribute("Mapgen")
-	mapgenLabel.Text = "mapgen: " .. (mg or "cekam na server...")
-	if mg and string.sub(mg, 1, 5) == "CHYBA" then
-		mapgenLabel.TextColor3 = Color3.fromRGB(255, 90, 70)
-	end
-end)
-]]></ProtectedString>
-				</Properties>
-			</Item>
-		</Item>
 	</Item>
+	<Item class="ServiceVisibilityService" referent="RBXbe834259df484f72b9501f61358882c5">
+		<Properties>
+			<BinaryString name="HiddenServices">AAAAAA==</BinaryString>
+			<BinaryString name="VisibleServices">AAAAAA==</BinaryString>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">ServiceVisibilityService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c32000003ac</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="HttpService" referent="RBX19d71498a5054225a03259cec6841d85">
+		<Properties>
+			<bool name="HttpEnabled">false</bool>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">HttpService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c32000003b7</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="Lighting" referent="RBX8c84fef081914cc89d57e288aba6cceb">
+		<Properties>
+			<Color3 name="Ambient">
+				<R>0.5</R>
+				<G>0.5</G>
+				<B>0.5</B>
+			</Color3>
+			<float name="Brightness">1</float>
+			<Color3 name="ColorShift_Bottom">
+				<R>0</R>
+				<G>0</G>
+				<B>0</B>
+			</Color3>
+			<Color3 name="ColorShift_Top">
+				<R>0</R>
+				<G>0</G>
+				<B>0</B>
+			</Color3>
+			<float name="EnvironmentDiffuseScale">0</float>
+			<float name="EnvironmentSpecularScale">0</float>
+			<float name="ExposureCompensation">0</float>
+			<token name="ExtendLightRangeTo120">0</token>
+			<Color3 name="FogColor">
+				<R>0.75</R>
+				<G>0.75</G>
+				<B>0.75</B>
+			</Color3>
+			<float name="FogEnd">100000</float>
+			<float name="FogStart">0</float>
+			<float name="GeographicLatitude">41.7332993</float>
+			<bool name="GlobalShadows">false</bool>
+			<token name="LightingStyle">1</token>
+			<Color3 name="OutdoorAmbient">
+				<R>0.5</R>
+				<G>0.5</G>
+				<B>0.5</B>
+			</Color3>
+			<bool name="Outlines">true</bool>
+			<bool name="PrioritizeLightingQuality">false</bool>
+			<float name="ShadowSoftness">0.5</float>
+			<token name="Technology">2</token>
+			<string name="TimeOfDay">14:00:00</string>
+			<BinaryString name="AttributesSerialize">AQAAACYAAABSQlhfTGlnaHRpbmdUZWNobm9sb2d5VW5pZmllZE1pZ3JhdGlvbgMB</BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">Lighting</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c32000003da</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="VideoService" referent="RBXb112f3f745774c17b8682656f6f74d3c">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">VideoService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c32000003dd</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="LodDataService" referent="RBX9b16d0ad4124426f84f0ecc55d1062cf">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">LodDataService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c32000003de</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="TestService" referent="RBX7732137dba804241bc018fd9b6c13906">
+		<Properties>
+			<bool name="AutoRuns">true</bool>
+			<string name="Description"></string>
+			<bool name="ExecuteWithStudioRun">false</bool>
+			<bool name="IsPhysicsEnvironmentalThrottled">true</bool>
+			<bool name="IsSleepAllowed">true</bool>
+			<int name="NumberOfPlayers">0</int>
+			<double name="SimulateSecondsLag">0</double>
+			<bool name="ThrottlePhysicsToRealtime">true</bool>
+			<double name="Timeout">10</double>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<SecurityCapabilities name="Capabilities">0</SecurityCapabilities>
+			<bool name="DefinesCapabilities">false</bool>
+			<UniqueId name="HistoryId">00000000000000000000000000000000</UniqueId>
+			<string name="Name">TestService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<SharedString name="Tags">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+			<UniqueId name="UniqueId">18de60858fe78ff20a983c320000042c</UniqueId>
+		</Properties>
+	</Item>
+	<SharedStrings>
+		<SharedString md5="yuZpQdnvvUBOTYh1jqZ2cA=="></SharedString>
+	</SharedStrings>
 </roblox>
