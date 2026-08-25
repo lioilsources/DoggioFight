@@ -21,6 +21,13 @@ rivers on large green islands, lagoon atolls, giant mushrooms, glowing
 crystal spires and icicled glacier mesas. Islands are **destructible** —
 your shots knock pieces off, and the debris tumbles into the void.
 
+The sky is alive: **serpent dragons** patrol their islands — fire
+(volcanic/ashen), ice (glacial), water (atoll), mud (swamp) and electric
+(crystal) — while **sand worms** porpoise through desert mesas, a **stone
+guardian** watches over barren islands, bioluminescent **jellyfish** drift
+above the green ones, and if you are lucky you will cross paths with a
+wandering **sky whale**. All of them are (for now) peaceful scenery.
+
 You spawn on a home island (random biome per world) and take off
 immediately — there is no walking in DoggioWars.
 
@@ -42,6 +49,7 @@ survives respawn.
 | A / D (left stick ←→) | strafe sideways (heading unchanged) |
 | Shift / Space (X / ○) | rise / sink vertically |
 | Left mouse button, E (R2) | **shoot** |
+| Z (gamepad minimap button) | **world map** — islands, monsters, your ship |
 
 Tricks, boost and drift are disabled in submarine mode — those buttons
 have a new meaning here.
@@ -90,6 +98,7 @@ troubleshooting (in Czech).
 | `/home` | return to the home island at the origin |
 | `/race` | greyhound race — chase the golden rabbit (`/race stop` to cancel) |
 | `/radar` | toggle the island radar (minimap) |
+| `/map` | fullscreen world map (same as **Z**) |
 | `/gp` | live gamepad diagnostics overlay |
 | `/respawn_fighter` | respawn your plane |
 
