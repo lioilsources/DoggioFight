@@ -328,14 +328,128 @@ FLOWERS = {
 }
 
 
+OUT_CORE = os.path.join(
+    os.path.dirname(__file__), "..", "mods", "dw_core", "textures")
+
+
+# --------------------------------------------------------------------------
+# Monstra (entity v dw_core) — neutralni sede baze, zivel barvi az Lua
+# pres ^[multiply:#rgb (stejny recept jako zlaty zajic)
+# --------------------------------------------------------------------------
+
+def monster_body(name):
+    """Svetla supinova dlazdice: sum + radky tmavsich oblouku supin."""
+    px = noise_tile(name, (178, 178, 186), 12)
+    for row in range(3, SIZE, 4):
+        off = 2 if (row // 4) % 2 else 0
+        for col in range(SIZE):
+            if (col + off) % 4 == 0:
+                r, g, b, a = px[row][col]
+                px[row][col] = (clamp(r - 46), clamp(g - 46), clamp(b - 46), a)
+    return px
+
+
+def monster_head(name):
+    """Oblicej: supinova baze + tmava tlama se zuby + bile oci s ramem."""
+    px = monster_body(name)
+    for y in range(11, SIZE):
+        for x in range(SIZE):
+            r, g, b, a = px[y][x]
+            px[y][x] = (clamp(r - 70), clamp(g - 70), clamp(b - 70), a)
+    for x in range(1, SIZE - 1, 2):          # zuby
+        px[11][x] = (240, 240, 235, 255)
+    for ex in (3, 11):                        # oci 2x2 + tmavy ram
+        for dy in range(-1, 3):
+            for dx in range(-1, 3):
+                px[4 + dy][ex + dx] = (40, 40, 48, 255)
+        for dy in range(2):
+            for dx in range(2):
+                px[4 + dy][ex + dx] = (252, 252, 252, 255)
+    return px
+
+
+def guardian_face(name):
+    """Kamenna tvar: basaltovy sum, zlomene oboci, zhave oci, sterbina ust."""
+    px = noise_tile(name, (92, 92, 98), 10)
+    for ex in (3, 10):
+        for dx in range(4):                   # oboci
+            px[3][ex + dx - 1] = (60, 60, 66, 255)
+        for dy in range(2):                   # zhave oci 3x2
+            for dx in range(3):
+                px[5 + dy][ex + dx] = (255, 208, 70, 255)
+    for x in range(5, 11):                    # usta
+        px[12][x] = (48, 48, 54, 255)
+    return px
+
+
+def jelly_bell(name):
+    """Poloprusvitny zvon meduzy s tremi svetlejsimi zebry."""
+    px = blank()
+    widths = [4, 8, 10, 12, 13, 14, 14, 14, 13, 12, 12, 11, 10, 9, 8, 7]
+    r = Rnd(name)
+    for y in range(SIZE):
+        w = widths[y]
+        x0 = (SIZE - w) // 2
+        for x in range(x0, x0 + w):
+            d = r.rng(-10, 10)
+            alpha = 165 if y < 11 else 120
+            px[y][x] = (clamp(208 + d), clamp(190 + d), clamp(232 + d), alpha)
+    for x in range(3, 13, 4):                 # zebra
+        for y in range(2, 10):
+            rr, g, b, a = px[y][x]
+            if a:
+                px[y][x] = (clamp(rr + 26), clamp(g + 26), clamp(b + 26), a)
+    return px
+
+
+def map_dot(name):
+    """Plny bily kruh s mekkym okrajem — mapove tecky (barvi ^[colorize)."""
+    px = blank()
+    c = (SIZE - 1) / 2.0
+    for y in range(SIZE):
+        for x in range(SIZE):
+            d2 = (x - c) ** 2 + (y - c) ** 2
+            if d2 <= 36:
+                px[y][x] = (255, 255, 255, 255)
+            elif d2 <= 49:
+                px[y][x] = (255, 255, 255, 140)
+    return px
+
+
+def drop_particle(name):
+    """Mekka kapka pro vodni/bahenni odkapavani."""
+    px = blank()
+    cx = cy = SIZE // 2
+    for y in range(SIZE):
+        for x in range(SIZE):
+            d2 = (x - cx) ** 2 + (y - cy) ** 2
+            if d2 <= 9:
+                a = 235 if d2 <= 4 else 130
+                px[y][x] = (235, 240, 245, a)
+    return px
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
+    os.makedirs(OUT_CORE, exist_ok=True)
     made = 0
 
     def save(stem, px):
         nonlocal made
         write_png(os.path.join(OUT, "dwn_%s.png" % stem), px)
         made += 1
+
+    def save_core(stem, px):
+        nonlocal made
+        write_png(os.path.join(OUT_CORE, "doggiowars_%s.png" % stem), px)
+        made += 1
+
+    save_core("monster_body", monster_body("monster_body"))
+    save_core("monster_head", monster_head("monster_head"))
+    save_core("guardian", guardian_face("guardian"))
+    save_core("jelly", jelly_bell("jelly"))
+    save_core("particle_drop", drop_particle("particle_drop"))
+    save_core("map_dot", map_dot("map_dot"))
 
     for n, (base, spread) in SOLID.items():
         px = noise_tile(n, base, spread, coarse=2 if n == "gravel" else 1)
