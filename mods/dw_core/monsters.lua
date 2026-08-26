@@ -696,5 +696,37 @@ minetest.register_on_leaveplayer(function(player)
     whales[player:get_player_name()] = nil
 end)
 
+---------------------------------------------------------------------------
+-- Integrace s chatbridge (Twitch chat) — volitelná, obě strany běží i samy.
+--
+-- Bridge umí jen "spawni entitu X"; o ostrovech nic neví. Monstrum bez
+-- .island se ale do vteřiny samo smaže (viz on_step), takže mu tady ostrov
+-- doplníme. Vazba je měkká: registrujeme se, jen když mod chatbridge
+-- opravdu běží, a on o DoggioWars nemusí vědět nic.
+---------------------------------------------------------------------------
+
+-- Přiřadí entitě nejbližší ostrov; vrací true, když se to povedlo.
+function doggiowars.bind_monster_to_island(obj)
+    local ent = obj and obj:get_luaentity()
+    if not ent or ent.island then return false end
+    local pos = obj:get_pos()
+    if not pos then return false end
+    local isl = doggiowars.nearest_island(pos.x, pos.z, seed())
+    if not isl then return false end
+    ent.island = isl
+    return true
+end
+
+minetest.register_on_mods_loaded(function()
+    if not minetest.global_exists("chatbridge")
+            or not chatbridge.register_on_spawn then
+        return
+    end
+    chatbridge.register_on_spawn(function(obj)
+        doggiowars.bind_monster_to_island(obj)
+    end)
+    minetest.log("action", "[doggiowars] chatbridge integration registered")
+end)
+
 minetest.log("action", "[doggiowars] monsters loaded: "
     .. "5 dragons, worm, guardian, jelly, whale")
