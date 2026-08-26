@@ -1,0 +1,122 @@
+# Vydání DoggioWars na dvě místa naráz: GitHub Release (odkazuje na něj
+# olin.now) a ContentDB (odtud si hru stahují hráči v Luanti).
+#
+# Spustí se pushnutím tagu `v*`. Anotovaný tag je lepší — jeho zpráva se
+# stane popisem vydání na obou místech:
+#
+#     git tag -a v2.4.0 -m "Co je nového…" && git push origin v2.4.0
+#
+# Pro ContentDB je potřeba repo secret CONTENTDB_TOKEN
+# (ContentDB → Settings → API Tokens). Bez něj se GitHub Release udělá
+# stejně a krok pro ContentDB se jen přeskočí s varováním.
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: GitHub Release + ContentDB
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0      # potřeba pro objekt tagu (zpráva anotovaného tagu)
+
+      - name: Zjistit tag
+        id: tag
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          case "$TAG" in
+            v*) ;;
+            *) echo "::error::'$TAG' není verze — workflow čeká tag ve tvaru vX.Y.Z"; exit 1 ;;
+          esac
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Popis vydání ze zprávy tagu
+        run: |
+          # Jen anotovaný tag má vlastní zprávu. U lehkého tagu by
+          # %(contents) vrátilo zprávu commitu i s trailery (Co-authored-by
+          # a spol.), což do popisu vydání nepatří — tam se nechá prázdno a
+          # GitHub si popis vygeneruje z commitů.
+          TYPE=$(git for-each-ref "refs/tags/${GITHUB_REF_NAME}" --format='%(objecttype)')
+          if [ "$TYPE" = "tag" ]; then
+            git for-each-ref "refs/tags/${GITHUB_REF_NAME}" --format='%(contents)' > notes.md
+            echo "Popis vydání ze zprávy tagu ($(wc -c < notes.md) B)"
+          else
+            : > notes.md
+            echo "::notice::${GITHUB_REF_NAME} je lehký tag — popis vygeneruje GitHub z commitů"
+          fi
+
+      - name: Zabalit hru
+        run: |
+          # Prefix je to, co dělá rozbalenou složku nezaměnitelnou: Luanti
+          # bere gameid z názvu složky. git archive respektuje export-ignore
+          # z .gitattributes, takže Prompts/ a play.sh se do zipu nedostanou.
+          git archive --format=zip \
+            --prefix=doggiowars_game/ \
+            HEAD -o "doggiowars-${GITHUB_REF_NAME}.zip"
+          unzip -l "doggiowars-${GITHUB_REF_NAME}.zip" | tail -1
+
+      - name: GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: doggiowars-${{ steps.tag.outputs.tag }}.zip
+          fail_on_unmatched_files: true
+          name: DoggioWars ${{ steps.tag.outputs.tag }}
+          tag_name: ${{ steps.tag.outputs.tag }}
+          body_path: notes.md
+          generate_release_notes: true
+          draft: false
+          prerelease: ${{ contains(steps.tag.outputs.tag, 'alpha') || contains(steps.tag.outputs.tag, 'beta') || contains(steps.tag.outputs.tag, 'rc') }}
+
+      - name: ContentDB
+        env:
+          TOKEN: ${{ secrets.CONTENTDB_TOKEN }}
+          TAG: ${{ steps.tag.outputs.tag }}
+        run: |
+          set -euo pipefail
+          if [ -z "${TOKEN:-}" ]; then
+            echo "::warning::CONTENTDB_TOKEN není nastavený — ContentDB se přeskakuje."
+            echo "Nastav ho: gh secret set CONTENTDB_TOKEN -R $GITHUB_REPOSITORY"
+            exit 0
+          fi
+
+          API=https://content.luanti.org/api/packages/lioilsources/doggiowars_game
+          NOTES=$(head -c 2000 notes.md | jq -Rs .)
+
+          # ContentDB si zip staví sám z gitu, proto method=git a ref=tag.
+          # min/max verze Luanti si bere z game.conf, tady se neposílají.
+          CODE=$(curl -sS -o resp.json -w '%{http_code}' -X POST "$API/releases/new/" \
+            -H "Authorization: Bearer $TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{\"method\":\"git\",\"title\":\"$TAG\",\"ref\":\"$TAG\",\"release_notes\":$NOTES}")
+          cat resp.json; echo
+          if [ "$CODE" != "200" ]; then
+            echo "::error::ContentDB odmítl vydání (HTTP $CODE)"; exit 1
+          fi
+
+          # Odpověď chodí hned, ale s commit=null a size=0 — import běží
+          # asynchronně. Bez tohohle čekání by workflow hlásil úspěch i pro
+          # vydání, které se nikdy nenaimportovalo.
+          for i in $(seq 1 30); do
+            sleep 10
+            LINE=$(curl -sS "$API/releases/" \
+              | jq -r --arg t "$TAG" '.[] | select(.title == $t) | "\(.commit // "null") \(.size)"' | head -1)
+            COMMIT=${LINE%% *}; SIZE=${LINE##* }
+            if [ -n "$LINE" ] && [ "$COMMIT" != "null" ] && [ "${SIZE:-0}" -gt 0 ]; then
+              echo "ContentDB má $TAG: commit ${COMMIT:0:7}, $((SIZE / 1024)) KB"
+              exit 0
+            fi
+            echo "  čekám na import… ($i/30)"
+          done
+          echo "::error::ContentDB vydání $TAG se do 5 minut nenaimportovalo"
+          exit 1
