@@ -155,6 +155,23 @@ The old names still resolve: `dw_nodes` registers an alias for each one, so
 worlds saved by earlier versions load unchanged. New code should use
 `dw_nodes:` — aliases do not appear in `registered_nodes`.
 
+## Twitch integration (optional)
+
+The game ships the `chatbridge` mod, which lets a Twitch chat spawn the
+bestiary — `!drak`, `!velryba`, `!meduzy` and friends — through the
+[chatbridge](https://github.com/lioilsources/chatbridge) service. It is
+dormant until you point it at a bridge, and it needs two settings in **your
+own** `minetest.conf` (a game may not grant itself network access):
+
+```
+secure.http_mods = chatbridge
+chatbridge_url = http://127.0.0.1:8093
+```
+
+Chat can only ever add entities that clean themselves up — it never touches
+terrain — and `/chatoff` (server priv) kills it instantly and clears whatever
+chat spawned.
+
 ## Roblox port (prototype)
 
 DoggioWars is also being ported to Roblox. The [roblox/](https://github.com/lioilsources/DoggioWars/tree/main/roblox)
